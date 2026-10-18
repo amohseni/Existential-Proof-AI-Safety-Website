@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · ∃x AI</title>
+<meta name="description" content="Mission, methods, and contact for ∃x AI.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<canvas id="search-field" aria-hidden="true"></canvas>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="index.html" id="top" aria-label="∃x AI, home"><span class="ex" aria-hidden="true">E</span><span class="x" aria-hidden="true">x</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html">Research</a>
+    <a href="projects.html">Projects</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html" aria-current="page">About</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="a-title">
+  <p class="eyebrow">About</p>
+  <h1 id="a-title">∃x AI studies the foundations of safe artificial agency.</h1>
+</section>
+
+<section class="section" id="mission">
+  <p class="label">Mission</p>
+  <div class="body">
+    <p>∃x AI studies the foundations of safe artificial agency. We use formal tools from logic, epistemology, decision theory, game theory, and philosophy of AI to understand how advanced systems represent the world, form and pursue objectives, and can be made more interpretable and aligned.</p>
+  </div>
+</section>
+
+<section class="section" id="name">
+  <p class="label">The name</p>
+  <div class="body">
+    <p>∃<i>x</i> is read “there exists an <i>x</i>.” In logic, an existence claim is settled by finding a witness: an object that satisfies the condition. Here the condition is being a route to safe AI. <span data-verify="Pronunciation: the plan says ExProof AI; the repository says Existential Proof">The name is pronounced “ExProof AI.”</span></p>
+    <p>The animation behind these pages runs the same search on a small scale. A light explores a hidden tree, looking for a path from the left edge to the right. One tree in three has such a path. When the path exists, the search finds it; when it does not, the search exhausts the tree and starts again.</p>
+  </div>
+</section>
+
+<section class="section" id="methods">
+  <p class="label">Methods</p>
+  <div class="body">
+    <p data-verify="Methods list: confirm it describes the lab">Logic, formal epistemology, Bayesian inference, decision theory, game theory, evolutionary game theory, and agent-based modeling.</p>
+    <h3>Why formal foundations matter</h3>
+    <p data-verify="Drafted by Claude">Arguments about AI risk often turn on claims whose key terms are vague: agency, goals, deception, power. Stating those claims formally makes it possible to prove them, refute them, or say exactly what evidence would settle them.</p>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <p class="label">Contact</p>
+  <div class="body">
+    <p data-verify="Who the lab wants to hear from">We welcome questions from researchers, funders, and people working on AI policy, and we are glad to hear from students and researchers who want to work with us.</p>
+    <ul class="addresses">
+      <li><span class="who">Aydin Mohseni</span><span class="addr">amohseni@andrew.cmu.edu</span></li>
+      <li><span class="who">Daniel Herrmann</span><span class="addr" data-verify="Daniel's email address">Email to add</span></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="mono">∃xP</span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website" data-verify="Repository is private until launch; this link works for visitors only once it is public">GitHub</a>
+    <a href="about.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

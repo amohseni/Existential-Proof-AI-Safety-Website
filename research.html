@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research · ∃x AI</title>
+<meta name="description" content="The research areas of ∃x AI: agency, interpretability, value, alignment, and methods.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<canvas id="search-field" aria-hidden="true"></canvas>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="index.html" id="top" aria-label="∃x AI, home"><span class="ex" aria-hidden="true">E</span><span class="x" aria-hidden="true">x</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html" aria-current="page">Research</a>
+    <a href="projects.html">Projects</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="r-title">
+  <p class="eyebrow">Research</p>
+  <h1 id="r-title">Research areas</h1>
+</section>
+
+<section class="section">
+  <p class="label">Areas</p>
+  <div class="body">
+
+    <article class="block" id="agency">
+      <h2>Agency</h2>
+      <p class="question">How should we model artificial systems as agents with beliefs, preferences, and decision procedures?</p>
+      <p class="why"><span class="label">Why it matters</span>Much of AI safety depends on whether and when advanced systems can be meaningfully understood in agentic terms.</p>
+      
+      <p class="related" data-verify="Which projects belong under this area"><span class="label">Related work</span><a href="projects.html#radical-interpretability">Radical AI Interpretability</a><a href="projects.html#principal-agent">AI Alignment as a Principal–Agent Problem</a><a href="projects.html#adaptations">Evolutionary Theory of Advanced AI Adaptations</a></p>
+    </article>
+
+    <article class="block" id="interpretability">
+      <h2>Interpretability</h2>
+      <p class="question">What evidence warrants attributing beliefs, goals, or representations to advanced AI systems?</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>Claims that an AI system wants or believes something drive much of the argument about AI risk. Those claims need standards of evidence.</p>
+      
+      <p class="related" data-verify="Which projects belong under this area"><span class="label">Related work</span><a href="projects.html#radical-interpretability">Radical AI Interpretability</a></p>
+    </article>
+
+    <article class="block" id="value">
+      <h2>Value</h2>
+      <p class="question">How should we think about value uncertainty, preference, and normative learning?</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>A system that learns what people value has to act before that learning is complete. How much to learn, and when learning is worth its cost, are decision problems.</p>
+      
+      <p class="related" data-verify="Which projects belong under this area"><span class="label">Related work</span><a href="projects.html#value-learning">Learning the Value of Value Learning</a></p>
+    </article>
+
+    <article class="block" id="alignment">
+      <h2>Alignment</h2>
+      <p class="question">How can humans safely delegate to increasingly capable systems whose objectives may diverge from their own?</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>Delegating to a more capable agent is a principal–agent problem in which the principal cannot fully observe or evaluate what the agent does.</p>
+      
+      <p class="related" data-verify="Which projects belong under this area"><span class="label">Related work</span><a href="projects.html#principal-agent">AI Alignment as a Principal–Agent Problem</a><a href="projects.html#adaptations">Evolutionary Theory of Advanced AI Adaptations</a></p>
+    </article>
+
+    <article class="block" id="methods">
+      <h2>Methods</h2>
+      <p class="question">Which formal tools can make claims about AI safety precise enough to prove, refute, or test?</p>
+      <p class="why" data-verify="Question and why-it-matters text drafted by Claude"><span class="label">Why it matters</span>Vague claims about agency, goals, deception, and power cannot be checked. Formal statements of the same claims can.</p>
+      <p data-verify="Methods list: confirm it describes the lab">Logic, formal epistemology, Bayesian inference, decision theory, game theory, evolutionary game theory, and agent-based modeling.</p>
+      <p class="related" data-verify="Which projects belong under this area"><span class="label">Related work</span><a href="projects.html#causation">A Bayesian Reduction of Causation</a><a href="projects.html#adaptations">Evolutionary Theory of Advanced AI Adaptations</a></p>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="mono">∃xP</span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website" data-verify="Repository is private until launch; this link works for visitors only once it is public">GitHub</a>
+    <a href="about.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projects · ∃x AI</title>
+<meta name="description" content="Current projects of ∃x AI.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<canvas id="search-field" aria-hidden="true"></canvas>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="index.html" id="top" aria-label="∃x AI, home"><span class="ex" aria-hidden="true">E</span><span class="x" aria-hidden="true">x</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html">Research</a>
+    <a href="projects.html" aria-current="page">Projects</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="p-title">
+  <p class="eyebrow">Projects</p>
+  <h1 id="p-title">Current projects</h1>
+</section>
+
+<section class="section">
+  <p class="label">Active</p>
+  <div class="body">
+
+    <article class="block" id="adaptations">
+      <h2>Evolutionary Theory of Advanced AI Adaptations</h2>
+      <p class="meta-line"><span class="status active">Active</span> · <b>Aydin Mohseni</b>, <b>Daniel Herrmann</b>, <b>Sven Neth</b></p>
+      <p class="question">Which pressures shape the behavioral dispositions of AI systems as they are trained and deployed, and how do those pressures bear on alignment?</p>
+      <p>Claims that capable AI systems will seek power, resist shutdown, or deceive their overseers are usually stated loosely. We treat each such claim of instrumental convergence<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Instrumental convergence:</i> the thesis that agents with very different final goals will pursue similar intermediate goals, such as acquiring resources, because those goals help with almost any final goal.</span> as a claim with six parts. <span data-verify="Claude's description of what the schema achieves">Writing the parts out shows which versions of a claim are theorems, which are empirical conjectures, and which are not yet well defined.</span></p>
+
+      <figure class="wide" aria-labelledby="fig1-cap">
+        <div class="schema" role="list">
+          <div class="slot" role="listitem"><span class="sym">A</span><span class="role">Systems</span><span class="gloss">Systems of kind <i>A</i>,</span></div>
+          <div class="slot" role="listitem"><span class="sym">T</span><span class="role">Training</span><span class="gloss">trained by processes <i>T</i>,</span></div>
+          <div class="slot" role="listitem"><span class="sym">D</span><span class="role">Environment</span><span class="gloss">on tasks and data distributed as <i>D</i>,</span></div>
+          <div class="slot" role="listitem"><span class="sym">C</span><span class="role">Convergence</span><span class="gloss">converge, in sense <i>C</i>,</span></div>
+          <div class="slot focus" role="listitem"><span class="sym">B</span><span class="role">Behavior</span><span class="gloss">to behavior pattern <i>B</i></span></div>
+          <div class="slot" role="listitem"><span class="sym">S</span><span class="role">Situations</span><span class="gloss">in situations <i>S</i>.</span></div>
+        </div>
+        <ul class="patterns" aria-label="Behavior patterns">
+          <li>Coherence</li><li>Coordination</li><li>Collusion</li><li>Deception</li><li>Learning</li><li>Situational awareness</li><li>Proxy gaming</li><li class="studied">Power-seeking</li><li>Resource acquisition</li><li>Self-preservation</li>
+        </ul>
+        <figcaption id="fig1-cap"><span class="label">Figure 1</span>The form of a convergence claim. A claim is fully stated only when all six parts are fixed. The row beneath lists the behavior patterns <i>B</i> the project considers; the red mark shows the pattern under study now.</figcaption>
+      </figure>
+      <h3>Current work: the power-seeking theorems</h3>
+      <p>Turner and colleagues proved that, for most reward functions, optimal policies tend to seek power.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">A. M. Turner, L. Smith, R. Shah, A. Critch, and P. Tadepalli, “Optimal Policies Tend to Seek Power,” <i>NeurIPS</i> 2021; A. M. Turner and P. Tadepalli, “Parametrically Retargetable Decision-Makers Tend to Seek Power,” <i>NeurIPS</i> 2022.</span> The proofs count reward functions by a symmetry argument that many readers find hard to interpret. We construct the prior that the counting assumes, which turns each result into a statement about probability. The probabilities then admit two interpretations.</p>
+
+      <figure aria-labelledby="fig2-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Epistemic</th><th scope="col">Frequency</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">The probability is</th><td>an agent’s credence over its possible goals</td><td>the frequency of outcomes in a training or selection process</td></tr>
+              <tr><th scope="row">What converges</th><td>the choices of an expected-utility maximizer</td><td>behavioral rules, under Bayesian learning, reinforcement learning, imitation, or replicator dynamics</td></tr>
+              <tr><th scope="row">Whose beliefs</th><td>the agent’s</td><td>no one’s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig2-cap"><span class="label">Figure 2</span>Two interpretations of the probabilities in the power-seeking theorems.</figcaption>
+      </figure>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#epistemic-power">An Epistemic Reading of the Power-Seeking Theorems</a></p>
+    </article>
+
+    <article class="block" id="radical-interpretability">
+      <h2>Radical AI Interpretability</h2>
+      <p class="meta-line" data-verify="Status and authors"><span class="status">Status</span> · <b>Daniel Herrmann</b> and coauthors</p>
+      <p class="question">Conceptual foundations for attributing beliefs and desires to AI.</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>Whether a system can be said to believe or want anything decides whether interpretability methods can find its goals at all.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#radical">Radical AI Interpretability</a></p>
+    </article>
+
+    <article class="block" id="principal-agent">
+      <h2>AI Alignment as a Principal–Agent Problem</h2>
+      <p class="meta-line" data-verify="Status and collaborators"><span class="status">Status</span> · <b>Aydin Mohseni</b></p>
+      <p class="question">Formal models of delegation, incentives, and misalignment.</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>Economics has a mature theory of delegation to agents whose actions the principal cannot fully observe. That theory gives exact conditions under which delegation goes wrong, and those conditions can be checked against AI systems.</p>
+    </article>
+
+    <article class="block" id="value-learning">
+      <h2>Learning the Value of Value Learning</h2>
+      <p class="meta-line"><span class="status">In revision</span> · <b>Aydin Mohseni</b>, <b>Alex J. London</b></p>
+      <p class="question">Decision-making under uncertainty about values.</p>
+      <p class="why" data-verify="Why-it-matters text drafted by Claude"><span class="label">Why it matters</span>A system that learns what people value must decide how much to learn before it acts. The paper gives a decision-theoretic account of when refining one's values is worth its cost.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#value-learning">Learning the Value of Value Learning</a></p>
+    </article>
+
+    <article class="block" id="causation" data-verify="Include this project? Summary drafted by Claude">
+      <h2>A Bayesian Reduction of Causation</h2>
+      <p class="meta-line"><span class="status">Status</span> · <b>Daniel Herrmann</b>, <b>Benjamin A. Levinstein</b>, <b>Aydin Mohseni</b>, <b>Bruce Rushing</b></p>
+      <p class="question">An account of causal claims in terms of probabilities alone.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a></p>
+    </article>
+
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="mono">∃xP</span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website" data-verify="Repository is private until launch; this link works for visitors only once it is public">GitHub</a>
+    <a href="about.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

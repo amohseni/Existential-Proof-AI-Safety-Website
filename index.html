@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>∃x AI</title>
+<meta name="description" content="∃x AI is an AI safety research group using logic, epistemology, decision theory, and mathematical modeling to search for principled routes to safe AI.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<canvas id="search-field" aria-hidden="true"></canvas>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="index.html" id="top" aria-label="∃x AI, home"><span class="ex" aria-hidden="true">E</span><span class="x" aria-hidden="true">x</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html">Research</a>
+    <a href="projects.html">Projects</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero" aria-labelledby="hero-title">
+  <p class="eyebrow">AI safety research</p>
+  <h1 id="hero-title" data-verify="Hero claim: see note in chat about asserting existence">There <em>exists</em> a path to safe AI.</h1>
+  <p class="lede">We use logic, epistemology, decision theory, and mathematical modeling to understand advanced AI systems as agents, and to search for principled routes to interpretability, alignment, and safety.</p>
+  <p class="who"><b>Aydin Mohseni</b> · Carnegie Mellon University<br><b>Daniel Herrmann</b> · University of North Carolina at Chapel Hill</p>
+</section>
+
+<section class="section" aria-labelledby="h-research">
+  <p class="label" id="h-research">Research</p>
+  <div class="body">
+    <div class="areas">
+      <div class="area"><h3><a href="research.html#agency">Agency</a></h3><p>What does it mean to model an artificial system as an agent?</p></div>
+      <div class="area"><h3><a href="research.html#interpretability">Interpretability</a></h3><p>What evidence warrants attributing beliefs, goals, or representations to advanced AI systems?</p></div>
+      <div class="area"><h3><a href="research.html#value">Value</a></h3><p>How should we think about value uncertainty, preference, and normative learning?</p></div>
+      <div class="area"><h3><a href="research.html#alignment">Alignment</a></h3><p>How can humans safely delegate to increasingly capable systems whose objectives may diverge from their own?</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-projects">
+  <p class="label" id="h-projects">Selected projects</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="projects.html#adaptations">Evolutionary Theory of Advanced AI Adaptations</a></span><span class="d">The pressures that shape the behavioral dispositions of AI systems, starting with power-seeking.</span></div><span class="status active">Active</span></li>
+      <li><div><span class="t"><a href="projects.html#radical-interpretability">Radical AI Interpretability</a></span><span class="d">Conceptual foundations for attributing beliefs and desires to AI.</span></div><span class="status" data-verify="Status">Status</span></li>
+      <li><div><span class="t"><a href="projects.html#principal-agent">AI Alignment as a Principal–Agent Problem</a></span><span class="d">Formal models of delegation, incentives, and misalignment.</span></div><span class="status" data-verify="Status">Status</span></li>
+      <li><div><span class="t"><a href="projects.html#value-learning">Learning the Value of Value Learning</a></span><span class="d">Decision-making under uncertainty about values.</span></div><span class="status">In revision</span></li>
+    </ul>
+    <p class="more"><a href="projects.html">All projects</a></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-problems">
+  <p class="label" id="h-problems">Open problems</p>
+  <div class="body">
+    <ol class="problems">
+      <li>When is agency attribution to AI justified?</li>
+      <li>Can latent beliefs and values be measured reliably?</li>
+      <li>What formal conditions make alignment stable?</li>
+      <li>How should safety reasoning proceed under deep uncertainty?</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="h-people">
+  <p class="label" id="h-people">People</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="people.html#mohseni">Aydin Mohseni</a></span><span class="d">Assistant Professor of Philosophy, Carnegie Mellon University</span></div><span></span></li>
+      <li><div><span class="t"><a href="people.html#herrmann">Daniel Herrmann</a></span><span class="d" data-verify="Daniel's title">University of North Carolina at Chapel Hill</span></div><span></span></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="mono">∃xP</span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website" data-verify="Repository is private until launch; this link works for visitors only once it is public">GitHub</a>
+    <a href="about.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>
