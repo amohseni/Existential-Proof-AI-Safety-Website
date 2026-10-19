@@ -26,7 +26,7 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
 
 
 - **Header and footer** are repeated in every page. A change to the navigation must be made in all seven files.
-- **Add a publication:** copy one `<li class="work">` block in `publications.html`. List the authors in the order they appear on the paper, book, or report itself, in the author line, the BibTeX, and the project meta line alike; check the source (arXiv, the journal, or the manuscript) instead of reordering by role or alphabet. Set `data-type` to `paper`, `working`, or `report`. Talks do not go on this page. Two statuses only: `<span class="status active">In progress</span>` (anything not yet published, including manuscripts, papers under review, and revisions) and `<span class="status out">Published</span>` (including preprints). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
+- **Add a publication:** copy one `<li class="work">` block in `publications.html`. List the authors in the order they appear on the paper, book, or report itself, in the author line, the BibTeX, and the project meta line alike; check the source (arXiv, the journal, or the manuscript) instead of reordering by role or alphabet. Set `data-type` to `paper`, `working`, or `report`. Talks and workshops go in the separate Talks and Workshops sections below the list (`<li class="work talk">`, no status, no Cite). Two statuses only: `<span class="status active">In progress</span>` (anything not yet published, including manuscripts, papers under review, and revisions) and `<span class="status out">Published</span>` (including preprints). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
 - **Add a project:** copy one `<article class="block">` in `projects.html`. Give it an `id`, an `h2`, a `p.meta-line` with linked names, a one- or two-sentence `p.summary`, and optionally a `<details class="expand"><summary>More</summary><div class="expand-body">…</div></details>` for the longer explanation. Do not add status labels.
 - **Link a name:** link every person's name to their main personal website every time it appears: people cards, author lines, project meta lines, the home page, and the contact list. Citations inside margin notes and BibTeX blocks stay plain. Look up the website of anyone newly added. Known URLs:
 
@@ -40,11 +40,14 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Benjamin A. Levinstein | https://www.levinstein.org/ |
   | Gerard Rothfus | https://gerardrothfus.com/ |
   | Pietro Cibinel | https://pietrocibinel.com/ |
+  | Simon DeDeo | https://www.cmu.edu/dietrich/sds/people/faculty/simon-dedeo.html |
+  | Travis LaCroix | https://durham.ac.uk/staff/travis-lacroix |
+  | Dorian Clay | https://www.cmu.edu/dietrich/philosophy/people/masters/dorian-clay.html |
   | Sree Sharvesh | https://www.sreesharvesh.com/ |
   | Abinav Chari | https://www.linkedin.com/in/abinav-chari1 (as on Daniel's site) |
   | Isabelle Qian | https://www.linkedin.com/in/isabelle-athena-qian (as on Daniel's site) |
 
-  Names with no confirmed URL stay unlinked: Jens Jäger, Haotian Zong, Yosra Kazemi, Yang Hu.
+  Names with no confirmed URL stay unlinked: Jeremy Saal, L. G. Demo, Jens Jäger, Haotian Zong, Yosra Kazemi, Yang Hu.
 - **Add a margin note:** inside a paragraph, add
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.

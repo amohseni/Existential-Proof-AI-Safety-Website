@@ -33,8 +33,8 @@
   <h1 id="p-title">Projects</h1>
 </section>
 
-<section class="section" aria-label="Project list">
-  <p class="label" aria-hidden="true"></p>
+<section class="section" id="area-agency">
+  <p class="label">Agency</p>
   <div class="body">
 
     <article class="block" id="adaptations">
@@ -68,25 +68,50 @@
         </div>
       </details>
     </article>
-    <article class="block" id="agential-representations">
-      <h2>The Robustness of Agential Representations</h2>
-      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Jens Jäger and Haotian Zong</p>
-      <p class="summary">When a language model’s choices are interpreted as expected-utility maximization, how coherent are the credences and utilities attributed to it, and how robust is that attribution?</p>
+    <article class="block" id="naturalizing-agency">
+      <h2>Naturalizing Agency</h2>
+      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>, <a href="https://aydinmohseni.com/">Aydin Mohseni</a>, <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a>, <a href="https://brucemrushing.com/">Bruce Rushing</a>, and <a href="https://gerardrothfus.com/">Gerard Rothfus</a></p>
+      <p class="summary">Claims about AI risk use the vocabulary of agency: a system seeks power, plans around its overseers, controls its environment. We show how such notions, starting with chance, causation, and control, can be recovered from an agent’s own beliefs and desires, so that claims made in this vocabulary become claims interpretability can test.</p>
       <details class="expand">
         <summary>More</summary>
         <div class="expand-body">
-      <p>The project tests the attribution in four ways: whether it predicts the model’s choices in and out of sample; whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts; whether it agrees with credences and utilities decoded by probes; and whether it is stable under rephrasings that preserve meaning.</p>
+      <p class="question">Can the notions we use to describe agents be recovered from the agent’s own beliefs and desires?</p>
+      <p>De Finetti showed that an agent who treats a sequence of trials as exchangeable behaves as if she were learning an unknown chance, so chance can be recovered from credence. Skyrms extended the program, treating chance as resilient credence.<label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle"><span class="sidenote">B. de Finetti, “La prévision: ses lois logiques, ses sources subjectives,” <i>Annales de l’Institut Henri Poincaré</i> 7 (1937); B. Skyrms, <i>Causal Necessity</i>, Yale University Press, 1980.</span> We take the same approach to causation, counterfactuals, and an agent’s sense of what is under her control. Each looks like a fact about the world that an agent must track. The aim is to show that each can be recovered from her attitudes once she represents herself as part of the world she is trying to predict and change.</p>
+      <figure aria-labelledby="fig-nat-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col">Notion</th><th scope="col">Recovered from</th><th scope="col">Work</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Chance</th><td>exchangeable credence</td><td>de Finetti; Skyrms</td></tr>
+              <tr><th scope="row">Causation</th><td>conditioning on naturalized intervention variables</td><td><a href="publications.html#causation">A Bayesian Reduction of Causation</a></td></tr>
+              <tr><th scope="row">Counterfactuals</th><td>in progress</td><td>current work</td></tr>
+              <tr><th scope="row">Control</th><td>the propositions an agent’s attitudes treat as hers to decide</td><td><a href="https://escholarship.org/uc/item/7x9890zn">Naturalizing Decision Theory</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig-nat-cap"><span class="label">Table 2</span>From chance to agency.</figcaption>
+      </figure>
+      <h3>Current work: causation and control</h3>
+      <p>Results on Pearl’s causal hierarchy seem to show that causal claims cannot be reduced to probabilistic ones.<label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle"><span class="sidenote">J. Pearl, <i>Causality</i>, Cambridge University Press, 2000; E. Bareinboim, J. D. Correa, D. Ibeling, and T. Icard, “On Pearl’s Hierarchy and the Foundations of Causal Inference,” 2022.</span> The irreducibility comes from an impoverished set of variables. Add variables for interventions, treated as events in the world, and interventional claims become conditional probabilities:</p>
+      <p class="scheme"><var>P</var>(<var>Y</var> = <var>y</var> | do(<var>X</var> = <var>x</var>)) = <var>P</var>(<var>Y</var> = <var>y</var> | <var>X</var> = <var>x</var>, <var>I<sub>X</sub></var> = on).</p>
+      <p>For control, desirability tracking reads off, from an agent’s beliefs and desires, the propositions she takes herself to control and the decision problems she takes herself to face.</p>
+      <h3>Why it matters for safety</h3>
+      <p>Power-seeking is the pursuit of options an agent takes to be within its control. Planning around an overseer needs a world model that supports reasoning about interventions. Both claims presuppose an account of what a system treats as a cause and as within its power. If those can be read off its beliefs and desires, then the worry that a system seeks power or plans around its overseers becomes a claim about its attitudes, which the methods of <a href="#radical-interpretability">Radical AI Interpretability</a> can test. The <a href="#adaptations">adaptations project</a> needs exactly this account of control.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a><a href="publications.html#act-probabilities">Subjective Naturalism &amp; Act Probabilities</a><a href="publications.html#deference">Deference and Decision</a><a href="publications.html#dissertation">Naturalizing Decision Theory</a></p>
         </div>
       </details>
     </article>
-    <article class="block" id="bayes-optimal-research">
-      <h2>Bayes-Optimal Research Protocols for Automated AI Safety Research</h2>
-      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Yosra Kazemi and Yang Hu</p>
-      <p class="summary">Bayes-optimal allocation of compute across research directions in AI theorem proving, with results verified in Lean.</p>
-    </article>
+
+  </div>
+</section>
+
+<section class="section" id="area-interpretability">
+  <p class="label">Interpretability</p>
+  <div class="body">
+
     <article class="block" id="radical-interpretability">
       <h2>Radical AI Interpretability</h2>
-      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel A. Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a></p>
+      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a></p>
       <p class="summary">How can we tell what an AI system believes and wants from facts about its computation? The book joins philosophical radical interpretation with mechanistic interpretability.</p>
       <details class="expand">
         <summary>More</summary>
@@ -109,21 +134,62 @@
             </tbody>
           </table>
         </div>
-        <figcaption id="fig-rai-cap"><span class="label">Table 2</span>Four conditions for a representation in a language model to count as belief-like.</figcaption>
+        <figcaption id="fig-rai-cap"><span class="label">Table 3</span>Four conditions for a representation in a language model to count as belief-like.</figcaption>
       </figure>
       <p class="related"><span class="label">Outputs</span><a href="publications.html#radical">Radical AI Interpretability</a><a href="publications.html#standards">Standards for Belief Representations in LLMs</a><a href="publications.html#lie-detector">Still No Lie Detector for Language Models</a></p>
     
         </div>
       </details>
     </article>
+    <article class="block" id="transformer-representations">
+      <h2>Belief and Value Representations in Transformers</h2>
+      <p class="meta-line">Jeremy Saal and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>, with Simplex</p>
+      <p class="summary">A transformer trained to choose under uncertainty develops separate, causally organized representations of its posterior beliefs and of the value of its options, though the task requires neither.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p class="question">Do trained systems develop something like beliefs and desires, and can we check?</p>
+      <p>The setting is a model organism for the framework of <a href="#radical-interpretability">Radical AI Interpretability</a>. In a synthetic decision task the true posterior over hidden states and the value of each option can be computed exactly, so an attribution of beliefs and values can be checked against ground truth. A small transformer trained on choices alone develops separable linear representations of both. Steering the posterior changes choice by acting on the subspace that encodes the options’ values, as a Jeffrey–Bolker reading predicts: when belief changes, the represented values change as expected desirability requires. A pretrained language model, Qwen3-1.7B-Base, shows the same organization.</p>
+      <p>The work is a test case for the claim that belief–desire attributions to trained systems can be measured, not only posited. A paper is under review.</p>
+        </div>
+      </details>
+    </article>
+    <article class="block" id="agential-representations">
+      <h2>The Robustness of Agential Representations</h2>
+      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Jens Jäger and Haotian Zong</p>
+      <p class="summary">When a language model’s choices are interpreted as expected-utility maximization, how coherent are the credences and utilities attributed to it, and how robust is that attribution?</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p>The project tests the attribution in four ways: whether it predicts the model’s choices in and out of sample; whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts; whether it agrees with credences and utilities decoded by probes; and whether it is stable under rephrasings that preserve meaning.</p>
+        </div>
+      </details>
+    </article>
+
+  </div>
+</section>
+
+<section class="section" id="area-value">
+  <p class="label">Value</p>
+  <div class="body">
+
     <article class="block" id="value-learning">
       <h2>Learning the Value of Value Learning</h2>
       <p class="meta-line"><a href="https://www.cmu.edu/dietrich/philosophy/people/faculty/london.html">Alex J. London</a> and <a href="https://aydinmohseni.com/">Aydin Mohseni</a></p>
-      <p class="summary">Decision-making under uncertainty about values.</p>
+      <p class="summary">Decision theory handles uncertainty about facts but treats values as fixed. This project extends the Jeffrey–Bolker framework to the refinement of values, and proves that refining one’s values has value in the way gathering information does.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p class="question">Can rational choice theory model an agent who learns about her own values?</p>
+      <p>Standard frameworks let an agent learn about the world while her options and values stay fixed. We extend the Jeffrey–Bolker framework so that values themselves can be refined, and prove a value-of-information theorem for this axiological refinement. Between agents, mutual refinement tends to turn zero-sum games into positive-sum ones, and can yield Pareto improvements in Nash bargaining.</p>
+      <p>For AI, the result bears on systems meant to learn what their principals value. It gives a decision-theoretic account of why such learning is worth doing, and of why two parties who refine their values together can both come out ahead.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#value-learning">Learning the Value of Value Learning</a></p>
+        </div>
+      </details>
     </article>
     <article class="block" id="preference-uncertainty">
       <h2>Intrapersonal Comparisons under Preference Uncertainty</h2>
-      <p class="meta-line"><a href="https://pietrocibinel.com/">Pietro Cibinel</a> and <a href="https://www.danielherrmann.ca/">Daniel A. Herrmann</a></p>
+      <p class="meta-line"><a href="https://pietrocibinel.com/">Pietro Cibinel</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a></p>
       <p class="summary">How should someone act on behalf of a person whose preferences she does not know? The problem of interpersonal comparisons arises even when only one person is at stake.</p>
       <details class="expand">
         <summary>More</summary>
@@ -138,9 +204,17 @@
         </div>
       </details>
     </article>
-    <article class="block" id="principal-agent">
-      <h2>AI Alignment as a Principal–Agent Problem</h2>
-      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel A. Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a></p>
+
+  </div>
+</section>
+
+<section class="section" id="area-alignment">
+  <p class="label">Alignment</p>
+  <div class="body">
+
+    <article class="block" id="alignment-sufficiency">
+      <h2>Alignment Sufficiency</h2>
+      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a></p>
       <p class="summary">When is imperfect alignment good enough to delegate a decision to an AI system? There is a margin of misalignment within which delegating pays.</p>
       <details class="expand">
         <summary>More</summary>
@@ -162,44 +236,25 @@
             </tbody>
           </table>
         </div>
-        <figcaption id="fig-pa-cap"><span class="label">Table 3</span>Two standards for delegating to a system whose values may differ from ours.</figcaption>
+        <figcaption id="fig-pa-cap"><span class="label">Table 4</span>Two standards for delegating to a system whose values may differ from ours.</figcaption>
       </figure>
       <p class="related"><span class="label">Outputs</span><a href="publications.html#managing-misalignment">A Decision-Theoretic Approach for Managing Misalignment</a><a href="publications.html#margins">Margins of Misalignment</a></p>
     
         </div>
       </details>
     </article>
-    <article class="block" id="naturalizing-agency">
-      <h2>Naturalizing Agency</h2>
-      <p class="meta-line"><a href="https://www.danielherrmann.ca/">Daniel A. Herrmann</a>, <a href="https://aydinmohseni.com/">Aydin Mohseni</a>, <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a>, <a href="https://brucemrushing.com/">Bruce Rushing</a>, and <a href="https://gerardrothfus.com/">Gerard Rothfus</a></p>
-      <p class="summary">Notions that look metaphysically loaded, such as chance, causation, counterfactuals, and control, can be recovered from an agent’s own beliefs and desires. We carry this program to the concepts AI safety uses when it treats a system as an agent.</p>
-      <details class="expand">
-        <summary>More</summary>
-        <div class="expand-body">
-      <p class="question">Can the notions we use to describe agents be recovered from the agent’s own beliefs and desires?</p>
-      <p>De Finetti showed that an agent who treats a sequence of trials as exchangeable behaves as if she were learning an unknown chance, so chance can be recovered from credence. Skyrms extended the program, treating chance as resilient credence.<label for="sn-9" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-9" class="margin-toggle"><span class="sidenote">B. de Finetti, “La prévision: ses lois logiques, ses sources subjectives,” <i>Annales de l’Institut Henri Poincaré</i> 7 (1937); B. Skyrms, <i>Causal Necessity</i>, Yale University Press, 1980.</span> We take the same approach to causation, counterfactuals, and an agent’s sense of what is under her control. Each looks like a fact about the world that an agent must track. The aim is to show that each can be recovered from her attitudes once she represents herself as part of the world she is trying to predict and change.</p>
-      <figure aria-labelledby="fig-nat-cap">
-        <div class="table-wrap">
-          <table class="compare">
-            <thead><tr><th scope="col">Notion</th><th scope="col">Recovered from</th><th scope="col">Work</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">Chance</th><td>exchangeable credence</td><td>de Finetti; Skyrms</td></tr>
-              <tr><th scope="row">Causation</th><td>conditioning on naturalized intervention variables</td><td><a href="publications.html#causation">A Bayesian Reduction of Causation</a></td></tr>
-              <tr><th scope="row">Counterfactuals</th><td>in progress</td><td>current work</td></tr>
-              <tr><th scope="row">Control</th><td>the propositions an agent’s attitudes treat as hers to decide</td><td><a href="https://escholarship.org/uc/item/7x9890zn">Naturalizing Decision Theory</a></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <figcaption id="fig-nat-cap"><span class="label">Table 4</span>From chance to agency.</figcaption>
-      </figure>
-      <h3>Current work: causation and control</h3>
-      <p>Results on Pearl’s causal hierarchy seem to show that causal claims cannot be reduced to probabilistic ones.<label for="sn-10" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-10" class="margin-toggle"><span class="sidenote">J. Pearl, <i>Causality</i>, Cambridge University Press, 2000; E. Bareinboim, J. D. Correa, D. Ibeling, and T. Icard, “On Pearl’s Hierarchy and the Foundations of Causal Inference,” 2022.</span> The irreducibility comes from an impoverished set of variables. Add variables for interventions, treated as events in the world, and interventional claims become conditional probabilities:</p>
-      <p class="scheme"><var>P</var>(<var>Y</var> = <var>y</var> | do(<var>X</var> = <var>x</var>)) = <var>P</var>(<var>Y</var> = <var>y</var> | <var>X</var> = <var>x</var>, <var>I<sub>X</sub></var> = on).</p>
-      <p>For control, desirability tracking reads off, from an agent’s beliefs and desires, the propositions she takes herself to control and the decision problems she takes herself to face. Applied to a trained system, these results say what it would take for the system to treat something as a cause, or as within its power.</p>
-      <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a><a href="publications.html#act-probabilities">Subjective Naturalism &amp; Act Probabilities</a><a href="publications.html#deference">Deference and Decision</a><a href="publications.html#dissertation">Naturalizing Decision Theory</a></p>
-        </div>
-      </details>
+    <article class="block" id="principal-agent">
+      <h2>AI Alignment as a Principal–Agent Problem</h2>
+      <p class="meta-line"><a href="https://aydinmohseni.com/">Aydin Mohseni</a> and L. G. Demo</p>
+      <p class="summary">Formal models of delegation, incentives, and misalignment.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#principal-agent-paper">AI Alignment as a Principal–Agent Problem</a></p>
     </article>
+    <article class="block" id="bayes-optimal-research">
+      <h2>Bayes-Optimal Research Protocols for Automated AI Safety Research</h2>
+      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Yosra Kazemi and Yang Hu</p>
+      <p class="summary">Bayes-optimal allocation of compute across research directions in AI theorem proving, with results verified in Lean.</p>
+    </article>
+
   </div>
 </section>
 </main>

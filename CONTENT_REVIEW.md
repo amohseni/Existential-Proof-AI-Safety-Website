@@ -18,7 +18,6 @@ The site states only what Aydin said, what the site plan (`docs/PLAN.md`) says, 
 | Projects, Publications | A Bayesian Reduction of Causation | Author order (set alphabetically), year, status, one-line summary. |
 | Publications | Year for Learning the Value of Value Learning | Year to show. |
 | People | Website, Google Scholar, and CV links for both | URLs. |
-| People | Collaborator list (Sven Neth, Alex J. London, Benjamin A. Levinstein, Bruce Rushing) | Who to list, with affiliations. |
 
 The removed text is preserved in the repository history (commit `d361d15` and earlier).
 

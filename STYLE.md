@@ -78,7 +78,7 @@ Headings are plain and descriptive. Section labels are one or two words in small
 - One term per concept, used consistently across pages.
 - Link each person's name to their main personal website wherever it appears. Leave it unlinked if no URL is confirmed.
 - Projects carry no status labels. Each has a one- or two-sentence summary; longer text goes inside its "More" toggle.
-- Publications lists papers, working papers, and reports. Talks are not listed.
+- Publications lists books, papers, working papers, and reports. Talks and workshops go in their own sections below the list, not in it.
 
 ## 6. Layout check
 
