@@ -1,43 +1,33 @@
 # Content review
 
-Every claim below is marked `data-verify` in the HTML. Open any page with `#review` at the end of the URL to see each one highlighted. When a claim is confirmed or corrected, edit the text and delete its `data-verify="..."` attribute.
+The site states only what Aydin said, what the site plan (`docs/PLAN.md`) says, or what is verified. On 18 October 2026, before launch, every unconfirmed claim was removed. The items below were taken out and can go back in once confirmed. Review mode still works: mark any new unconfirmed text with `data-verify="question"` and open a page with `#review` to see it highlighted.
 
-## From Aydin or the site plan (no mark)
+## Removed before launch
 
-- Name, wordmark, monogram, palette, and the background search (`docs/PLAN.md`).
-- Hero paragraph, research-area questions, project one-line summaries, open problems, people bios, and the About mission statement (`docs/PLAN.md`, with the hero's em dash removed).
-- Aydin's title and memberships; Daniel Herrmann, Assistant Professor of Philosophy, UNC Chapel Hill, danher@unc.edu.
-- Name ∃xProof AI, pronounced ExProof AI.
-- The evolutionary-adaptations project: members, aim, six-part schema, behavior patterns, power-seeking focus, the two interpretations.
-- "Learning the Value of Value Learning": with Alex J. London, in revision.
-
-## To confirm
-
-| Page | Claim | Question |
+| Page | Removed | To restore, confirm |
 |---|---|---|
-| Home | "We are searching for a path to safe AI." | Claude picked option 1 of 12; swap if you prefer another. |
-| Home, Projects | Status of Radical AI Interpretability and the principal–agent project | Status? |
-| Research | Why-it-matters text for Interpretability, Value, Alignment, Methods | Drafted by Claude. Only Agency's is from the plan. |
-| Research | Project-to-area mapping | Drafted by Claude. |
-| Research, About | Methods list | Does it describe the lab? |
-| Projects | "shows which versions of a claim are theorems, which are empirical conjectures, and which are not yet well defined" | Claude's description of the schema. |
-| Projects | Radical AI Interpretability: authors, status, why it matters | Daniel and who else? |
-| Projects | Principal–agent project: collaborators, status, why it matters | Aydin alone? |
-| Projects | Value learning: why it matters | Drafted by Claude. |
-| Projects | Bayesian Reduction of Causation: include it, summary | Summary drafted by Claude. |
-| Publications | Epistemic reading paper: authors | Mohseni and Herrmann, or with Sven Neth? |
-| Publications | Causation paper: year, status, author order | Author order guessed alphabetical. |
-| Publications | Radical AI Interpretability: authors, year, venue, type | |
-| Publications | September 2026 workshop talk | Title, date, and whether it belongs on the list. |
-| People | Website, Google Scholar, CV links | URLs to add for both. |
-| People | Collaborator list | Who to list, with affiliations? |
-| About | Why formal foundations matter | Drafted by Claude. |
-| About | Who the lab wants to hear from | Confirm. |
-| Footer | GitHub link | Works for visitors only once the repository is public. |
+| Home, Projects | Status of Radical AI Interpretability and the principal–agent project | Each project's status. |
+| Research | "Why it matters" text for Interpretability, Value, Alignment, Methods | Approve or rewrite; only Agency's text came from the plan. |
+| Research | Links from each area to related projects | Which projects belong under which area. |
+| Research, About | Longer methods list (formal epistemology, Bayesian inference, evolutionary game theory, agent-based modeling) | Whether it describes the group. The site now uses the plan's list. |
+| About | "Why formal foundations matter" paragraph | Approve or rewrite. |
+| About | Who the group wants to hear from | Approve or rewrite. |
+| Projects | Sentence on what the six-part schema shows (theorems, conjectures, ill-defined claims) | Approve. |
+| Projects | "Why it matters" text for Radical AI Interpretability, the principal–agent project, and value learning | Approve or rewrite. |
+| Projects | Collaborators on the principal–agent project | Names. |
+| Projects, Publications | A Bayesian Reduction of Causation | Whether to include; year, status, author order, one-line summary. |
+| Publications | An Epistemic Reading of the Power-Seeking Theorems | Authors (Mohseni and Herrmann? Sven Neth?). |
+| Publications | Radical AI Interpretability | Authors, year, venue, type. |
+| Publications | September 2026 workshop talk on instrumental convergence | Title, date, and whether to list it. |
+| Publications | Year for Learning the Value of Value Learning | Year to show. |
+| People | Website, Google Scholar, and CV links for both | URLs. |
+| People | Collaborator list (Sven Neth, Alex J. London, Benjamin A. Levinstein, Bruce Rushing) | Who to list, with affiliations. |
+
+The removed text is preserved in the repository history (commit `d361d15` and earlier).
 
 ## Not on the site yet
 
 - Daniel's FORMAL proposal (Foundations of Robust Machine Alignment), once its status can be stated publicly.
-- The research-protocols line (optimal research protocols for debate and scalable oversight), if it is a lab project.
-- The Measuring Agency project (SPAR), if it is a lab project.
+- The research-protocols line (optimal research protocols for debate and scalable oversight), if it is a group project.
+- The Measuring Agency project (SPAR), if it is a group project.
 - Notes: add the page with the first two notes.
