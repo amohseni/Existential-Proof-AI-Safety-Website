@@ -18,13 +18,13 @@ The full plan is in `docs/PLAN.md`. This file records how the build follows the 
 
 1. **Plain HTML instead of Astro.** Six pages with about a dozen entries do not need a build toolchain. Plain HTML deploys on GitHub Pages with no Actions workflow, previews anywhere, and can be edited with a text editor. Moving to Astro is worth it once Notes has regular posts; the page structure carries over unchanged.
 2. **No Notes page yet.** An empty or thin Notes page signals an inactive lab. Add it to the navigation with the first two notes.
-3. **A research overview, and a page per program.** `research.html` is a map: for each of the four areas, its question, why it matters, its programs with one line each, and its key questions. Each program has its own page with Overview, Current work, Outputs, and links to the other programs. A program is a line of work, not a paper; it carries a "Led by" line naming core members only, and collaborators appear with the outputs they wrote. The former Projects page redirects old anchors to the program pages.
+3. **A research overview, and a page per program.** `research.html` is a map: for each of the four areas, its question, why it matters, its programs with one line each, and its key questions. Each program has its own page with Overview, Current work, Outputs, and links to the other programs. A program is a line of work, not a paper; it carries a "Led by" line naming the directors only, and collaborators appear with the outputs they wrote. The former Projects page redirects old anchors to the program pages.
 4. **Links are plain white text that turns red on hover.** No underline at rest (changed 18 October 2026 at Daniel's request). Blood red text on black has a contrast ratio near 2.9:1, below the 4.5:1 needed for small text, so red appears only on hover, in marks, for the current page, and in large accent text.
 5. **Added the evolutionary-adaptations project**, which the plan's project list omits. It is the project with Daniel and Sven Neth. Its six-part scheme is set as text, and it carries the site's one table.
 6. **Layout rules are enforced.** `STYLE.md` defines the zones and section types; `tools/check_layout.py` fails on any protrusion into the margin column, sideways scrolling, overlapping notes, or clipped text.
 
 7. **Names link to personal websites.** Links are written directly in the HTML, and the GitHub repository is the only source of the site. The list of known URLs is in `README.md` under "Link a name"; names without a confirmed URL stay unlinked. Aydin's only listed affiliation besides CMU is CoRe Safe AI.
-8. **People are grouped.** The current entries are "Core members"; graduate students and team members will get their own groups.
+8. **People are grouped.** The groups are Directors (Aydin Mohseni and Daniel Herrmann), Students and mentees, and Collaborators.
 
 ## Hero
 
