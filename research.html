@@ -23,7 +23,7 @@
     <a href="publications.html">Publications</a>
     <a href="people.html">People</a>
     <a href="about.html">About</a>
-    <a href="join.html">Join</a>
+    <a href="work-with-us.html">Work with us</a>
   </nav>
 </header>
 
@@ -31,79 +31,47 @@
 <section class="hero page-head" aria-labelledby="r-title">
   <p class="eyebrow">Research</p>
   <h1 id="r-title">Research areas and programs</h1>
-  <p class="lede">Four areas, the programs that work on each, and the questions that drive them. Each program has its own page.</p>
-  <p class="who"><a href="#agency">Agency</a> · <a href="#interpretability">Interpretability</a> · <a href="#value">Value</a> · <a href="#alignment">Alignment</a></p>
 </section>
 
-<section class="section" id="agency">
-  <p class="label">Agency</p>
+<section class="section section--wide" aria-label="Research areas">
+  <p class="label">Areas</p>
   <div class="body">
-    <p class="question">How should we model artificial systems as agents with beliefs, preferences, and decision procedures?</p>
-    <p class="why"><span class="label">Why it matters</span>Much of AI safety depends on whether and when advanced systems can be meaningfully understood in agentic terms.</p>
-    <h3>Programs</h3>
-    <ul class="featured">
-        <li id="adaptations"><div><span class="t"><a href="adaptations.html">Evolutionary Theory of Advanced AI Adaptations</a></span><span class="d">The pressures that shape the behavioral dispositions of advanced AI systems, starting with power-seeking.</span></div></li>
-        <li id="naturalizing-agency"><div><span class="t"><a href="naturalizing-agency.html">Naturalizing Agency</a></span><span class="d">Recovering causation and control from an agent’s own beliefs and desires.</span></div></li>
-    </ul>
-    <h3>Key questions</h3>
-    <ol class="problems">
-        <li>When does a decision theory describe a trained system well enough to predict how its behavior generalizes?</li>
-        <li>Can models that are causally isolated from one another still coordinate?</li>
-        <li>What is a world model, and what does a causal model do for the agent that has one?</li>
-      </ol>
-  </div>
-</section>
-
-<section class="section" id="interpretability">
-  <p class="label">Interpretability</p>
-  <div class="body">
-    <p class="question">What evidence warrants attributing beliefs, goals, or representations to advanced AI systems?</p>
-    <p class="why"><span class="label">Why it matters</span>Deployment decisions will rest on what probes and evaluations report. A probe that tracks a correlate of truth, and not a belief, fails silently, and a silent failure that feeds a deployment decision is worse than no measurement.</p>
-    <h3>Programs</h3>
-    <ul class="featured">
-        <li id="measuring-attitudes"><div><span class="t"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a></span><span class="d">When an AI system has beliefs and goals, and how we could measure them.</span></div></li>
-    </ul>
-    <h3>Key questions</h3>
-    <ol class="problems">
-        <li>What would make a probe for deception or situational awareness a measurement of it?</li>
-        <li>What does an evaluation show when the system can tell that it is being evaluated?</li>
-        <li>Probes are validated against behavior and then used to check behavioral evaluations. Where does that regress stop?</li>
-      </ol>
-  </div>
-</section>
-
-<section class="section" id="value">
-  <p class="label">Value</p>
-  <div class="body">
-    <p class="question">How should we think about value uncertainty, preference, and normative learning?</p>
-    <p class="why"><span class="label">Why it matters</span>Training pipelines already settle whose feedback counts and how conflicts are resolved, usually without stating these as choices.</p>
-    <h3>Programs</h3>
-    <ul class="featured">
-        <li id="value-uncertainty"><div><span class="t"><a href="value-uncertainty.html">Decision under Value Uncertainty</a></span><span class="d">Choosing when one’s own values, or those of the person one acts for, are uncertain.</span></div></li>
-    </ul>
-    <h3>Key questions</h3>
-    <ol class="problems">
-        <li>Which aggregation rules do current training pipelines assume, and how should they be compared?</li>
-        <li>How should a system act for one person who is uncertain about her own preferences, when expected preference is not well defined?</li>
-      </ol>
-  </div>
-</section>
-
-<section class="section" id="alignment">
-  <p class="label">Alignment</p>
-  <div class="body">
-    <p class="question">How can humans safely delegate to increasingly capable systems whose objectives may diverge from their own?</p>
-    <p class="why"><span class="label">Why it matters</span>Perfect alignment is unlikely, so the practical question is when imperfect alignment is good enough. A safety case for deployment needs a way to say how much alignment a given role requires.</p>
-    <h3>Programs</h3>
-    <ul class="featured">
-        <li id="delegation"><div><span class="t"><a href="delegation.html">AI Alignment and Delegation</a></span><span class="d">When imperfect alignment is good enough to delegate a decision to an AI system.</span></div></li>
-    </ul>
-    <h3>Key questions</h3>
-    <ol class="problems">
-        <li>How reliable must the measurement of a trait be for a given deployment decision?</li>
-        <li>What is it for an agent to allow itself to be changed, as opposed to merely being changeable?</li>
-        <li>Can a system share our values while reasoning by a different decision theory?</li>
-      </ol>
+    <div class="areas areas--map">
+      <div class="area" id="agency">
+        <h2>Agency</h2>
+        <p class="area-q">How should we model artificial systems as agents with beliefs, preferences, and decision procedures?</p>
+        <p class="area-why">Much of AI safety depends on whether and when advanced systems can be meaningfully understood in agentic terms.</p>
+        <ul class="area-programs">
+          <li id="adaptations"><a href="adaptations.html">Evolutionary Theory of Advanced AI Adaptations</a><span>The pressures that shape the behavioral dispositions of advanced AI systems, starting with power-seeking.</span></li>
+          <li id="naturalizing-agency"><a href="naturalizing-agency.html">Naturalizing Agency</a><span>Recovering causation and control from an agent’s own beliefs and desires.</span></li>
+        </ul>
+      </div>
+      <div class="area" id="interpretability">
+        <h2>Interpretability</h2>
+        <p class="area-q">What evidence warrants attributing beliefs, goals, or representations to advanced AI systems?</p>
+        <p class="area-why">Deployment decisions will rest on what probes and evaluations report. A probe that tracks a correlate of truth, and not a belief, fails silently, and a silent failure that feeds a deployment decision is worse than no measurement.</p>
+        <ul class="area-programs">
+          <li id="measuring-attitudes"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a><span>When an AI system has beliefs and goals, and how we could measure them.</span></li>
+        </ul>
+      </div>
+      <div class="area" id="value">
+        <h2>Value</h2>
+        <p class="area-q">How should we think about value uncertainty, preference, and normative learning?</p>
+        <p class="area-why">Training pipelines already settle whose feedback counts and how conflicts are resolved, usually without stating these as choices.</p>
+        <ul class="area-programs">
+          <li id="value-uncertainty"><a href="value-uncertainty.html">Decision under Value Uncertainty</a><span>Choosing when one’s own values, or those of the person one acts for, are uncertain.</span></li>
+        </ul>
+      </div>
+      <div class="area" id="alignment">
+        <h2>Alignment</h2>
+        <p class="area-q">How can humans safely delegate to increasingly capable systems whose objectives may diverge from their own?</p>
+        <p class="area-why">Perfect alignment is unlikely, so the practical question is when imperfect alignment is good enough. A safety case for deployment needs a way to say how much alignment a given role requires.</p>
+        <ul class="area-programs">
+          <li id="delegation"><a href="delegation.html">AI Alignment and Delegation</a><span>When imperfect alignment is good enough to delegate a decision to an AI system.</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="more">Questions we would like help with are on the <a href="work-with-us.html#questions">Work with us</a> page.</p>
   </div>
 </section>
 </main>
@@ -114,7 +82,7 @@
     <a href="people.html">People</a>
     <a href="publications.html">Publications</a>
     <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website">GitHub</a>
-    <a href="join.html#contact">Contact</a>
+    <a href="work-with-us.html#contact">Contact</a>
   </nav>
   <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
   <p>Set in ET Book, EB Garamond, STIX Two Math, and IBM Plex. Updated 18 October 2026.</p>
