@@ -22,10 +22,22 @@ The repository is public and served by GitHub Pages from `main`, folder `/ (root
 
 This repository is the only source of the site. Edit the HTML files here and push; nothing is generated from a local copy, so a change made here is never overwritten by a rebuild.
 
+### Editing at the same time
+
+Both of us push to `main`. To keep edits from colliding:
+
+1. Pull before you start: `git pull --rebase`.
+2. Make one change per commit, with a message that says what changed and on which page.
+3. Push soon after each change. If the push is rejected because the other person pushed first, run `git pull --rebase`, check the result, and push again.
+4. If the rebase stops on a conflict, keep both people's text unless one plainly replaces the other, then `git add` the file and `git rebase --continue`. If unsure, ask the other person before pushing.
+5. The header and footer are repeated in every page, so a navigation change touches every file. Say so before making one, so the other person is not editing pages at the same time.
+
+Small fixes can also be made in the GitHub web editor (open a file, click the pencil, commit to `main`).
+
 Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (with a local server running, as described there) before pushing.
 
 
-- **Header and footer** are repeated in every page. A change to the navigation must be made in all seven pages.
+- **Header and footer** are repeated in every page. A change to the navigation must be made in every page.
 - **Add a publication:** copy one `<li class="work">` block in `publications.html`. List the authors in the order they appear on the paper, book, or report itself, in the author line, the BibTeX, and the project meta line alike; check the source (arXiv, the journal, or the manuscript) instead of reordering by role or alphabet. Set `data-type` to `paper`, `working`, or `report`. The page has four sections in this order: Published (newest first, preprints included), In progress (manuscripts, papers under review, revisions), Talks, Workshops. Put an entry in the right section; entries carry no status label. Update the counts in the line under the page title. Link every version that exists: the journal or proceedings version and the open archive version (arXiv, PhilPapers, a free-to-read link). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
 - **Add a program:** a program is a line of work that outlasts any one paper; a single paper goes on Publications and in a program's Outputs. Each program has its own page (copy an existing one): a hero with the area in the eyebrow, the title, a one- or two-sentence summary, and a "Led by" line naming core members only; then Overview, Current work, Outputs (each output with its authors), and More research. List it on `research.html` under its area, with a one-line description, and on the home page. Margin-note ids and table numbers restart on each page. If you rename or merge a program, add its old anchor to the map in `projects.html`.
 - **Link a name:** link every person's name to their main personal website every time it appears: people cards, author lines, project meta lines, the home page, and the contact list. Citations inside margin notes and BibTeX blocks stay plain. Look up the website of anyone newly added. Known URLs:
