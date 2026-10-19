@@ -23,7 +23,9 @@ A section is one type or the other, never both. Nothing reaches into another zon
 
 ### Vertical rhythm and rules
 
-- **No hairlines between text.** Sections, list items, and works have no dividing lines; the tree in the background is the only line work between them. The heavier rules stay: the line under the masthead, the rule above each grid cell, column, or person, and the rules inside tables.
+- **No hairlines between text.** Sections, list items, and works have no dividing lines; the tree in the background is the only line work between them.
+- **No rules between sections.** The only horizontal line on a page is the one under the masthead, at half the strength of `--rule-strong`. Tables keep their internal rules.
+- **Cap lines align.** An imaginary line drawn along the tops of the capitals of a rail label runs along the tops of the capitals of the first line beside it (or the top of a photo), and, on the Publications page, along the year and the title of each entry. The label's offset depends on what the section body starts with (see the `--label-pt` rules in `site.css`). After changing any type size, run `tools/check_alignment.py`.
 - **Closing notes sit midway.** A section ends `--tail` (1.4rem, 1.1rem under 860px) above its lower edge. A closing note (`p.more` as the last element of a section body, such as "All research" or "Back to Agency") sits `--tail` below the element above it and `--tail` above that edge, so it is centered between the two. Any new closing line follows the same rule; do not give it its own margins.
 
 ### Figures, tables, and diagrams
@@ -66,7 +68,7 @@ Headings are plain and descriptive. Section labels are one or two words in small
 | `--bg` | #050505 | Page background. |
 | `--fg` | #f5f5f2 | Primary text. |
 | `--fg-2` | #b8b8b3 | Secondary text, metadata, labels. |
-| `--rule`, `--rule-strong` | #2c2c2a, #6c6c68 | `--rule` only inside tables and the citation box; `--rule-strong` for the rules above grid cells and columns. Never used for text. |
+| `--rule`, `--rule-strong` | #2c2c2a, #6c6c68 | `--rule` only inside tables and the citation box; `--rule-strong` (at half opacity) for the masthead line. Never used for text. |
 | `--red`, `--red-bright` | #b0122b, #d11c3d | The ∃, link hover, the current page, status marks, large accent words. Never small body text, because its contrast on black is too low. |
 | `--green` | #1fa463 | The found path in the background search only. |
 
