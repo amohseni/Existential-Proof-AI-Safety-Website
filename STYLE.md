@@ -62,7 +62,7 @@ Headings are plain and descriptive. Section labels are one or two words in small
 | `--fg` | #f5f5f2 | Primary text. |
 | `--fg-2` | #b8b8b3 | Secondary text, metadata, labels. |
 | `--rule`, `--rule-strong` | #2c2c2a, #6c6c68 | Hairlines. Never used for text. |
-| `--red`, `--red-bright` | #b0122b, #d11c3d | The ∃, link underlines, the current page, hover, status marks, large accent words. Never small body text, because its contrast on black is too low. |
+| `--red`, `--red-bright` | #b0122b, #d11c3d | The ∃, link hover, the current page, status marks, large accent words. Never small body text, because its contrast on black is too low. |
 | `--green` | #1fa463 | The found path in the background search only. |
 
 ## 4. The name
