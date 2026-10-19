@@ -324,6 +324,20 @@ html.review .review-bar {
 .areas--map p.label { font-size: 0.68rem; line-height: 1.4; color: var(--fg-2); }
 @media (max-width: 860px) { .areas--map { grid-template-columns: minmax(0, 1fr); gap: 2rem; } }
 
+/* Paired columns (Work with us): two items side by side, one column on narrow screens. */
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem 2.6rem; align-items: start; }
+.pair .col { border-top: 1px solid var(--rule-strong); padding-top: 0.9rem; min-width: 0; }
+.pair h3 { font-style: normal; font-size: 1.35rem; margin: 0 0 0.6rem; }
+.pair p { font-size: 1.08rem; line-height: 1.45; }
+.pair .plain { list-style: none; padding: 0; margin: 0; max-width: none; }
+.pair .plain li { padding-block: 0.5rem; border-top: 1px solid var(--rule); font-size: 1.04rem; line-height: 1.38; }
+.pair .plain li:first-child { border-top: 0; padding-top: 0; }
+.pair .problems li { font-size: 1rem; line-height: 1.38; padding-block: 0.5rem; grid-template-columns: 2.2rem minmax(0, 1fr); }
+.pair .addr { font-family: var(--sans); font-size: 0.95rem; color: var(--fg-2); user-select: all; margin: 0; }
+.pair + .more { margin-top: 1.6rem; }
+.pair-intro { color: var(--fg-2); }
+@media (max-width: 760px) { .pair { grid-template-columns: minmax(0, 1fr); gap: 1.8rem; } }
+
 @media (max-width: 1100px) { :root { --margin: 12rem; } .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 1.6rem; } }
 @media (max-width: 860px) {
   .page { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
