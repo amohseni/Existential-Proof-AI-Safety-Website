@@ -50,7 +50,6 @@ A section is one type or the other, never both. Nothing reaches into another zon
 |---|---|---|
 | Text and headings | ET Book | Body text, headings, questions, the scheme block. |
 | Labels and metadata | IBM Plex Sans | Navigation, section labels, author lines, statuses, buttons. |
-| Numbers in lists | IBM Plex Mono | Open-problem numbers only. |
 | Wordmark | STIX Two Math (∃) and EB Garamond (xProof AI) | The name only, through the `.brand` markup. |
 
 Headings are plain and descriptive. Section labels are one or two words in small capitals. Italic marks emphasis, titles, terms being defined, and variables in running text.
@@ -77,6 +76,8 @@ Headings are plain and descriptive. Section labels are one or two words in small
 - State only what is true and confirmed. Mark anything unconfirmed with `data-verify="question"` and check it with `#review` before publishing.
 - Plain, direct sentences. No em dashes. No clever turns or slogans.
 - One term per concept, used consistently across pages.
+- Link each person's name to their main personal website wherever it appears. Leave it unlinked if no URL is confirmed.
+- Projects carry no status labels. Each has a one- or two-sentence summary; longer text goes inside its "More" toggle.
 - Publications lists papers, working papers, and reports. Talks are not listed.
 
 ## 6. Layout check

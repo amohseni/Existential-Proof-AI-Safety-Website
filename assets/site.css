@@ -160,6 +160,21 @@ p, ul, ol { max-width: var(--measure); margin: 0 0 1.1rem; }
 
 .block + .block { margin-top: 3rem; padding-top: 2.6rem; border-top: 1px solid var(--rule); }
 .question { font-size: 1.32rem; line-height: 1.35; margin-bottom: 1.2rem; }
+
+/* Project entries: a one- or two-sentence summary, then an optional "More" that opens in place. */
+.summary { font-size: 1.2rem; line-height: 1.45; margin-bottom: 0.9rem; }
+details.expand { margin: 0 0 0.4rem; }
+details.expand > summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;
+  font: 500 0.7rem var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-2);
+  padding-block: 0.3rem;
+}
+details.expand > summary::-webkit-details-marker { display: none; }
+details.expand > summary::before { content: "+"; font-size: 0.95rem; line-height: 1; color: var(--red-bright); width: 0.7rem; }
+details.expand[open] > summary::before { content: "\2212"; }
+details.expand > summary:hover { color: var(--fg); }
+details.expand[open] > summary { color: var(--fg); margin-bottom: 1rem; }
+.expand-body > *:first-child { margin-top: 0; }
 .meta-line { font-family: var(--sans); font-size: 0.74rem; letter-spacing: 0.02em; color: var(--fg-2); margin: -0.4rem 0 1.4rem; }
 .meta-line b { font-weight: 500; color: var(--fg); }
 .why { color: var(--fg-2); }
@@ -176,7 +191,7 @@ p, ul, ol { max-width: var(--measure); margin: 0 0 1.1rem; }
 .area p { font-size: 1rem; line-height: 1.38; color: var(--fg-2); margin: 0; }
 
 .featured { list-style: none; padding: 0; margin: 0; max-width: none; border-top: 1px solid var(--rule-strong); }
-.featured li { display: grid; grid-template-columns: minmax(0, 1fr) 7rem; gap: 1.4rem; padding-block: 1rem; border-bottom: 1px solid var(--rule); align-items: baseline; }
+.featured li { padding-block: 1rem; border-bottom: 1px solid var(--rule); }
 .featured .t { font-size: 1.22rem; line-height: 1.3; display: block; margin-bottom: 0.2rem; }
 .featured .t a { text-decoration: none; }
 .featured .t a:hover { color: var(--red-bright); }
@@ -306,7 +321,6 @@ html.review .review-bar {
   body { font-size: 1.08rem; }
   .masthead { position: static; }
   .areas { grid-template-columns: minmax(0, 1fr); }
-  .featured li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
   .work { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
   .work-meta { flex-direction: row; flex-wrap: wrap; gap: 0.2rem 1rem; align-items: center; }
   .addresses li { grid-template-columns: minmax(0, 1fr); gap: 0; }

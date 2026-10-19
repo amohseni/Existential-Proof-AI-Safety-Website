@@ -25,6 +25,8 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
 
 - **Header and footer** are repeated in every page. A change to the navigation must be made in all seven files.
 - **Add a publication:** copy one `<li class="work">` block in `publications.html`. Set `data-type` to `paper`, `working`, or `report`. Talks do not go on this page. Status classes: `active` (in progress), none (under review or revision), `out` (published). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
+- **Add a project:** copy one `<article class="block">` in `projects.html`. Give it an `id`, an `h2`, a `p.meta-line` with linked names, a one- or two-sentence `p.summary`, and optionally a `<details class="expand"><summary>More</summary><div class="expand-body">…</div></details>` for the longer explanation. Do not add status labels.
+- **Link a name:** link every person's name to their main personal website, on every page where it appears.
 - **Add a margin note:** inside a paragraph, add
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.

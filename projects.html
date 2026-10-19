@@ -30,16 +30,20 @@
 <main data-scrim>
 <section class="hero page-head" aria-labelledby="p-title">
   <p class="eyebrow">Projects</p>
-  <h1 id="p-title">Current projects</h1>
+  <h1 id="p-title">Projects</h1>
 </section>
 
-<section class="section">
-  <p class="label">Active</p>
+<section class="section" aria-label="Project list">
+  <p class="label" aria-hidden="true"></p>
   <div class="body">
 
     <article class="block" id="adaptations">
       <h2>Evolutionary Theory of Advanced AI Adaptations</h2>
-      <p class="meta-line"><span class="status active">Active</span> · <b>Aydin Mohseni</b>, <b>Daniel Herrmann</b>, <b>Sven Neth</b></p>
+      <p class="meta-line"><a href="https://aydinmohseni.com/">Aydin Mohseni</a>, Daniel Herrmann, and <a href="https://www.ocf.berkeley.edu/~nethsven/">Sven Neth</a></p>
+      <p class="summary">A general theory of the pressures that shape the behavioral dispositions of advanced AI systems as they are trained and deployed, and of how those pressures bear on alignment. Current work gives an epistemic interpretation of the power-seeking theorems.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
       <p class="question">Which pressures shape the behavioral dispositions of AI systems as they are trained and deployed, and how do those pressures bear on alignment?</p>
       <p>Claims that capable AI systems will seek power, resist shutdown, or deceive their overseers are usually stated loosely. We treat each such claim of instrumental convergence<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Instrumental convergence:</i> the thesis that agents with very different final goals will pursue similar intermediate goals, such as acquiring resources, because those goals help with almost any final goal.</span> as a claim with six parts:</p>
 
@@ -61,54 +65,42 @@
         </div>
         <figcaption id="fig2-cap"><span class="label">Table 1</span>Two interpretations of the probabilities in the power-seeking theorems.</figcaption>
       </figure>
+        </div>
+      </details>
     </article>
-
-    <article class="block" id="radical-interpretability">
-      <h2>Radical AI Interpretability</h2>
-      <p class="meta-line"><span class="status out">Preprint, 2026</span> · <b>Daniel A. Herrmann</b>, <b>Benjamin A. Levinstein</b></p>
-      <p class="question">Conceptual foundations for attributing beliefs and desires to AI.</p>
-      <p class="related"><span class="label">Outputs</span><a href="https://arxiv.org/abs/2606.26523">Radical AI Interpretability (book, arXiv:2606.26523)</a></p>
-    </article>
-
-    <article class="block" id="causation">
-      <h2>A Bayesian Reduction of Causation</h2>
-      <p class="meta-line"><b>Daniel A. Herrmann</b>, <b>Benjamin A. Levinstein</b>, <b>Aydin Mohseni</b>, <b>Bruce Rushing</b></p>
-      <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a></p>
-    </article>
-
-    <article class="block" id="principal-agent">
-      <h2>AI Alignment as a Principal–Agent Problem</h2>
-            <p class="question">Formal models of delegation, incentives, and misalignment.</p>
-    </article>
-
-    <article class="block" id="value-learning">
-      <h2>Learning the Value of Value Learning</h2>
-      <p class="meta-line"><span class="status">In revision</span> · <b>Aydin Mohseni</b>, <b>Alex J. London</b></p>
-      <p class="question">Decision-making under uncertainty about values.</p>
-      <p class="related"><span class="label">Outputs</span><a href="publications.html#value-learning">Learning the Value of Value Learning</a></p>
-    </article>
-
-
-  </div>
-</section>
-
-<section class="section" id="spar">
-  <p class="label">SPAR</p>
-  <div class="body">
-    <p class="secondary">Two projects run through SPAR (Supervised Program for Alignment Research) in fall 2026, each led by Aydin Mohseni with two team members.</p>
-
     <article class="block" id="agential-representations">
       <h2>The Robustness of Agential Representations</h2>
-      <p class="meta-line"><span class="status active">Active, fall 2026</span> · <b>Aydin Mohseni</b> with <b>Jens Jäger</b> and <b>Haotian Zong</b></p>
-      <p class="question">When a language model's choices are interpreted as expected-utility maximization, how coherent are the credences and utilities attributed to it, and how robust is that attribution?</p>
-      <p>The project tests the attribution in four ways: whether it predicts the model's choices in and out of sample; whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts; whether it agrees with credences and utilities decoded by probes; and whether it is stable under rephrasings that preserve meaning.</p>
+      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Jens Jäger and Haotian Zong</p>
+      <p class="summary">When a language model’s choices are interpreted as expected-utility maximization, how coherent are the credences and utilities attributed to it, and how robust is that attribution?</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p>The project tests the attribution in four ways: whether it predicts the model’s choices in and out of sample; whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts; whether it agrees with credences and utilities decoded by probes; and whether it is stable under rephrasings that preserve meaning.</p>
+        </div>
+      </details>
     </article>
-
     <article class="block" id="bayes-optimal-research">
       <h2>Bayes-Optimal Research Protocols for Automated AI Safety Research</h2>
-      <p class="meta-line"><span class="status active">Active, fall 2026</span> · <b>Aydin Mohseni</b> with <b>Yosra Kazemi</b> and <b>Yang Hu</b></p>
-      <p class="question">How should compute be allocated across research directions when AI systems do the research?</p>
-      <p>The project studies Bayes-optimal allocation of compute across research directions in AI theorem proving, with results verified in Lean.</p>
+      <p class="meta-line">SPAR, fall 2026 · <a href="https://aydinmohseni.com/">Aydin Mohseni</a> with Yosra Kazemi and Yang Hu</p>
+      <p class="summary">Bayes-optimal allocation of compute across research directions in AI theorem proving, with results verified in Lean.</p>
+    </article>
+    <article class="block" id="radical-interpretability">
+      <h2>Radical AI Interpretability</h2>
+      <p class="meta-line">Daniel A. Herrmann and <a href="https://philpeople.org/profiles/ben-levinstein">Benjamin A. Levinstein</a></p>
+      <p class="summary">A framework for interpreting AI systems as agents, combining philosophical radical interpretation with the tools of mechanistic interpretability. The book is available on <a href="https://arxiv.org/abs/2606.26523">arXiv</a>.</p>
+    </article>
+    <article class="block" id="value-learning">
+      <h2>Learning the Value of Value Learning</h2>
+      <p class="meta-line"><a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.cmu.edu/dietrich/philosophy/people/faculty/london.html">Alex J. London</a></p>
+      <p class="summary">Decision-making under uncertainty about values.</p>
+    </article>
+    <article class="block" id="principal-agent">
+      <h2>AI Alignment as a Principal–Agent Problem</h2>
+      <p class="summary">Formal models of delegation, incentives, and misalignment.</p>
+    </article>
+    <article class="block" id="causation">
+      <h2>A Bayesian Reduction of Causation</h2>
+      <p class="meta-line">Daniel A. Herrmann, <a href="https://philpeople.org/profiles/ben-levinstein">Benjamin A. Levinstein</a>, <a href="https://aydinmohseni.com/">Aydin Mohseni</a>, and Bruce Rushing</p>
     </article>
   </div>
 </section>
