@@ -39,11 +39,12 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Alex J. London | https://www.cmu.edu/dietrich/philosophy/people/faculty/london.html |
   | Benjamin A. Levinstein | https://www.levinstein.org/ |
   | Gerard Rothfus | https://gerardrothfus.com/ |
+  | Pietro Cibinel | https://pietrocibinel.com/ |
   | Sree Sharvesh | https://www.sreesharvesh.com/ |
   | Abinav Chari | https://www.linkedin.com/in/abinav-chari1 (as on Daniel's site) |
   | Isabelle Qian | https://www.linkedin.com/in/isabelle-athena-qian (as on Daniel's site) |
 
-  Names with no confirmed URL stay unlinked: Pietro Cibinel, Jens Jäger, Haotian Zong, Yosra Kazemi, Yang Hu.
+  Names with no confirmed URL stay unlinked: Jens Jäger, Haotian Zong, Yosra Kazemi, Yang Hu.
 - **Add a margin note:** inside a paragraph, add
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.
