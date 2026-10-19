@@ -19,7 +19,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else "http://127.0.0.1:8765"
-PAGES = ["index", "research", "projects", "publications", "people", "about", "404"]
+PAGES = ["index", "research", "publications", "people", "about", "contact", "404"]
 WIDTHS = [390, 768, 1024, 1280, 1600]
 
 CHECK = r"""

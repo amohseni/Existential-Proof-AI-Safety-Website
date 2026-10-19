@@ -4,7 +4,7 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 
 ## Files
 
-- `index.html`, `research.html`, `projects.html`, `publications.html`, `people.html`, `about.html`, `404.html`: the pages.
+- `index.html`, `research.html`, `publications.html`, `people.html`, `about.html`, `contact.html`, `404.html`: the pages. `projects.html` only redirects old links (with their anchors) to the Research page.
 - `assets/site.css`: layout, type, color, print styles.
 - `assets/site.js`: review mode, publication filters, citation copy buttons.
 - `assets/search.js`: the background search animation.
@@ -25,9 +25,9 @@ This repository is the only source of the site. Edit the HTML files here and pus
 Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (with a local server running, as described there) before pushing.
 
 
-- **Header and footer** are repeated in every page. A change to the navigation must be made in all seven files.
+- **Header and footer** are repeated in every page. A change to the navigation must be made in all seven pages.
 - **Add a publication:** copy one `<li class="work">` block in `publications.html`. List the authors in the order they appear on the paper, book, or report itself, in the author line, the BibTeX, and the project meta line alike; check the source (arXiv, the journal, or the manuscript) instead of reordering by role or alphabet. Set `data-type` to `paper`, `working`, or `report`. Talks and workshops go in the separate Talks and Workshops sections below the list (`<li class="work talk">`, no status, no Cite). Two statuses only: `<span class="status active">In progress</span>` (anything not yet published, including manuscripts, papers under review, and revisions) and `<span class="status out">Published</span>` (including preprints). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
-- **Add a project:** copy one `<article class="block">` in `projects.html`. Give it an `id`, an `h2`, a `p.meta-line` with linked names, a one- or two-sentence `p.summary`, and optionally a `<details class="expand"><summary>More</summary><div class="expand-body">…</div></details>` for the longer explanation. Do not add status labels.
+- **Add a program:** programs live on `research.html`, inside the section for their research area, between the area's introduction and its key questions. A program is a line of work that outlasts any one paper; a single paper goes on Publications and in a program's Outputs line. Copy one `<article class="block">`: an `id`, an `h2`, a `p.meta-line` reading "Led by" and the core member or members who lead it (no collaborator lists; authors belong to outputs), a one- or two-sentence `p.summary`, and optionally a `<details class="expand"><summary>More</summary><div class="expand-body">…</div></details>` ending with an Outputs line. Do not add status labels. Margin-note ids and table numbers run in page order across the whole page. If you rename or merge a program, add its old anchor to the map in `projects.html`.
 - **Link a name:** link every person's name to their main personal website every time it appears: people cards, author lines, project meta lines, the home page, and the contact list. Citations inside margin notes and BibTeX blocks stay plain. Look up the website of anyone newly added. Known URLs:
 
   | Name | URL |
