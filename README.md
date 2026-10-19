@@ -16,7 +16,7 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 
 ## Hosting
 
-The repository is public and served by GitHub Pages from `main`, folder `/ (root)`, at `https://amohseni.github.io/Existential-Proof-AI-Safety-Website/`. Every push to `main` republishes the site within a minute or two. Aydin Mohseni and Daniel Herrmann both have write access.
+The repository is public and served by GitHub Pages from `main`, folder `/ (root)`, at `https://exproof.ai/` (set by the `CNAME` file; the old `amohseni.github.io/Existential-Proof-AI-Safety-Website/` address redirects there). Every push to `main` republishes the site within a minute or two. Aydin Mohseni and Daniel Herrmann both have write access.
 
 ## Editing
 
