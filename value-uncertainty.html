@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Decision under Value Uncertainty · ∃xProof AI</title>
+<meta name="description" content="How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both questions arise for AI systems meant to learn and serve what people value.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<svg id="exproof-search-background" aria-hidden="true" focusable="false"></svg>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark brand" href="index.html" id="top" aria-label="ExProof AI, home"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">Proof</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html" aria-current="page">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+    <a href="join.html">Join</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="p-title">
+  <p class="eyebrow"><a href="research.html#value">Research · Value</a></p>
+  <h1 id="p-title">Decision under Value Uncertainty</h1>
+  <p class="lede">How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both questions arise for AI systems meant to learn and serve what people value.</p>
+  <p class="who">Led by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a></p>
+</section>
+
+<section class="section" id="overview">
+  <p class="label">Overview</p>
+  <div class="body">
+      <p class="question">How should values that are not yet settled enter a decision?</p>
+      <p>Decision theory handles uncertainty about facts well and uncertainty about values badly. Two cases matter for AI: an agent refining her own values, and an agent acting for someone whose preferences she does not know.</p>
+  </div>
+</section>
+
+<section class="section" id="current">
+  <p class="label">Current work</p>
+  <div class="body">
+<h3>Learning what one values</h3>
+      <p>Standard frameworks let an agent learn about the world while her options and values stay fixed. We extend the Jeffrey–Bolker framework so that values themselves can be refined, and prove a value-of-information theorem for this axiological refinement. Between agents, mutual refinement tends to turn zero-sum games into positive-sum ones, and can yield Pareto improvements in Nash bargaining.</p>
+      <h3>Acting for someone whose preferences are uncertain</h3>
+      <p>A benefactor chooses on behalf of one person and is uncertain about that person’s preferences. The natural rule is to maximize expected utility across the candidate preferences. But each candidate utility function is fixed only up to a choice of scale, and rescaling one of them can change which option comes out best.<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">Multiplying one candidate utility function by ten changes nothing about the preferences it represents, but gives that candidate ten times the weight in the expectation.</span> This is the problem of interpersonal comparisons, arising within a single person. What the benefactor needs is a rule</p>
+      <p class="scheme"><var>f</var>: probability functions over the person’s possible utility functions → rankings of the options.</p>
+      <p>We ask how far the standard solutions to interpersonal comparisons carry over to the intrapersonal case, among them normalizing every utility function to the same range and egalitarian equivalence. We also ask what changes when the benefactor acts for a group whose preferences are uncertain. There the order of aggregation matters: aggregating across people first and aggregating across possible preferences first can give different rankings.</p>
+  </div>
+</section>
+
+<section class="section" id="outputs">
+  <p class="label">Outputs</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="publications.html#value-learning">Learning the Value of Value Learning</a></span><span class="d"><a href="https://www.cmu.edu/dietrich/philosophy/people/faculty/london.html">Alex J. London</a> and <a href="https://aydinmohseni.com/">Aydin Mohseni</a>. Working paper (in progress).</span></div></li>
+      <li><div><span class="t"><a href="publications.html#preference-uncertainty">Intrapersonal Comparisons under Preference Uncertainty</a></span><span class="d"><a href="https://pietrocibinel.com/">Pietro Cibinel</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>. Working paper (in progress).</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="more-research">
+  <p class="label">More research</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="adaptations.html">Evolutionary Theory of Advanced AI Adaptations</a></span><span class="d">Agency</span></div></li>
+      <li><div><span class="t"><a href="naturalizing-agency.html">Naturalizing Agency</a></span><span class="d">Agency</span></div></li>
+      <li><div><span class="t"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a></span><span class="d">Interpretability</span></div></li>
+      <li><div><span class="t"><a href="delegation.html">AI Alignment and Delegation</a></span><span class="d">Alignment</span></div></li>
+    </ul>
+    <p class="more"><a href="research.html">All research areas</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="brand brand-mark" role="img" aria-label="ExProof AI monogram"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">P</span></span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website">GitHub</a>
+    <a href="join.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book, EB Garamond, STIX Two Math, and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

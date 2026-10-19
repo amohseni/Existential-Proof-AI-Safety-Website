@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Naturalizing Agency · ∃xProof AI</title>
+<meta name="description" content="Claims about AI risk use the vocabulary of agency: a system seeks power, plans around its overseers, controls its environment. We show how such notions, starting with chance, causation, and control, can be recovered from an agent’s own beliefs and desires, so that claims made in this vocabulary become claims interpretability can test.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<svg id="exproof-search-background" aria-hidden="true" focusable="false"></svg>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark brand" href="index.html" id="top" aria-label="ExProof AI, home"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">Proof</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html" aria-current="page">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+    <a href="join.html">Join</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="p-title">
+  <p class="eyebrow"><a href="research.html#agency">Research · Agency</a></p>
+  <h1 id="p-title">Naturalizing Agency</h1>
+  <p class="lede">Claims about AI risk use the vocabulary of agency: a system seeks power, plans around its overseers, controls its environment. We show how such notions, starting with chance, causation, and control, can be recovered from an agent’s own beliefs and desires, so that claims made in this vocabulary become claims interpretability can test.</p>
+  <p class="who">Led by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a></p>
+</section>
+
+<section class="section" id="overview">
+  <p class="label">Overview</p>
+  <div class="body">
+      <p class="question">Can the notions we use to describe agents be recovered from the agent’s own beliefs and desires?</p>
+      <p>De Finetti showed that an agent who treats a sequence of trials as exchangeable behaves as if she were learning an unknown chance, so chance can be recovered from credence. Skyrms extended the program, treating chance as resilient credence.<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">B. de Finetti, “La prévision: ses lois logiques, ses sources subjectives,” <i>Annales de l’Institut Henri Poincaré</i> 7 (1937); B. Skyrms, <i>Causal Necessity</i>, Yale University Press, 1980.</span> We take the same approach to causation, counterfactuals, and an agent’s sense of what is under her control. Each looks like a fact about the world that an agent must track. The aim is to show that each can be recovered from her attitudes once she represents herself as part of the world she is trying to predict and change.</p>
+      <figure aria-labelledby="fig-nat-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col">Notion</th><th scope="col">Recovered from</th><th scope="col">Work</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Chance</th><td>exchangeable credence</td><td>de Finetti; Skyrms</td></tr>
+              <tr><th scope="row">Causation</th><td>conditioning on naturalized intervention variables</td><td><a href="publications.html#causation">A Bayesian Reduction of Causation</a></td></tr>
+              <tr><th scope="row">Counterfactuals</th><td>in progress</td><td>current work</td></tr>
+              <tr><th scope="row">Control</th><td>the propositions an agent’s attitudes treat as hers to decide</td><td><a href="https://escholarship.org/uc/item/7x9890zn">Naturalizing Decision Theory</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig-nat-cap"><span class="label">Table 1</span>From chance to agency.</figcaption>
+      </figure>
+  </div>
+</section>
+
+<section class="section" id="current">
+  <p class="label">Current work</p>
+  <div class="body">
+<h3>Causation and control</h3>
+      <p>Results on Pearl’s causal hierarchy seem to show that causal claims cannot be reduced to probabilistic ones.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">J. Pearl, <i>Causality</i>, Cambridge University Press, 2000; E. Bareinboim, J. D. Correa, D. Ibeling, and T. Icard, “On Pearl’s Hierarchy and the Foundations of Causal Inference,” 2022.</span> The irreducibility comes from an impoverished set of variables. Add variables for interventions, treated as events in the world, and interventional claims become conditional probabilities:</p>
+      <p class="scheme"><var>P</var>(<var>Y</var> = <var>y</var> | do(<var>X</var> = <var>x</var>)) = <var>P</var>(<var>Y</var> = <var>y</var> | <var>X</var> = <var>x</var>, <var>I<sub>X</sub></var> = on).</p>
+      <p>For control, desirability tracking reads off, from an agent’s beliefs and desires, the propositions she takes herself to control and the decision problems she takes herself to face.</p>
+      <h3>Why it matters for safety</h3>
+      <p>Power-seeking is the pursuit of options an agent takes to be within its control. Planning around an overseer needs a world model that supports reasoning about interventions. Both claims presuppose an account of what a system treats as a cause and as within its power. If those can be read off its beliefs and desires, then the worry that a system seeks power or plans around its overseers becomes a claim about its attitudes, which the methods of <a href="measuring-attitudes.html">our interpretability program</a> can test. The <a href="adaptations.html">adaptations program</a> needs exactly this account of control.</p>
+  </div>
+</section>
+
+<section class="section" id="outputs">
+  <p class="label">Outputs</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="publications.html#causation">A Bayesian Reduction of Causation</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>, <a href="https://aydinmohseni.com/">Aydin Mohseni</a>, <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a>, and <a href="https://brucemrushing.com/">Bruce Rushing</a>. Working paper (in progress).</span></div></li>
+      <li><div><span class="t"><a href="publications.html#act-probabilities">Subjective Naturalism &amp; Act Probabilities</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>. Working paper (in progress).</span></div></li>
+      <li><div><span class="t"><a href="publications.html#deference">Deference and Decision</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://gerardrothfus.com/">Gerard Rothfus</a>. <i>Theory and Decision</i> 101 (2026): 401–427. Paper, 2026.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#dissertation">Naturalizing Decision Theory</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>. PhD dissertation, University of California, Irvine. Dissertation, 2023.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="more-research">
+  <p class="label">More research</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="adaptations.html">Evolutionary Theory of Advanced AI Adaptations</a></span><span class="d">Agency</span></div></li>
+      <li><div><span class="t"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a></span><span class="d">Interpretability</span></div></li>
+      <li><div><span class="t"><a href="value-uncertainty.html">Decision under Value Uncertainty</a></span><span class="d">Value</span></div></li>
+      <li><div><span class="t"><a href="delegation.html">AI Alignment and Delegation</a></span><span class="d">Alignment</span></div></li>
+    </ul>
+    <p class="more"><a href="research.html">All research areas</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="brand brand-mark" role="img" aria-label="ExProof AI monogram"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">P</span></span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website">GitHub</a>
+    <a href="join.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book, EB Garamond, STIX Two Math, and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>

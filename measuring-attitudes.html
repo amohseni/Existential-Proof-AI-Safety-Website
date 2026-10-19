@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Measuring Beliefs and Desires in AI Systems · ∃xProof AI</title>
+<meta name="description" content="When does an AI system have beliefs and goals, and how could we measure them? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on trained models, from small transformers to language models.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<svg id="exproof-search-background" aria-hidden="true" focusable="false"></svg>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark brand" href="index.html" id="top" aria-label="ExProof AI, home"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">Proof</span><span class="ai" aria-hidden="true">AI</span></a>
+  <nav class="nav" aria-label="Site">
+    <a href="research.html" aria-current="page">Research</a>
+    <a href="publications.html">Publications</a>
+    <a href="people.html">People</a>
+    <a href="about.html">About</a>
+    <a href="join.html">Join</a>
+  </nav>
+</header>
+
+<main data-scrim>
+<section class="hero page-head" aria-labelledby="p-title">
+  <p class="eyebrow"><a href="research.html#interpretability">Research · Interpretability</a></p>
+  <h1 id="p-title">Measuring Beliefs and Desires in AI Systems</h1>
+  <p class="lede">When does an AI system have beliefs and goals, and how could we measure them? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on trained models, from small transformers to language models.</p>
+  <p class="who">Led by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a></p>
+</section>
+
+<section class="section" id="overview">
+  <p class="label">Overview</p>
+  <div class="body">
+      <p class="question">How can we tell what an AI system believes and wants from facts about its computation?</p>
+      <p>Interpretability methods read beliefs and goals off a model’s internal states. Whether a reading is correct depends on what it is for a state to be a belief, and the methods leave this unstated. We take up the problem of radical interpretation,<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Radical interpretation:</i> the problem, posed by Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with the facts about the agent given by its computation:</p>
+      <p class="scheme">Find the beliefs <var>B</var>, desires <var>D</var>, and meanings <var>M</var> that together best explain the computation <var>C</var> of system <var>S</var>.</p>
+      <p>The three are solved for together. Belief, desire, and the structure of the propositions they concern constrain one another, so a method that holds one fixed while measuring another inherits its distortions.</p>
+  </div>
+</section>
+
+<section class="section" id="current">
+  <p class="label">Current work</p>
+  <div class="body">
+<p><i>Criteria.</i> Probes for belief in language models fail to generalize in basic ways,<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">B. A. Levinstein and D. A. Herrmann, “Still No Lie Detector for Language Models: Probing Empirical and Conceptual Roadblocks,” <i>Philosophical Studies</i> 182 (2025).</span> and a representation must meet four conditions to count as belief-like.<label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote">D. A. Herrmann and B. A. Levinstein, “Standards for Belief Representations in LLMs,” <i>Minds and Machines</i> 35 (2025).</span> The book <i>Radical AI Interpretability</i> ties criteria of success, on representationalist and interpretationist views alike, to tests that current methods can run. The next step is to give deception and situational awareness the same treatment.</p>
+      <figure aria-labelledby="fig-rai-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col">Condition</th><th scope="col">The representation must</th><th scope="col">A typical test</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Accuracy</th><td>track the truth of what it represents</td><td>probe accuracy on held-out statements</td></tr>
+              <tr><th scope="row">Coherence</th><td>respect logical relations among its contents</td><td>consistency under negation and conjunction</td></tr>
+              <tr><th scope="row">Uniformity</th><td>be the same across domains and contexts</td><td>one probe transferring across datasets</td></tr>
+              <tr><th scope="row">Use</th><td>guide the system’s behavior</td><td>intervening on it shifts what the system does</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig-rai-cap"><span class="label">Table 1</span>Four conditions for a representation in a language model to count as belief-like.</figcaption>
+      </figure>
+      <p><i>Model organisms.</i> In a synthetic decision task, the true posterior over hidden states and the value of each option can be computed exactly, so attributions can be checked against ground truth. A small transformer trained on choices alone develops separable linear representations of both, and steering the posterior changes choice through the subspace that encodes the options’ values, as a Jeffrey–Bolker reading predicts. A pretrained language model shows the same organization. This work is led by Jeremy Saal, with Simplex; a paper is under review.</p>
+      <p><i>Language models.</i> When a language model’s choices are read as expected-utility maximization, how coherent are the credences and utilities this attributes, and how robust is the attribution? We test whether it predicts choices in and out of sample, whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts, whether it agrees with probes, and whether it is stable under meaning-preserving rephrasings.</p>
+  </div>
+</section>
+
+<section class="section" id="outputs">
+  <p class="label">Outputs</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="publications.html#radical">Radical AI Interpretability</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a>. Cambridge Elements in Philosophy of AI, Cambridge University Press (forthcoming). Book, 2026.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#standards">Standards for Belief Representations in LLMs</a></span><span class="d"><a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Benjamin A. Levinstein</a>. <i>Minds and Machines</i> 35 (2025), article 5. Paper, 2025.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#lie-detector">Still No Lie Detector for Language Models: Probing Empirical and Conceptual Roadblocks</a></span><span class="d"><a href="https://www.levinstein.org/">Benjamin A. Levinstein</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a>. <i>Philosophical Studies</i> 182 (2025): 1539–1565. Paper, 2025.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#measuring-agency">Measuring Agency: Belief and Preference Elicitation for Language Models</a></span><span class="d"><a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.cmu.edu/dietrich/philosophy/people/masters/dorian-clay.html">Dorian Clay</a>. Working paper (in progress).</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="more-research">
+  <p class="label">More research</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="adaptations.html">Evolutionary Theory of Advanced AI Adaptations</a></span><span class="d">Agency</span></div></li>
+      <li><div><span class="t"><a href="naturalizing-agency.html">Naturalizing Agency</a></span><span class="d">Agency</span></div></li>
+      <li><div><span class="t"><a href="value-uncertainty.html">Decision under Value Uncertainty</a></span><span class="d">Value</span></div></li>
+      <li><div><span class="t"><a href="delegation.html">AI Alignment and Delegation</a></span><span class="d">Alignment</span></div></li>
+    </ul>
+    <p class="more"><a href="research.html">All research areas</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <span class="brand brand-mark" role="img" aria-label="ExProof AI monogram"><span class="exists" aria-hidden="true">∃</span><span class="x" aria-hidden="true">x</span><span class="proof" aria-hidden="true">P</span></span>
+  <nav aria-label="Footer">
+    <a href="people.html">People</a>
+    <a href="publications.html">Publications</a>
+    <a href="https://github.com/amohseni/Existential-Proof-AI-Safety-Website">GitHub</a>
+    <a href="join.html#contact">Contact</a>
+  </nav>
+  <p>The background shows a search through a hidden tree for a path from the left edge to the right. One tree in three contains such a path. The search finds it and lights it green, or exhausts the tree and starts over.</p>
+  <p>Set in ET Book, EB Garamond, STIX Two Math, and IBM Plex. Updated 18 October 2026.</p>
+</footer>
+
+</div>
+<div class="review-bar" role="status"><strong>Review mode</strong><span id="review-count"></span><span>Hover a highlight to see what needs confirming.</span><a href="#top">Exit review</a></div>
+<script src="assets/site.js"></script>
+<script src="assets/search.js"></script>
+</body>
+</html>
