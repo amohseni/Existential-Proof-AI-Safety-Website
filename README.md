@@ -56,6 +56,7 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Travis LaCroix | https://durham.ac.uk/staff/travis-lacroix |
   | Dorian Clay | https://www.cmu.edu/dietrich/philosophy/people/masters/dorian-clay.html |
   | Sree Sharvesh | https://www.sreesharvesh.com/ |
+  | Katalin Berlow | https://katalinberlow.github.io/ |
   | Abinav Chari | https://www.linkedin.com/in/abinav-chari1 (as on Daniel's site) |
   | Isabelle Qian | https://www.linkedin.com/in/isabelle-athena-qian (as on Daniel's site) |
 
