@@ -1,4 +1,4 @@
-# ∃x AI website
+# ∃xProof AI website
 
 Static site for the AI safety research group of Aydin Mohseni and Daniel Herrmann. Plain HTML, no build step.
 
@@ -9,8 +9,8 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 - `assets/site.js`: review mode, publication filters, citation copy buttons.
 - `assets/search.js`: the background search animation.
 - `assets/favicon.svg`: the ∃xP monogram.
-- `assets/fonts/`: ET Book (MIT license, from tufte-css).
-- `docs/PLAN.md`: the site plan. `DESIGN.md`: how the build follows and departs from it.
+- `assets/fonts/`: ET Book (MIT license, from tufte-css); wordmark subsets of STIX Two Math and EB Garamond (SIL Open Font License).
+- `docs/PLAN.md`: the site plan. `docs/WORDMARK-AND-SEARCH.md`: the wordmark and background spec. `DESIGN.md`: how the build follows and departs from it.
 - `CONTENT_REVIEW.md`: claims that still need confirming.
 
 ## Going live on GitHub Pages
@@ -29,4 +29,4 @@ The repository starts private so draft content is not public. When the content i
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.
 - **Review mode:** open any page with `#review` at the end of the URL. Every element with a `data-verify` attribute is highlighted, and hovering shows what needs confirming. Delete the attribute once the claim is confirmed.
-- **Animation settings** are at the top of `assets/search.js`: `P_SOLVABLE` (1/3) and the timings in `T`. Running `window.__searchField.sample(10000)` in the browser console checks the 1/3 share and the tree invariants.
+- **Animation settings** are at the top of `assets/search.js`: `CFG` (the 1/3 probability, depth range, node budget, colors, speeds, and timings). Running `window.__exproof.sample(1000)` in the browser console checks the 1/3 share and the tree invariants.

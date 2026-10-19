@@ -6,7 +6,8 @@ Every claim below is marked `data-verify` in the HTML. Open any page with `#revi
 
 - Name, wordmark, monogram, palette, and the background search (`docs/PLAN.md`).
 - Hero paragraph, research-area questions, project one-line summaries, open problems, people bios, and the About mission statement (`docs/PLAN.md`, with the hero's em dash removed).
-- Aydin's title and memberships; Daniel at UNC Chapel Hill.
+- Aydin's title and memberships; Daniel Herrmann, Assistant Professor of Philosophy, UNC Chapel Hill, danher@unc.edu.
+- Name ∃xProof AI, pronounced ExProof AI.
 - The evolutionary-adaptations project: members, aim, six-part schema, behavior patterns, power-seeking focus, the two interpretations.
 - "Learning the Value of Value Learning": with Alex J. London, in revision.
 
@@ -14,9 +15,8 @@ Every claim below is marked `data-verify` in the HTML. Open any page with `#revi
 
 | Page | Claim | Question |
 |---|---|---|
-| Home | "There exists a path to safe AI." | Keep the existence claim, or soften it (see DESIGN.md)? |
+| Home | "We are searching for a path to safe AI." | Claude picked option 1 of 12; swap if you prefer another. |
 | Home, Projects | Status of Radical AI Interpretability and the principal–agent project | Status? |
-| Home, People | Daniel's title | Title and department. |
 | Research | Why-it-matters text for Interpretability, Value, Alignment, Methods | Drafted by Claude. Only Agency's is from the plan. |
 | Research | Project-to-area mapping | Drafted by Claude. |
 | Research, About | Methods list | Does it describe the lab? |
@@ -31,10 +31,8 @@ Every claim below is marked `data-verify` in the HTML. Open any page with `#revi
 | Publications | September 2026 workshop talk | Title, date, and whether it belongs on the list. |
 | People | Website, Google Scholar, CV links | URLs to add for both. |
 | People | Collaborator list | Who to list, with affiliations? |
-| About | Pronunciation | The plan says "ExProof AI"; the repository says "Existential Proof". |
 | About | Why formal foundations matter | Drafted by Claude. |
 | About | Who the lab wants to hear from | Confirm. |
-| About | Daniel's email | To add. |
 | Footer | GitHub link | Works for visitors only once the repository is public. |
 
 ## Not on the site yet

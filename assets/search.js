@@ -1,252 +1,410 @@
-// Background: a search for a path to safe AI.
+// Background: a search for a proof that a path to safe AI exists.
 //
-// Each cycle generates a hidden binary tree that grows from the left edge toward the right.
-// With probability exactly 1/3 the tree contains one path that reaches the right edge
-// (depth D); otherwise every branch ends before depth D, so no path exists.
-// A white light searches the tree by depth-first search with a heuristic child order.
-// The heuristic sees only geometry, never which branch is the solution.
-// Explored edges stay visible in gray. If the light reaches depth D, the path from the root
-// turns green. If the search exhausts the tree, it stops. Either way the tree fades and a
-// new one is generated.
+// Each cycle generates a hidden tree that grows from 5% to 95% of the viewport width.
+// With probability exactly 1/3 the tree contains one planted witness path that reaches the
+// terminal depth D; otherwise no branch reaches D. Non-witness branches die out by a
+// depth-dependent extinction process, so dead ends are spread through the tree instead of
+// piling up one step before D.
+//
+// A white light searches the tree by heuristic depth-first search. The heuristic sees only
+// geometry; it never reads which branch is the witness. Edges appear only as the light
+// traverses them and stay gray. Nodes are never drawn. If the light reaches depth D, the
+// root-to-goal path sweeps green. If the search exhausts the tree, the light rests and the
+// tree fades. The layout is a tidy tree, so no two edges cross.
 (function () {
-  var canvas = document.getElementById("search-field");
-  if (!canvas || !canvas.getContext) return;
-  var ctx = canvas.getContext("2d");
+  var svg = document.getElementById("exproof-search-background");
+  if (!svg || !svg.createSVGPoint) return;
+  var NS = "http://www.w3.org/2000/svg";
   var reduceQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
 
-  var P_SOLVABLE = 1 / 3;
-  var COLOR = { explored: "122,122,118", node: "150,150,146", light: "255,255,255", success: "31,164,99" };
-  var T = { pause: 150, successSweep: 520, successHold: 1300, failHold: 850, fade: 1200, gap: 700 };
+  var CFG = {
+    pSolvable: 1 / 3,
+    minDepth: 26, maxDepth: 34, maxNodes: 320,
+    edgeColor: "#91918b", edgeWidth: 1.2, edgeOpacity: 0.44,
+    green: "#1fa463",
+    scrimInside: 0.55,     // edge opacity multiplier under the text column
+    pxPerMs: 0.95,         // forward travel speed through the middle of a run
+    runBase: 150,          // fixed part of each run's duration (ms)
+    backFactor: 0.6,      // backtracking takes this fraction of the forward time
+    deadEndPause: 220, decisionPause: 40,
+    success: { pause: 380, toGreen: 520, sweep: 1100, hold: 1900 },
+    failure: { rest: 650, subside: 1000, hold: 600 },
+    dissolve: 1700, gap: 800
+  };
 
-  var W, H, dpr, scrim = { x0: 0, x1: 0 }, tree, plan, state, raf;
+  var W, H, scrim = { x0: -1e4, x1: -1e4 }, tree, runs, state, raf, layers = {};
 
   function rand(a, b) { return a + Math.random() * (b - a); }
-  function ease(t) { return 0.5 - 0.5 * Math.cos(Math.PI * t); }
-
-  // Lower opacity under the text column, full opacity in the empty margins.
+  function smootherstep(t) { t = Math.max(0, Math.min(1, t)); return t * t * t * (t * (t * 6 - 15) + 10); }
+  function deadEndEase(t) { return smootherstep(1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 1.6)); }
+  function el(name, attrs, parent) {
+    var e = document.createElementNS(NS, name);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
   function maskAt(x) {
-    var ramp = 70, inside = 0.32;
+    var ramp = 80, inside = CFG.scrimInside;
     if (x <= scrim.x0 - ramp || x >= scrim.x1 + ramp) return 1;
     if (x >= scrim.x0 && x <= scrim.x1) return inside;
     var d = x < scrim.x0 ? (scrim.x0 - x) / ramp : (x - scrim.x1) / ramp;
     return inside + (1 - inside) * d;
   }
 
-  function measure() {
-    dpr = Math.min(2, window.devicePixelRatio || 1);
-    W = window.innerWidth; H = window.innerHeight;
-    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    canvas.style.width = W + "px"; canvas.style.height = H + "px";
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var col = document.querySelector("[data-scrim]");
-    if (col) { var r = col.getBoundingClientRect(); scrim.x0 = r.left; scrim.x1 = r.right; }
-    else { scrim.x0 = scrim.x1 = -1e4; }
+  // ---------- Generation ----------
+  function stopProbability(depth, D, pressure) {
+    var u = depth / D;
+    var p = 0.035 + 0.60 * Math.pow(u, 1.70);
+    var budget = 0.35 * Math.pow(Math.max(0, (pressure - 0.72) / 0.28), 2);
+    return Math.min(0.98, p + budget);
+  }
+  function twoChildProbability(depth, D, pressure) {
+    var u = depth / D;
+    return Math.max(0.10, 0.40 - 0.24 * u) * (1 - Math.pow(Math.min(1, pressure), 1.6));
+  }
+  function witnessSideBranchProbability(depth, D) {
+    if (depth === 0) return 0.92;
+    return 0.06 + 0.34 * (1 - depth / D);
   }
 
-  // ---------- Tree generation ----------
-  function build() {
-    var D = Math.max(7, Math.min(11, Math.round(W / 125)));
-    var m = Math.max(20, W * 0.035);
-    var dx = (W - 2 * m) / D;
-    var solvable = Math.random() < P_SOLVABLE;
+  function generate(D, solvable) {
     var nodes = [];
-    var root = { d: 0, x: m, y: H * rand(0.4, 0.6), kids: [], parent: null, dir: 0 };
-    nodes.push(root);
-
-    function dyAt(k) { return H * 0.17 * Math.pow(0.82, k) * rand(0.85, 1.15); }
-    function add(p, dir) {
-      var y = p.y + dir * dyAt(p.d);
-      y = Math.max(H * 0.06, Math.min(H * 0.94, y));
-      var n = { d: p.d + 1, x: m + (p.d + 1) * dx + rand(-0.04, 0.04) * dx, y: y, kids: [], parent: p, dir: dir };
-      p.kids.push(n); nodes.push(n); return n;
+    function make(parent, depth, win) {
+      var n = { depth: depth, parent: parent, children: [], win: win };
+      nodes.push(n); return n;
     }
-    // Off-spine growth never goes deeper than `limit` (always below D).
-    function grow(p, limit, pBranch) {
-      if (p.d >= limit) return;
-      [-1, 1].forEach(function (dir) {
-        if (Math.random() < pBranch) grow(add(p, dir), limit, pBranch * 0.72);
-      });
-    }
-
-    // The spine is the one candidate route. It reaches depth D only when solvable.
-    var spineLen = solvable ? D : D - 1 - (Math.random() < 0.5 ? 1 : 0);
-    var cur = root;
-    for (var k = 0; k < spineLen; k++) {
-      var dir = Math.random() < 0.5 ? -1 : 1;
-      var on = add(cur, dir);
-      if (cur.d + 1 < D && Math.random() < 0.72) {
-        var s = add(cur, -dir);
-        grow(s, Math.min(D - 1, s.d + Math.floor(rand(0, 3.2))), 0.62);
+    var root = make(null, 0, solvable);
+    var queue = [root];
+    while (queue.length) {
+      var n = queue.shift();
+      var pressure = nodes.length / CFG.maxNodes;
+      var kids = [];
+      if (n.win) {
+        if (n.depth < D) {
+          kids.push({ win: true });
+          if (Math.random() < witnessSideBranchProbability(n.depth, D) && n.depth + 1 < D) kids.push({ win: false });
+        }
+      } else {
+        if (n.depth >= D - 1) { kids = []; }                                  // hard boundary only
+        else if (n.depth >= 2 && Math.random() < stopProbability(n.depth, D, pressure)) { kids = []; }
+        else {
+          var count = (n.depth === 0 || Math.random() < twoChildProbability(n.depth, D, pressure)) ? 2 : 1;
+          if (pressure >= 1) count = 0;
+          for (var i = 0; i < count; i++) kids.push({ win: false });
+        }
       }
-      cur = on;
+      if (kids.length === 2 && Math.random() < 0.5) kids.reverse();
+      kids.forEach(function (k) { var c = make(n, n.depth + 1, k.win); n.children.push(c); queue.push(c); });
     }
-    if (!solvable) grow(cur, D - 1, 0.75);
-    // Shuffle child order so the spine is not always the first child.
-    nodes.forEach(function (n) { if (n.kids.length === 2 && Math.random() < 0.5) n.kids.reverse(); });
-    return { nodes: nodes, root: root, D: D, dx: dx, solvable: solvable };
+    return { nodes: nodes, root: root, D: D, solvable: solvable };
   }
 
-  // ---------- Search plan: heuristic depth-first search ----------
-  // Prefer the child that continues the current direction and stays near the vertical
-  // center (more room to grow). Small random tiebreak. No knowledge of the solution.
-  function score(parent, c) {
-    var smooth = parent.dir === 0 ? 0 : (c.dir === parent.dir ? 1 : 0);
-    var center = 1 - Math.abs(c.y - H / 2) / (H / 2);
-    return 0.6 * smooth + 0.8 * center + Math.random() * 0.5;
+  // Tidy layout with contour packing (Reingold–Tilford style). Children keep a fixed order;
+  // each sibling subtree is shifted just far enough that, at every depth, it sits at least one
+  // unit below the subtrees before it. Each parent sits at the average of its children.
+  // Sibling subtrees therefore occupy disjoint vertical intervals at every depth, so no two
+  // edges cross, and unbalanced subtrees pack tightly instead of leaving tall empty gaps.
+  function layout(t) {
+    (function place(n) {
+      if (!n.children.length) { n.top = [0]; n.bot = [0]; return; }
+      n.children.forEach(place);
+      var offs = [], bot = [];
+      n.children.forEach(function (c, i) {
+        var off = 0;
+        if (i > 0) {
+          off = -Infinity;
+          for (var k = 0; k < c.top.length && k < bot.length; k++) off = Math.max(off, bot[k] - c.top[k] + 1);
+        }
+        offs.push(off);
+        for (var k2 = 0; k2 < c.bot.length; k2++) bot[k2] = Math.max(bot[k2] === undefined ? -Infinity : bot[k2], off + c.bot[k2]);
+      });
+      var mid = offs.reduce(function (a, b) { return a + b; }, 0) / offs.length;
+      n.top = [0]; n.bot = [0];
+      n.children.forEach(function (c, i) {
+        c.rel = offs[i] - mid;
+        for (var k = 0; k < c.top.length; k++) {
+          var tk = c.rel + c.top[k], bk = c.rel + c.bot[k];
+          n.top[k + 1] = n.top[k + 1] === undefined ? tk : Math.min(n.top[k + 1], tk);
+          n.bot[k + 1] = n.bot[k + 1] === undefined ? bk : Math.max(n.bot[k + 1], bk);
+        }
+      });
+    })(t.root);
+    var lo = Math.min.apply(null, t.root.top), hi = Math.max.apply(null, t.root.bot);
+    var unit = Math.min(H * 0.8 / Math.max(1, hi - lo), H * 0.045);
+    var mid = H / 2 - unit * (lo + hi) / 2;
+    var left = W * 0.05, dx = (W * 0.90) / t.D;
+    (function assign(n, y) {
+      n.x = left + n.depth * dx; n.y = mid + unit * y;
+      n.children.forEach(function (c) { assign(c, y + c.rel); });
+    })(t.root, 0);
+    t.dx = dx;
   }
-  function makePlan(t) {
+
+  function build() {
+    var span = Math.max(0, Math.min(1, (W - 400) / 1200));
+    var D = Math.round(CFG.minDepth + (CFG.maxDepth - CFG.minDepth) * span);
+    var solvable = Math.random() < CFG.pSolvable;
+    var t = generate(D, solvable);
+    layout(t);
+    return t;
+  }
+
+  // ---------- Search: heuristic depth-first search ----------
+  // Prefers continuing the current vertical direction, mildly prefers the center,
+  // tiny random tiebreak. Never reads the `win` flag.
+  function score(n, c) {
+    var incoming = n.parent ? Math.sign(n.y - n.parent.y) : 0;
+    var out = Math.sign(c.y - n.y);
+    var continuity = incoming !== 0 && out === incoming ? 1 : (out === 0 ? 0.6 : 0);
+    var center = 1 - Math.abs(c.y - H / 2) / (H / 2);
+    return 0.55 * continuity + 0.35 * center + 0.08 * Math.random();
+  }
+  function plan(t) {
     var moves = [], found = null;
-    function dfs(n) {
-      if (n.d === t.D) { found = n; return true; }
-      if (!n.kids.length) { moves.push({ pause: true }); return false; }
-      var kids = n.kids.slice().sort(function (a, b) { return score(n, b) - score(n, a); });
+    (function dfs(n) {
+      if (n.depth === t.D) { found = n; return true; }
+      var kids = n.children.slice().sort(function (a, b) { return score(n, b) - score(n, a); });
       for (var i = 0; i < kids.length; i++) {
         moves.push({ from: n, to: kids[i], fwd: true });
         if (dfs(kids[i])) return true;
         moves.push({ from: kids[i], to: n, fwd: false });
       }
       return false;
-    }
-    dfs(t.root);
-    moves.forEach(function (mv) {
-      if (mv.pause) { mv.dur = T.pause; return; }
-      var len = Math.hypot(mv.to.x - mv.from.x, mv.to.y - mv.from.y);
-      var base = Math.max(240, Math.min(520, 330 * len / t.dx)) * rand(0.92, 1.08);
-      mv.dur = mv.fwd ? base : base * 0.62;
+    })(t.root);
+    // Group moves into runs between decision points, so motion accelerates and settles
+    // once per decision rather than once per edge.
+    var out = [], cur = null;
+    moves.forEach(function (m) {
+      var breakHere = !cur || cur.fwd !== m.fwd || (m.fwd && m.from.children.length > 1);
+      if (breakHere) { cur = { fwd: m.fwd, moves: [] }; out.push(cur); }
+      cur.moves.push(m);
     });
-    return { moves: moves, found: found };
+    out.forEach(function (r) {
+      r.pts = [r.moves[0].from].concat(r.moves.map(function (m) { return m.to; }));
+      r.cum = [0];
+      for (var i = 1; i < r.pts.length; i++) r.cum.push(r.cum[i - 1] + Math.hypot(r.pts[i].x - r.pts[i - 1].x, r.pts[i].y - r.pts[i - 1].y));
+      r.len = r.cum[r.cum.length - 1];
+      var end = r.pts[r.pts.length - 1];
+      r.deadEnd = r.fwd && !end.children.length && end.depth !== t.D;
+      r.goal = r.fwd && end.depth === t.D;
+      var base = CFG.runBase + r.len / CFG.pxPerMs;
+      r.dur = (r.fwd ? base : base * CFG.backFactor) * rand(0.94, 1.06);
+      r.after = r.deadEnd ? CFG.deadEndPause : (r.goal ? 0 : CFG.decisionPause);
+    });
+    return { runs: out, found: found };
   }
 
-  // ---------- Drawing ----------
-  function line(a, b, rgb, alpha, width) {
-    var mx = (a.x + b.x) / 2;
-    ctx.strokeStyle = "rgba(" + rgb + "," + (alpha * maskAt(mx)).toFixed(3) + ")";
-    ctx.lineWidth = width;
-    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-  }
-  function dot(p, rgb, alpha, r) {
-    ctx.fillStyle = "rgba(" + rgb + "," + (alpha * maskAt(p.x)).toFixed(3) + ")";
-    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
-  }
-  function light(p, alpha) {
-    var k = maskAt(p.x) * alpha;
-    var g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, 16);
-    g.addColorStop(0, "rgba(255,255,255," + (0.32 * k).toFixed(3) + ")");
-    g.addColorStop(1, "rgba(255,255,255,0)");
-    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, 16, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "rgba(" + COLOR.light + "," + (0.95 * Math.max(k, 0.5 * alpha)).toFixed(3) + ")";
-    ctx.beginPath(); ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2); ctx.fill();
+  // ---------- SVG scene ----------
+  function setupScene() {
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("width", W); svg.setAttribute("height", H);
+    var defs = el("defs", {}, svg);
+    var g1 = el("radialGradient", { id: "xp-halo-near" }, defs);
+    el("stop", { offset: "0", "stop-color": "#ffffff", "stop-opacity": "0.22" }, g1);
+    el("stop", { offset: "1", "stop-color": "#ffffff", "stop-opacity": "0" }, g1);
+    var g2 = el("radialGradient", { id: "xp-halo-far" }, defs);
+    el("stop", { offset: "0", "stop-color": "#ffffff", "stop-opacity": "0.06" }, g2);
+    el("stop", { offset: "1", "stop-color": "#ffffff", "stop-opacity": "0" }, g2);
+    layers.root = el("g", {}, svg);
+    layers.edges = el("g", { fill: "none", stroke: CFG.edgeColor, "stroke-width": CFG.edgeWidth, "stroke-linecap": "round" }, layers.root);
+    layers.proof = el("polyline", { fill: "none", stroke: CFG.green, "stroke-width": 1.6, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, layers.root);
+    layers.light = el("g", { opacity: 0 }, layers.root);
+    layers.far = el("circle", { r: 26, fill: "url(#xp-halo-far)" }, layers.light);
+    layers.near = el("circle", { r: 9, fill: "url(#xp-halo-near)" }, layers.light);
+    layers.core = el("circle", { r: 1.7, fill: "#ffffff" }, layers.light);
   }
 
-  function draw(fadeK) {
-    ctx.clearRect(0, 0, W, H);
-    var a = 0.55 * fadeK;
-    state.revealed.forEach(function (n) { line(n.parent, n, COLOR.explored, a, 1); });
-    state.revealed.forEach(function (n) { if (!n.kids.length || n.d === tree.D) dot(n, COLOR.node, a, 1.4); });
-    dot(tree.root, COLOR.node, a, 1.6);
-    if (state.partial) {
-      var mv = state.partial.mv, q = state.partial.q;
-      var p = { x: mv.from.x + (mv.to.x - mv.from.x) * q, y: mv.from.y + (mv.to.y - mv.from.y) * q };
-      if (mv.fwd) line(mv.from, p, COLOR.explored, a, 1);
-    }
-    if (state.success) {
-      var path = state.success.path, q2 = state.success.q, nSeg = path.length - 1;
-      var upto = q2 * nSeg;
-      for (var i = 0; i < nSeg; i++) {
-        if (i >= upto) break;
-        var f = Math.min(1, upto - i);
-        var b = { x: path[i].x + (path[i + 1].x - path[i].x) * f, y: path[i].y + (path[i + 1].y - path[i].y) * f };
-        line(path[i], b, COLOR.success, 0.9 * fadeK, 1.6);
-      }
-    }
-    if (state.lightAt) light(state.lightAt, fadeK);
+  function edgeEl(child) {
+    if (child.edge) return child.edge;
+    var p = child.parent;
+    var len = Math.hypot(child.x - p.x, child.y - p.y);
+    var e = el("line", {
+      x1: p.x, y1: p.y, x2: child.x, y2: child.y,
+      "stroke-dasharray": len + " " + (len + 1), "stroke-dashoffset": len,
+      opacity: (CFG.edgeOpacity * maskAt((p.x + child.x) / 2)).toFixed(3)
+    }, layers.edges);
+    child.edge = e; child.edgeLen = len; child.revealed = 0;
+    return e;
+  }
+  function reveal(child, frac) {
+    var e = edgeEl(child);
+    if (frac <= child.revealed) return;
+    child.revealed = frac;
+    e.setAttribute("stroke-dashoffset", (child.edgeLen * (1 - frac)).toFixed(2));
+  }
+  function placeLight(x, y) {
+    var k = Math.max(0.7, maskAt(x));
+    layers.light.setAttribute("transform", "translate(" + x.toFixed(2) + "," + y.toFixed(2) + ")");
+    layers.near.setAttribute("opacity", k);
+    layers.far.setAttribute("opacity", k);
+  }
+  function mix(a, b, t) {
+    var pa = [1, 3, 5].map(function (i) { return parseInt(a.substr(i, 2), 16); });
+    var pb = [1, 3, 5].map(function (i) { return parseInt(b.substr(i, 2), 16); });
+    return "rgb(" + pa.map(function (v, i) { return Math.round(v + (pb[i] - v) * t); }).join(",") + ")";
   }
 
   // ---------- Cycle ----------
-  function newCycle() {
-    tree = build(); plan = makePlan(tree);
-    state = { phase: "search", i: 0, t0: performance.now(), revealed: [], partial: null, lightAt: tree.root, success: null };
+  function newCycle(now) {
+    tree = build();
+    var p = plan(tree);
+    runs = p.runs;
+    setupScene();
+    placeLight(tree.root.x, tree.root.y);
+    state = { phase: "appear", t0: now, run: 0, found: p.found };
+  }
+
+  function pointAt(r, s) {
+    var i = 1;
+    while (i < r.cum.length - 1 && r.cum[i] < s) i++;
+    var a = r.pts[i - 1], b = r.pts[i], seg = r.cum[i] - r.cum[i - 1];
+    var f = seg > 0 ? (s - r.cum[i - 1]) / seg : 1;
+    if (r.fwd) {
+      for (var j = 1; j < i; j++) reveal(r.moves[j - 1].to, 1);
+      reveal(r.moves[i - 1].to, f);
+    }
+    return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
   }
 
   function step(now) {
-    var dt = now - state.t0;
-    if (state.phase === "search") {
-      var mv = plan.moves[state.i];
-      if (!mv) {
-        state.partial = null;
-        if (plan.found) {
-          var path = [], n = plan.found; while (n) { path.unshift(n); n = n.parent; }
-          state.success = { path: path, q: 0 };
-          state.phase = "sweep";
-        } else { state.phase = "hold"; state.hold = T.failHold; }
-        state.t0 = now; draw(1); return;
+    var dt = now - state.t0, S = state;
+    switch (S.phase) {
+      case "appear":
+        layers.light.setAttribute("opacity", smootherstep(dt / 500).toFixed(3));
+        if (dt >= 500) { S.phase = runs.length ? "run" : "exhausted"; S.t0 = now; }
+        return;
+      case "run": {
+        var r = runs[S.run];
+        var t = dt / r.dur;
+        var e = r.deadEnd ? deadEndEase(t) : smootherstep(t);
+        var p = pointAt(r, e * r.len);
+        placeLight(p.x, p.y);
+        if (t >= 1) { S.phase = "settle"; S.t0 = now; }
+        return;
       }
-      if (mv.pause) {
-        if (dt >= mv.dur) { state.i++; state.t0 = now; }
-        draw(1); return;
+      case "settle": {
+        var rr = runs[S.run];
+        if (dt < rr.after) return;
+        S.run++; S.t0 = now;
+        if (rr.goal) S.phase = "found";
+        else if (S.run >= runs.length) S.phase = "exhausted";
+        else S.phase = "run";
+        return;
       }
-      var q = Math.min(1, dt / mv.dur), e = ease(q);
-      state.partial = { mv: mv, q: e };
-      state.lightAt = { x: mv.from.x + (mv.to.x - mv.from.x) * e, y: mv.from.y + (mv.to.y - mv.from.y) * e };
-      if (q >= 1) {
-        if (mv.fwd && state.revealed.indexOf(mv.to) < 0) state.revealed.push(mv.to);
-        state.partial = null; state.lightAt = mv.to; state.i++; state.t0 = now;
+      case "found": {
+        var c = CFG.success;
+        if (dt > c.pause) {
+          var g = smootherstep((dt - c.pause) / c.toGreen);
+          layers.core.setAttribute("fill", mix("#ffffff", CFG.green, g));
+        }
+        if (dt >= c.pause + c.toGreen * 0.6) {
+          if (!S.path) {
+            S.path = []; var n = S.found; while (n) { S.path.unshift(n); n = n.parent; }
+            layers.proof.setAttribute("points", S.path.map(function (q) { return q.x.toFixed(1) + "," + q.y.toFixed(1); }).join(" "));
+            var L = 0; for (var i = 1; i < S.path.length; i++) L += Math.hypot(S.path[i].x - S.path[i - 1].x, S.path[i].y - S.path[i - 1].y);
+            S.pathLen = L;
+            layers.proof.setAttribute("stroke-dasharray", L + " " + (L + 1));
+            layers.proof.setAttribute("stroke-dashoffset", L);
+            layers.proof.setAttribute("opacity", 0.9);
+            S.sweep0 = now;
+          }
+          var q = smootherstep((now - S.sweep0) / c.sweep);
+          layers.proof.setAttribute("stroke-dashoffset", (S.pathLen * (1 - q)).toFixed(2));
+          if (now - S.sweep0 >= c.sweep + c.hold) { S.phase = "dissolve"; S.t0 = now; }
+        }
+        return;
       }
-      draw(1); return;
+      case "exhausted": {
+        var f = CFG.failure;
+        if (dt > f.rest) {
+          var k = 1 - smootherstep((dt - f.rest) / f.subside);
+          layers.near.setAttribute("opacity", (k).toFixed(3));
+          layers.far.setAttribute("opacity", (k).toFixed(3));
+          layers.core.setAttribute("opacity", (0.35 + 0.65 * k).toFixed(3));
+        }
+        if (dt >= f.rest + f.subside + f.hold) { S.phase = "dissolve"; S.t0 = now; }
+        return;
+      }
+      case "dissolve":
+        layers.root.setAttribute("opacity", (1 - smootherstep(dt / CFG.dissolve)).toFixed(3));
+        if (dt >= CFG.dissolve) { S.phase = "gap"; S.t0 = now; S.gap = CFG.gap * rand(0.85, 1.2); }
+        return;
+      case "gap":
+        if (dt >= S.gap) newCycle(now);
+        return;
     }
-    if (state.phase === "sweep") {
-      state.success.q = ease(Math.min(1, dt / T.successSweep));
-      if (dt >= T.successSweep) { state.phase = "hold"; state.hold = T.successHold; state.t0 = now; }
-      draw(1); return;
-    }
-    if (state.phase === "hold") {
-      if (dt >= state.hold) { state.phase = "fade"; state.t0 = now; }
-      draw(1); return;
-    }
-    if (state.phase === "fade") {
-      var k = 1 - ease(Math.min(1, dt / T.fade));
-      draw(k);
-      if (dt >= T.fade) { state.phase = "gap"; state.t0 = now; ctx.clearRect(0, 0, W, H); }
-      return;
-    }
-    if (state.phase === "gap" && dt >= T.gap * rand(0.8, 1.2)) newCycle();
   }
 
   function loop(now) { step(now); raf = requestAnimationFrame(loop); }
 
-  // Reduced motion: one still tree, fully revealed in gray, no light.
+  function measure() {
+    W = window.innerWidth; H = window.innerHeight;
+    var col = document.querySelector("[data-scrim]");
+    if (col) { var r = col.getBoundingClientRect(); scrim.x0 = r.left; scrim.x1 = r.right; }
+  }
+
+  // Reduced motion: one quiet, partly explored tree, no light.
   function still() {
     tree = build();
-    state = { revealed: tree.nodes.filter(function (n) { return n.parent; }), partial: null, lightAt: null, success: null };
-    draw(0.7);
+    var p = plan(tree);
+    setupScene();
+    var fwd = [];
+    p.runs.forEach(function (r) { if (r.fwd) r.moves.forEach(function (m) { fwd.push(m.to); }); });
+    fwd.slice(0, Math.ceil(fwd.length * 0.6)).forEach(function (n) { reveal(n, 1); });
+    layers.root.setAttribute("opacity", 0.8);
   }
 
   function start() {
     cancelAnimationFrame(raf);
     measure();
     if (reduceQuery.matches) { still(); return; }
-    newCycle(); raf = requestAnimationFrame(loop);
+    newCycle(performance.now());
+    raf = requestAnimationFrame(loop);
   }
 
-  var resizeTimer;
-  window.addEventListener("resize", function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(start, 250); });
+  var resizeTimer, lastW = window.innerWidth;
+  window.addEventListener("resize", function () {
+    // Ignore height-only changes (mobile address bars) to avoid restarting while scrolling.
+    if (Math.abs(window.innerWidth - lastW) < 2) { measure(); return; }
+    lastW = window.innerWidth;
+    clearTimeout(resizeTimer); resizeTimer = setTimeout(start, 250);
+  });
   if (reduceQuery.addEventListener) reduceQuery.addEventListener("change", start);
   start();
 
-  // Exposed for testing: window.__searchField.sample(n) returns the share of solvable trees.
-  window.__searchField = {
+  // Testing hook: window.__exproof.sample(n) checks the 1/3 rate and the tree invariants.
+  window.__exproof = {
     sample: function (n) {
-      var s = 0, ok = true, ms = 0, nodes = 0;
+      var solv = 0, ok = true, ms = 0, nodes = 0, leafDepth = {}, leaves = 0, crossings = 0;
       for (var i = 0; i < n; i++) {
-        var t = build(), deep = t.nodes.filter(function (x) { return x.d === t.D; }).length;
-        if (t.solvable) s++;
-        if ((t.solvable && deep !== 1) || (!t.solvable && deep !== 0)) ok = false;
-        var p = makePlan(t);
+        var t = build(), p = plan(t);
+        if (t.solvable) solv++;
+        var deep = t.nodes.filter(function (x) { return x.depth === t.D; });
+        if (t.solvable ? (deep.length !== 1 || !deep[0].win) : deep.length !== 0) ok = false;
         if (!!p.found !== t.solvable) ok = false;
         nodes += t.nodes.length;
-        p.moves.forEach(function (mv) { ms += mv.dur; });
+        p.runs.forEach(function (r) { ms += r.dur + r.after; });
+        t.nodes.forEach(function (x) {
+          if (!x.children.length && !x.win) { leaves++; leafDepth[x.depth] = (leafDepth[x.depth] || 0) + 1; }
+          if (x.children.length === 2 && x.children[0].y > x.children[1].y) crossings++;
+        });
+        if (i < 150) {
+          // Exact check: no two edges that do not share an endpoint may intersect.
+          var E = t.nodes.filter(function (x) { return x.parent; });
+          for (var a = 0; a < E.length; a++) for (var b = a + 1; b < E.length; b++) {
+            var e1 = E[a], e2 = E[b];
+            if (e1.depth !== e2.depth) continue;              // edges only overlap in x within one layer
+            if (e1.parent === e2.parent) continue;            // shared endpoint
+            var dA = (e1.parent.y - e2.parent.y), dB = (e1.y - e2.y);
+            if (dA * dB < 0 || dA === 0 || dB === 0) crossings++;
+          }
+        }
       }
-      return { solvableShare: s / n, invariantsHold: ok, meanSearchSeconds: ms / n / 1000, meanNodes: nodes / n };
+      var hist = {};
+      Object.keys(leafDepth).forEach(function (d) { hist[d] = +(leafDepth[d] / leaves).toFixed(3); });
+      return { solvableShare: solv / n, invariantsHold: ok, crossings: crossings,
+               meanNodes: nodes / n, meanSearchSeconds: ms / n / 1000, deadEndDepthShare: hist };
     }
   };
 })();

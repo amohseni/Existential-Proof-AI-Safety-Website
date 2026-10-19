@@ -1,4 +1,4 @@
-/* ∃x AI. Layout: three-zone Swiss grid on a black field.
+/* ∃xProof AI. Layout: three-zone Swiss grid on a black field.
    Label rail | text column (~65ch, ET Book) | margin notes (Tufte).
    The search-tree canvas sits behind everything and is dimmed under the text column.
    Below 860px the rail sits above each section and margin notes open in place. */
@@ -6,6 +6,9 @@
 @font-face { font-family: "ET Book"; src: url("fonts/et-book-roman.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "ET Book"; src: url("fonts/et-book-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: "ET Book"; src: url("fonts/et-book-semibold.woff") format("woff"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Wordmark Exists"; src: url("fonts/wordmark-exists.woff2") format("woff2"); unicode-range: U+2203; font-display: block; }
+@font-face { font-family: "Wordmark Garamond"; src: url("fonts/wordmark-garamond.woff2") format("woff2"); font-style: normal; font-display: block; }
+@font-face { font-family: "Wordmark Garamond"; src: url("fonts/wordmark-garamond-italic.woff2") format("woff2"); font-style: italic; font-display: block; }
 
 :root {
   /* Single dark look, by design. */
@@ -47,7 +50,7 @@ body {
 }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
 
-#search-field { position: fixed; inset: 0; z-index: 0; pointer-events: none; display: block; }
+#exproof-search-background { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; background: transparent; display: block; overflow: hidden; }
 
 .page {
   position: relative; z-index: 1;
@@ -72,12 +75,36 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--rule-strong);
 }
-.wordmark { text-decoration: none; display: inline-flex; align-items: baseline; gap: 0.08em; font-size: 1.35rem; line-height: 1; color: var(--fg); }
+/* Wordmark: ∃xProof AI. ∃ from STIX Two Math, xProof AI from EB Garamond.
+   Self-hosted subsets containing only the wordmark's glyphs. Only ∃ turns red on hover. */
+.wordmark {
+  display: inline-flex; align-items: baseline; white-space: nowrap;
+  color: var(--fg); text-decoration: none;
+  font-size: 1.62rem; line-height: 0.92; font-weight: 400;
+  text-rendering: geometricPrecision; font-kerning: normal;
+}
 .wordmark:hover { color: var(--fg); }
-.wordmark .ex { display: inline-block; transform: scaleX(-1); font-family: var(--serif); }
-.wordmark .x { font-family: var(--serif); font-style: italic; margin-right: 0.28em; }
-.wordmark .ai { font-family: var(--sans); font-weight: 500; font-size: 0.62em; letter-spacing: 0.14em; }
-.wordmark:hover .ex { color: var(--red-bright); }
+.wordmark .exists {
+  font-family: "Wordmark Exists", "STIX Two Math", "STIXGeneral", "Cambria Math", Georgia, serif;
+  font-size: 0.965em; line-height: 1; display: inline-block;
+  transform: translateY(0.016em) scaleX(0.975); transform-origin: center;
+  margin-right: 0.008em; transition: color 160ms ease;
+}
+.wordmark:hover .exists, .wordmark:focus-visible .exists { color: var(--red-bright); }
+.wordmark .x {
+  font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
+  font-size: 0.94em; font-style: italic; line-height: 1; display: inline-block;
+  transform: translateY(0.012em); margin-left: -0.010em; margin-right: 0.010em; letter-spacing: -0.010em;
+}
+.wordmark .proof {
+  font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
+  font-size: 0.94em; line-height: 1; letter-spacing: -0.022em; display: inline-block;
+}
+.wordmark .ai {
+  font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
+  font-size: 0.965em; line-height: 1; letter-spacing: -0.014em; display: inline-block;
+  margin-left: 0.18em;
+}
 .nav { display: flex; flex-wrap: wrap; gap: 0.35rem 1.5rem; font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.05em; }
 .nav a { text-decoration: none; color: var(--fg-2); padding-block: 0.15rem; }
 .nav a:hover { color: var(--fg); }
@@ -305,7 +332,7 @@ html.review .review-bar {
 @media print {
   :root { --bg: #fff; --fg: #000; --fg-2: #444; --rule: #ccc; --rule-strong: #888; --red: #8a1f15; --red-bright: #8a1f15; color-scheme: light; }
   html { font-size: 10.5pt; }
-  #search-field, .nav, .review-bar, .copy, details.cite, .filters { display: none !important; }
+  #exproof-search-background, .nav, .review-bar, .copy, details.cite, .filters { display: none !important; }
   .masthead { position: static; backdrop-filter: none; background: none; }
   .page { max-width: none; padding: 0; }
   .section { padding-block: 1.2rem 0.4rem; }
