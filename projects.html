@@ -91,9 +91,28 @@
       <details class="expand">
         <summary>More</summary>
         <div class="expand-body">
-      <p>The book joins radical interpretation<label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote"><i>Radical interpretation:</i> the project, from Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with mechanistic interpretability. It gives criteria of success for attributing beliefs, desires, and meanings, and ties each to tests that current methods can run. Its central lesson is that attribution is holistic. Belief, desire, and propositional structure constrain one another, so a method that measures one while holding the others fixed inherits their distortions.</p>
-      <p>It builds on two papers. One showed that leading probes for belief in language models fail to generalize. The other proposed four conditions for a representation to count as belief-like: accuracy, coherence, uniformity, and use. The next step is to give the same treatment to deception and situational awareness.</p>
-      <p class="related"><span class="label">Outputs</span><a href="https://arxiv.org/abs/2606.26523">Radical AI Interpretability (book, arXiv:2606.26523)</a><a href="publications.html#standards">Standards for Belief Representations in LLMs</a><a href="publications.html#lie-detector">Still No Lie Detector for Language Models</a></p>
+      <p class="question">How can we tell what an AI system believes and wants from facts about its computation?</p>
+      <p>Interpretability methods read beliefs and goals off a model’s internal states. Whether a reading is correct depends on what it is for a state to be a belief, and the methods leave this unstated. We take up the problem of radical interpretation,<label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote"><i>Radical interpretation:</i> the problem, posed by Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with the facts about the agent given by its computation:</p>
+      <p class="scheme">Find the beliefs <var>B</var>, desires <var>D</var>, and meanings <var>M</var> that together best explain the computation <var>C</var> of system <var>S</var>.</p>
+      <p>The three are solved for together. Belief, desire, and the structure of the propositions they concern constrain one another, so a method that holds one fixed while measuring another inherits its distortions.</p>
+      <h3>Current work: from belief to safety-relevant quantities</h3>
+      <p>Earlier papers found that leading probes for belief in language models fail to generalize,<label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"><span class="sidenote">B. A. Levinstein and D. A. Herrmann, “Still No Lie Detector for Language Models: Probing Empirical and Conceptual Roadblocks,” <i>Philosophical Studies</i> 182 (2025).</span> and proposed four conditions that a representation must meet to count as belief-like.<label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"><span class="sidenote">D. A. Herrmann and B. A. Levinstein, “Standards for Belief Representations in LLMs,” <i>Minds and Machines</i> 35 (2025).</span> The book ties criteria of success to tests that current methods can run. The next step is to give deception and situational awareness the same treatment.</p>
+      <figure aria-labelledby="fig-rai-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col">Condition</th><th scope="col">The representation must</th><th scope="col">A typical test</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Accuracy</th><td>track the truth of what it represents</td><td>probe accuracy on held-out statements</td></tr>
+              <tr><th scope="row">Coherence</th><td>respect logical relations among its contents</td><td>consistency under negation and conjunction</td></tr>
+              <tr><th scope="row">Uniformity</th><td>be the same across domains and contexts</td><td>one probe transferring across datasets</td></tr>
+              <tr><th scope="row">Use</th><td>guide the system’s behavior</td><td>intervening on it shifts what the system does</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig-rai-cap"><span class="label">Table 2</span>Four conditions for a representation in a language model to count as belief-like.</figcaption>
+      </figure>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#radical">Radical AI Interpretability</a><a href="publications.html#standards">Standards for Belief Representations in LLMs</a><a href="publications.html#lie-detector">Still No Lie Detector for Language Models</a></p>
+    
         </div>
       </details>
     </article>
@@ -109,10 +128,27 @@
       <details class="expand">
         <summary>More</summary>
         <div class="expand-body">
-      <p>A capable system may know more than we do and have options we lack. The same capabilities make it costly if its aims diverge from ours. We ask when a principal who is uncertain about a system’s values and abilities should hand it decisions. Letting it decide any problem whatever is a knife-edge standard: one misclassified gamble defeats it. Handing over the problems we expect it to face is robust, and the gain splits into three terms:</p>
-      <p class="scheme">Gain from delegating = reach + information − cost of misalignment.</p>
-      <p>A system that errs only on close calls, within <var>δ</var> of our indifference, costs at most <var>Kδ</var>², where <var>K</var> measures how often we face close calls. What it knows does not shrink with <var>δ</var>, so there is a margin of misalignment within which delegating pays.</p>
+      <p class="question">When is imperfect alignment good enough to delegate a decision to an AI system?</p>
+      <p>Perfect alignment is unlikely, so we need to know when a system that does not fully share our values is good enough to hand a task. We model the choice as a decision for a principal who is uncertain about the system’s values and abilities, and describe the system only by how it would choose.<label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"><span class="sidenote">In practice we observe what a system does, not what it believes or wants. None of the results assume that the system maximizes expected utility.</span> Delegating the problems she expects it to face pays when</p>
+      <p class="scheme">reach + information &gt; cost of misalignment.</p>
+      <p><i>Reach</i> is the value of the problems the system faces that she would not, <i>information</i> is what its choices reveal about the world, and the <i>cost of misalignment</i> is what its departures from her own choices cost her.</p>
+      <h3>Current work: knife-edges and margins</h3>
+      <p>Dorst and colleagues propose that to defer to an expert is to prefer her opinions for any decision whatever.<label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"><span class="sidenote">K. Dorst, B. A. Levinstein, B. Salow, B. E. Husic, and B. Fitelson, “Deference Done Better,” <i>Philosophical Perspectives</i> 35 (2021).</span> Carried over to delegation, where the agent’s values come along with its opinions, this standard becomes a knife-edge. The ex ante standard is robust. A system that errs only on close calls, within <var>δ</var> of her indifference, costs at most <var>Kδ</var>², where <var>K</var> measures how often she faces close calls, while its information does not shrink with <var>δ</var>.</p>
+      <figure aria-labelledby="fig-pa-cap">
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col"></th><th scope="col">Universal delegation</th><th scope="col">Ex ante delegation</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">The principal asks</th><td>would I let it decide any problem?</td><td>should I hand over the problems I expect?</td></tr>
+              <tr><th scope="row">What it requires</th><td>choices that match mine, given its type</td><td>errors only on close calls</td></tr>
+              <tr><th scope="row">Misalignment tolerated</th><td>none</td><td>a margin that grows with reach and information</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption id="fig-pa-cap"><span class="label">Table 3</span>Two standards for delegating to a system whose values may differ from ours.</figcaption>
+      </figure>
       <p class="related"><span class="label">Outputs</span><a href="publications.html#managing-misalignment">A Decision-Theoretic Approach for Managing Misalignment</a><a href="publications.html#margins">Margins of Misalignment</a></p>
+    
         </div>
       </details>
     </article>
@@ -123,8 +159,14 @@
       <details class="expand">
         <summary>More</summary>
         <div class="expand-body">
-      <p>Results on the causal hierarchy say that claims about interventions cannot be recovered from probabilities. We argue that these results rest on an impoverished set of variables. Treat interventions as events in the world, and claims about them reduce to conditioning. A representation theorem in the style of de Finetti shows how an agent can learn causal structure and probabilities together. For AI, this suggests that a system can reason well about interventions with no explicit causal machinery inside it, which bears on what interpretability should look for in a world model.</p>
+      <p class="question">Does causal reasoning need anything beyond subjective probability?</p>
+      <p>Pearl’s causal hierarchy separates associational, interventional, and counterfactual claims, and theorems in this tradition show that the higher kinds cannot be recovered from the lower.<label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"><span class="sidenote">J. Pearl, <i>Causality</i>, Cambridge University Press, 2000; E. Bareinboim, J. D. Correa, D. Ibeling, and T. Icard, “On Pearl’s Hierarchy and the Foundations of Causal Inference,” 2022.</span> We argue that these results rest on an impoverished set of variables. Add a variable for each intervention, treated as an event in the world like any other, and interventional claims become conditional probabilities:</p>
+      <p class="scheme"><var>P</var>(<var>Y</var> = <var>y</var> | do(<var>X</var> = <var>x</var>)) = <var>P</var>(<var>Y</var> = <var>y</var> | <var>X</var> = <var>x</var>, <var>I<sub>X</sub></var> = on).</p>
+      <p>A representation theorem in the style of de Finetti then shows how an agent can learn causal structure and probabilities together. For decision theory, causal decision theory becomes a useful approximation to evidential decision theory, and causalist intuitions trace to the limits of the reasoner.</p>
+      <h3>What it means for world models</h3>
+      <p>To say that a trained system has a world model can mean that it encodes the structure of its environment, or that its model supports reasoning about interventions. The second matters more for safety, since a system that can reason about interventions can plan around its overseers. If causal structure is what a bounded agent’s picture of the world looks like when it attends to only part of what it could track, a system may reason well about interventions with no explicit causal machinery inside it. Interpretability should look for that capacity in whatever form it takes.</p>
       <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a></p>
+    
         </div>
       </details>
     </article>
