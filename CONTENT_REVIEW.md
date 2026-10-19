@@ -18,7 +18,6 @@ The site states only what Aydin said, what the site plan (`docs/PLAN.md`) says, 
 | Projects, Publications | A Bayesian Reduction of Causation | Whether to include; year, status, author order, one-line summary. |
 | Publications | An Epistemic Reading of the Power-Seeking Theorems | Authors (Mohseni and Herrmann? Sven Neth?). |
 | Publications | Radical AI Interpretability | Authors, year, venue, type. |
-| Publications | September 2026 workshop talk on instrumental convergence | Title, date, and whether to list it. |
 | Publications | Year for Learning the Value of Value Learning | Year to show. |
 | People | Website, Google Scholar, and CV links for both | URLs. |
 | People | Collaborator list (Sven Neth, Alex J. London, Benjamin A. Levinstein, Bruce Rushing) | Who to list, with affiliations. |

@@ -21,15 +21,15 @@
     pSolvable: 1 / 3,
     minDepth: 26, maxDepth: 34, maxNodes: 320,
     edgeColor: "#91918b", edgeWidth: 1.2, edgeOpacity: 0.44,
-    green: "#1fa463",
+    green: "#1fa463", greenBright: "#4fdc95",
     scrimInside: 0.55,     // edge opacity multiplier under the text column
     pxPerMs: 0.95,         // forward travel speed through the middle of a run
     runBase: 150,          // fixed part of each run's duration (ms)
     backFactor: 0.6,      // backtracking takes this fraction of the forward time
     deadEndPause: 220, decisionPause: 40,
-    success: { pause: 380, toGreen: 520, sweep: 1100, hold: 1900 },
+    success: { pause: 380, toGreen: 520, sweep: 1100, settle: 350, brighten: 650, hold: 1300 },
     failure: { rest: 650, subside: 1000, hold: 600 },
-    dissolve: 1700, gap: 800
+    dissolve: 1700, gap: 1000
   };
 
   var W, H, scrim = { x0: -1e4, x1: -1e4 }, tree, runs, state, raf, layers = {};
@@ -143,7 +143,7 @@
   function build() {
     var span = Math.max(0, Math.min(1, (W - 400) / 1200));
     var D = Math.round(CFG.minDepth + (CFG.maxDepth - CFG.minDepth) * span);
-    var solvable = Math.random() < CFG.pSolvable;
+    var solvable = window.__exproofForce !== undefined ? window.__exproofForce : Math.random() < CFG.pSolvable;
     var t = generate(D, solvable);
     layout(t);
     return t;
@@ -206,9 +206,24 @@
     var g2 = el("radialGradient", { id: "xp-halo-far" }, defs);
     el("stop", { offset: "0", "stop-color": "#ffffff", "stop-opacity": "0.06" }, g2);
     el("stop", { offset: "1", "stop-color": "#ffffff", "stop-opacity": "0" }, g2);
+    // Mask that dims the proof path under the text column, matching the per-edge dimming.
+    var lg = el("linearGradient", { id: "xp-scrim-grad", gradientUnits: "userSpaceOnUse", x1: 0, y1: 0, x2: W, y2: 0 }, defs);
+    var ramp = 80, inside = CFG.scrimInside;
+    var stops = scrim.x1 > 0 ? [[scrim.x0 - ramp, 1], [scrim.x0, inside], [scrim.x1, inside], [scrim.x1 + ramp, 1]] : [[0, 1], [W, 1]];
+    stops.forEach(function (st) {
+      var g = Math.round(255 * st[1]);
+      el("stop", { offset: Math.max(0, Math.min(1, st[0] / W)).toFixed(4), "stop-color": "rgb(" + g + "," + g + "," + g + ")" }, lg);
+    });
+    var mk = el("mask", { id: "xp-scrim", maskUnits: "userSpaceOnUse", x: 0, y: 0, width: W, height: H }, defs);
+    el("rect", { x: 0, y: 0, width: W, height: H, fill: "url(#xp-scrim-grad)" }, mk);
     layers.root = el("g", {}, svg);
     layers.edges = el("g", { fill: "none", stroke: CFG.edgeColor, "stroke-width": CFG.edgeWidth, "stroke-linecap": "round" }, layers.root);
-    layers.proof = el("polyline", { fill: "none", stroke: CFG.green, "stroke-width": 1.6, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, layers.root);
+    var blur = el("filter", { id: "xp-glow", x: "-5%", y: "-50%", width: "110%", height: "200%" }, defs);
+    el("feGaussianBlur", { stdDeviation: "3.2" }, blur);
+    layers.proofGroup = el("g", { mask: "url(#xp-scrim)" }, null);
+    layers.glow = el("polyline", { fill: "none", stroke: CFG.greenBright, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round", filter: "url(#xp-glow)", opacity: 0 }, layers.proofGroup);
+    layers.proof = el("polyline", { fill: "none", stroke: CFG.green, "stroke-width": 1.6, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, layers.proofGroup);
+    layers.root.appendChild(layers.proofGroup);
     layers.light = el("g", { opacity: 0 }, layers.root);
     layers.far = el("circle", { r: 26, fill: "url(#xp-halo-far)" }, layers.light);
     layers.near = el("circle", { r: 9, fill: "url(#xp-halo-near)" }, layers.light);
@@ -309,9 +324,21 @@
             layers.proof.setAttribute("opacity", 0.9);
             S.sweep0 = now;
           }
-          var q = smootherstep((now - S.sweep0) / c.sweep);
+          var since = now - S.sweep0;
+          var q = smootherstep(since / c.sweep);
           layers.proof.setAttribute("stroke-dashoffset", (S.pathLen * (1 - q)).toFixed(2));
-          if (now - S.sweep0 >= c.sweep + c.hold) { S.phase = "dissolve"; S.t0 = now; }
+          // Once the proof path is complete, it brightens once: a brighter green, a slightly
+          // heavier stroke, and a soft glow. It holds at that brightness, then dissolves.
+          var b = smootherstep((since - c.sweep - c.settle) / c.brighten);
+          if (b > 0) {
+            if (!S.glowSet) { layers.glow.setAttribute("points", layers.proof.getAttribute("points")); S.glowSet = true; }
+            layers.proof.setAttribute("stroke", mix(CFG.green, CFG.greenBright, b));
+            layers.proof.setAttribute("stroke-width", (1.6 + 0.6 * b).toFixed(2));
+            layers.proof.setAttribute("opacity", (0.9 + 0.1 * b).toFixed(3));
+            layers.glow.setAttribute("opacity", (0.45 * b).toFixed(3));
+            layers.core.setAttribute("fill", mix(CFG.green, CFG.greenBright, b));
+          }
+          if (since >= c.sweep + c.settle + c.brighten + c.hold) { S.phase = "dissolve"; S.t0 = now; }
         }
         return;
       }
@@ -328,7 +355,7 @@
       }
       case "dissolve":
         layers.root.setAttribute("opacity", (1 - smootherstep(dt / CFG.dissolve)).toFixed(3));
-        if (dt >= CFG.dissolve) { S.phase = "gap"; S.t0 = now; S.gap = CFG.gap * rand(0.85, 1.2); }
+        if (dt >= CFG.dissolve) { S.phase = "gap"; S.t0 = now; S.gap = CFG.gap; }
         return;
       case "gap":
         if (dt >= S.gap) newCycle(now);
@@ -375,6 +402,8 @@
 
   // Testing hook: window.__exproof.sample(n) checks the 1/3 rate and the tree invariants.
   window.__exproof = {
+    phase: function () { return state && state.phase; },
+    glow: function () { return layers.glow && +layers.glow.getAttribute('opacity'); },
     sample: function (n) {
       var solv = 0, ok = true, ms = 0, nodes = 0, leafDepth = {}, leaves = 0, crossings = 0;
       for (var i = 0; i < n; i++) {

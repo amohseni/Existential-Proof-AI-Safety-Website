@@ -76,7 +76,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
   border-bottom: 1px solid var(--rule-strong);
 }
 /* Wordmark ∃xProof AI and monogram ∃xP. ∃ from STIX Two Math, the rest from EB Garamond,
-   self-hosted subsets. ∃ is red; on hover the x turns red too. `.brand` sets the name the same
+   self-hosted subsets. ∃ is red; on hover the whole wordmark turns red. `.brand` sets the name the same
    way inside running text. */
 .wordmark { display: inline-flex; align-items: baseline; color: var(--fg); text-decoration: none; font-size: 1.62rem; line-height: 0.92; }
 .wordmark:hover { color: var(--fg); }
@@ -94,7 +94,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
 }
 .brand .proof { font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif; font-size: 0.94em; line-height: 1; letter-spacing: -0.022em; display: inline-block; }
 .brand .ai { font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif; font-size: 0.965em; line-height: 1; letter-spacing: -0.014em; display: inline-block; margin-left: 0.18em; }
-.wordmark:hover .x, .wordmark:focus-visible .x { color: var(--red-bright); }
+.wordmark .x, .wordmark .proof, .wordmark .ai { transition: color 160ms ease; }
+.wordmark:hover, .wordmark:focus-visible { color: var(--red-bright); }
 .brand-mark { font-size: 1.2rem; color: var(--fg); }
 .nav { display: flex; flex-wrap: wrap; gap: 0.35rem 1.5rem; font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.05em; }
 .nav a { text-decoration: none; color: var(--fg-2); padding-block: 0.15rem; }

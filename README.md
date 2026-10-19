@@ -24,9 +24,9 @@ The repository starts private so draft content is not public. When the content i
 ## Editing
 
 - **Header and footer** are repeated in every page. A change to the navigation must be made in all seven files.
-- **Add a publication:** copy one `<li class="work">` block in `publications.html`. Set `data-type` to `working`, `paper`, or `talk`. Status classes: `active` (in progress), none (under review or revision), `out` (published or given). If you add the first published paper, add a "Papers" filter button with `data-filter="paper"`.
+- **Add a publication:** copy one `<li class="work">` block in `publications.html`. Set `data-type` to `paper`, `working`, or `report`. Talks do not go on this page. Status classes: `active` (in progress), none (under review or revision), `out` (published). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
 - **Add a margin note:** inside a paragraph, add
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.
 - **Review mode:** open any page with `#review` at the end of the URL. Every element with a `data-verify` attribute is highlighted, and hovering shows what needs confirming. Delete the attribute once the claim is confirmed.
-- **Animation settings** are at the top of `assets/search.js`: `CFG` (the 1/3 probability, depth range, node budget, colors, speeds, and timings). Running `window.__exproof.sample(1000)` in the browser console checks the 1/3 share and the tree invariants.
+- **Animation settings** are at the top of `assets/search.js`: `CFG` (the 1/3 probability, depth range, node budget, colors, speeds, and timings). Running `window.__exproof.sample(1000)` in the browser console checks the 1/3 share and the tree invariants. To watch a solvable cycle, run `window.__exproofForce = true` in the console before the next cycle starts.
