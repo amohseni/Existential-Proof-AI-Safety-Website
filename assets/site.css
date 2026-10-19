@@ -75,36 +75,27 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--rule-strong);
 }
-/* Wordmark: ∃xProof AI. ∃ from STIX Two Math, xProof AI from EB Garamond.
-   Self-hosted subsets containing only the wordmark's glyphs. Only ∃ turns red on hover. */
-.wordmark {
-  display: inline-flex; align-items: baseline; white-space: nowrap;
-  color: var(--fg); text-decoration: none;
-  font-size: 1.62rem; line-height: 0.92; font-weight: 400;
-  text-rendering: geometricPrecision; font-kerning: normal;
-}
+/* Wordmark ∃xProof AI and monogram ∃xP. ∃ from STIX Two Math, the rest from EB Garamond,
+   self-hosted subsets. ∃ is red; on hover the x turns red too. `.brand` sets the name the same
+   way inside running text. */
+.wordmark { display: inline-flex; align-items: baseline; color: var(--fg); text-decoration: none; font-size: 1.62rem; line-height: 0.92; }
 .wordmark:hover { color: var(--fg); }
-.wordmark .exists {
+.brand { white-space: nowrap; font-weight: 400; text-rendering: geometricPrecision; font-kerning: normal; }
+.brand .exists {
   font-family: "Wordmark Exists", "STIX Two Math", "STIXGeneral", "Cambria Math", Georgia, serif;
-  font-size: 0.965em; line-height: 1; display: inline-block;
-  transform: translateY(0.016em) scaleX(0.975); transform-origin: center;
-  margin-right: 0.008em; transition: color 160ms ease;
+  font-size: 0.965em; line-height: 1; display: inline-block; color: var(--red-bright);
+  transform: translateY(0.016em) scaleX(0.975); transform-origin: center; margin-right: 0.008em;
 }
-.wordmark:hover .exists, .wordmark:focus-visible .exists { color: var(--red-bright); }
-.wordmark .x {
+.brand .x {
   font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
   font-size: 0.94em; font-style: italic; line-height: 1; display: inline-block;
   transform: translateY(0.012em); margin-left: -0.010em; margin-right: 0.010em; letter-spacing: -0.010em;
+  transition: color 160ms ease;
 }
-.wordmark .proof {
-  font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
-  font-size: 0.94em; line-height: 1; letter-spacing: -0.022em; display: inline-block;
-}
-.wordmark .ai {
-  font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif;
-  font-size: 0.965em; line-height: 1; letter-spacing: -0.014em; display: inline-block;
-  margin-left: 0.18em;
-}
+.brand .proof { font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif; font-size: 0.94em; line-height: 1; letter-spacing: -0.022em; display: inline-block; }
+.brand .ai { font-family: "Wordmark Garamond", "EB Garamond", Garamond, Georgia, serif; font-size: 0.965em; line-height: 1; letter-spacing: -0.014em; display: inline-block; margin-left: 0.18em; }
+.wordmark:hover .x, .wordmark:focus-visible .x { color: var(--red-bright); }
+.brand-mark { font-size: 1.2rem; color: var(--fg); }
 .nav { display: flex; flex-wrap: wrap; gap: 0.35rem 1.5rem; font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.05em; }
 .nav a { text-decoration: none; color: var(--fg-2); padding-block: 0.15rem; }
 .nav a:hover { color: var(--fg); }
@@ -272,7 +263,7 @@ details.cite[open] summary { color: var(--red-bright); }
 .foot nav a { text-decoration: none; color: var(--fg); }
 .foot nav a:hover { color: var(--red-bright); }
 .foot p { margin: 0; max-width: 42rem; grid-column: 2; }
-.foot .mono { font-family: var(--mono); grid-column: 1; grid-row: 1; color: var(--fg); }
+.foot .brand-mark { grid-column: 1; grid-row: 1; align-self: start; line-height: 1; }
 
 /* ---------- Review mode (#review) ---------- */
 .review-bar { display: none; }
@@ -290,8 +281,8 @@ html.review .review-bar {
 @media (max-width: 860px) {
   .page { padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
   .hero, .section, .foot { grid-template-columns: minmax(0, 1fr); }
-  .hero .eyebrow, .hero h1, .hero .lede, .hero .who, .foot p, .foot nav, .foot .mono { grid-column: 1; grid-row: auto; }
-  .foot .mono { margin-bottom: 0.6rem; }
+  .hero .eyebrow, .hero h1, .hero .lede, .hero .who, .foot p, .foot nav, .foot .brand-mark { grid-column: 1; grid-row: auto; }
+  .foot .brand-mark { margin-bottom: 0.6rem; }
   .hero { padding-block: 3.2rem 2.8rem; }
   .hero .eyebrow { margin-bottom: 1.1rem; }
   .section { padding-block: 2.4rem 0.8rem; }
