@@ -26,6 +26,7 @@ A section is one type or the other, never both. Nothing reaches into another zon
 - **No hairlines between text.** Sections, list items, and works have no dividing lines; the tree in the background is the only line work between them.
 - **No rules between sections.** The only horizontal line on a page is the one under the masthead, at half the strength of `--rule-strong`. Tables keep their internal rules.
 - **Cap lines align.** An imaginary line drawn along the tops of the capitals of a rail label runs along the tops of the capitals of the first line beside it (or the top of a photo), and, on the Publications page, along the year and the title of each entry. The label's offset depends on what the section body starts with (see the `--label-pt` rules in `site.css`). After changing any type size, run `tools/check_alignment.py`.
+- **Link targets land below the menu.** A linked item (`#id`) stops so its first line sits level with the pinned section label, just below the menu bar, not under it. The `scroll-margin-top` rules in `site.css` do this; an element with its own top padding subtracts it, as `.work` does.
 - **Closing notes sit midway.** A section ends `--tail` (1.4rem, 1.1rem under 860px) above its lower edge. A closing note (`p.more` as the last element of a section body, such as "All research" or "Back to Agency") sits `--tail` below the element above it and `--tail` above that edge, so it is centered between the two. Any new closing line follows the same rule; do not give it its own margins.
 
 ### Figures, tables, and diagrams

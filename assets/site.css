@@ -143,6 +143,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
   padding-block: 3.2rem var(--tail);
 }
 .section > .label { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 4.6rem); align-self: start; padding-top: var(--label-pt); }
+/* Link targets. The menu bar is pinned, so a linked item stops just below it, at the height where a
+   pinned section label sits (4.6rem): the item's first line then lines up with the label. A linked
+   section stops so that its content, below its 3.2rem top padding, starts at that same height. */
+[id] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 4.6rem); }
+main > .section[id] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 1.4rem); }
+.work[id] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 4.6rem - 1.35rem); }   /* less the entry's top padding */
+.featured li[id] { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 4.6rem - 1rem); }
+.work[id]:first-child, .featured li[id]:first-child { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 4.6rem); }   /* first entries have no top padding */
 /* Cap-line alignment. The tops of the capitals in a rail label line up with the tops of the
    capitals in the first line beside it (or the top of a photo). Each kind of first element sits a
    fixed distance below its box, so the label's offset depends on what the body starts with.
@@ -390,6 +398,7 @@ html.review .review-bar {
   .nav { gap: 0.3rem 1.1rem; }
 }
 @media (max-width: 560px) {
+  [id], main > .section[id], .work[id], .featured li[id], .work[id]:first-child, .featured li[id]:first-child { scroll-margin-top: 1rem; }   /* the menu bar is not pinned here */
   body { font-size: 1.08rem; }
   .masthead { position: static; }
   .areas { grid-template-columns: minmax(0, 1fr); }
