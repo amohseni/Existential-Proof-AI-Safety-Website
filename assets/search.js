@@ -34,7 +34,8 @@
 
   var W, H, scrim = { x0: -1e4, x1: -1e4 }, tree, runs, state, raf, layers = {};
 
-  function rand(a, b) { return a + Math.random() * (b - a); }
+  var rng = Math.random;   // replaced by a seeded generator while a cycle is prepared
+  function rand(a, b) { return a + rng() * (b - a); }
   function smootherstep(t) { t = Math.max(0, Math.min(1, t)); return t * t * t * (t * (t * 6 - 15) + 10); }
   function deadEndEase(t) { return smootherstep(1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 1.6)); }
   function el(name, attrs, parent) {
@@ -82,18 +83,18 @@
       if (n.win) {
         if (n.depth < D) {
           kids.push({ win: true });
-          if (Math.random() < witnessSideBranchProbability(n.depth, D) && n.depth + 1 < D) kids.push({ win: false });
+          if (rng() < witnessSideBranchProbability(n.depth, D) && n.depth + 1 < D) kids.push({ win: false });
         }
       } else {
         if (n.depth >= D - 1) { kids = []; }                                  // hard boundary only
-        else if (n.depth >= 2 && Math.random() < stopProbability(n.depth, D, pressure)) { kids = []; }
+        else if (n.depth >= 2 && rng() < stopProbability(n.depth, D, pressure)) { kids = []; }
         else {
-          var count = (n.depth === 0 || Math.random() < twoChildProbability(n.depth, D, pressure)) ? 2 : 1;
+          var count = (n.depth === 0 || rng() < twoChildProbability(n.depth, D, pressure)) ? 2 : 1;
           if (pressure >= 1) count = 0;
           for (var i = 0; i < count; i++) kids.push({ win: false });
         }
       }
-      if (kids.length === 2 && Math.random() < 0.5) kids.reverse();
+      if (kids.length === 2 && rng() < 0.5) kids.reverse();
       kids.forEach(function (k) { var c = make(n, n.depth + 1, k.win); n.children.push(c); queue.push(c); });
     }
     return { nodes: nodes, root: root, D: D, solvable: solvable };
@@ -143,7 +144,7 @@
   function build() {
     var span = Math.max(0, Math.min(1, (W - 400) / 1200));
     var D = Math.round(CFG.minDepth + (CFG.maxDepth - CFG.minDepth) * span);
-    var solvable = window.__exproofForce !== undefined ? window.__exproofForce : Math.random() < CFG.pSolvable;
+    var solvable = window.__exproofForce !== undefined ? window.__exproofForce : rng() < CFG.pSolvable;
     var t = generate(D, solvable);
     layout(t);
     return t;
@@ -157,7 +158,7 @@
     var out = Math.sign(c.y - n.y);
     var continuity = incoming !== 0 && out === incoming ? 1 : (out === 0 ? 0.6 : 0);
     var center = 1 - Math.abs(c.y - H / 2) / (H / 2);
-    return 0.55 * continuity + 0.35 * center + 0.08 * Math.random();
+    return 0.55 * continuity + 0.35 * center + 0.08 * rng();
   }
   function plan(t) {
     var moves = [], found = null;
@@ -325,14 +326,91 @@
   }
 
   // ---------- Cycle ----------
-  function newCycle(now) {
-    tree = build();
-    var p = plan(tree);
-    runs = p.runs;
+  // Every cycle is a pure function of a seed and its start time. The tree, the search order,
+  // and every duration come from a seeded generator, and phase changes happen at exact times,
+  // so the state at any moment can be recomputed. The current seed and start time are kept in
+  // sessionStorage, so moving to another page rebuilds the same tree and puts the light where
+  // it would be by now. The next cycle's seed is derived from the current one, so pages agree
+  // on later cycles too.
+  var STORE = "exproof-search-v1", APPEAR = 500, cyc = null;
+
+  function mulberry32(a) {
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function nextSeed(s) { return mulberry32(s ^ 0x5bd1e995)() * 4294967296 >>> 0; }
+  function freshSeed() { return (Math.random() * 4294967296) >>> 0; }
+
+  function save() {
+    try {
+      sessionStorage.setItem(STORE, JSON.stringify({
+        seed: cyc.seed, epoch: Date.now() - (performance.now() - cyc.start), W: W, H: H
+      }));
+    } catch (e) { /* storage unavailable: each page runs on its own */ }
+  }
+  function load() {
+    try { return JSON.parse(sessionStorage.getItem(STORE) || "null"); } catch (e) { return null; }
+  }
+
+  // Generate the tree and search for a seed, and the times (from cycle start) of each phase.
+  function prepare(seed, start) {
+    rng = mulberry32(seed);
+    var t = build(), p = plan(t);
+    rng = Math.random;
+    var c = CFG.success, f = CFG.failure, at = APPEAR, runStarts = [];
+    p.runs.forEach(function (r) { runStarts.push(at); at += r.dur + r.after; });
+    var tail = p.found ? c.pause + c.toGreen * 0.6 + c.sweep + c.settle + c.brighten + c.hold : f.rest + f.subside + f.hold;
+    return { seed: seed, start: start, tree: t, runs: p.runs, found: p.found, runStarts: runStarts,
+             endRuns: at, endTail: at + tail, total: at + tail + CFG.dissolve + CFG.gap };
+  }
+
+  function install(c) {
+    cyc = c; tree = c.tree; runs = c.runs;
     setupScene();
     placeLight(tree.root.x, tree.root.y);
-    L.px = null; L.vx = 0; L.vy = 0; L.I = 0.2; L.target = 1; L.green = 0; L.bright = 0; L.color = null;
-    state = { phase: "appear", t0: now, run: 0, found: p.found };
+    L.px = null; L.vx = 0; L.vy = 0; L.I = 0.2; L.target = 1; L.green = 0; L.bright = 0; L.color = null; L.last = 0;
+    state = { phase: "appear", t0: c.start, run: 0, found: c.found };
+    save();
+  }
+
+  function newCycle(start, seed) { install(prepare(seed === undefined ? freshSeed() : seed, start)); }
+
+  function endOf(r) { return r.pts[r.pts.length - 1]; }
+  function revealRun(r) { if (r.fwd) r.moves.forEach(function (m) { reveal(m.to, 1); }); }
+
+  // Put the scene in the state it would be in at time `now`, skipping whole cycles if needed.
+  function seek(now) {
+    var c = cyc, guard = 0;
+    while (now - c.start >= c.total && guard++ < 200) c = prepare(nextSeed(c.seed), c.start + c.total);
+    if (guard >= 200) { newCycle(now); return; }
+    install(c);
+    var t = now - c.start, S = state;
+    if (t < APPEAR) return;
+    L.I = 1; L.target = 1;
+    layers.light.setAttribute("opacity", 1);
+    if (t < c.endRuns) {
+      var i = 0;
+      while (i + 1 < runs.length && c.runStarts[i + 1] <= t) i++;
+      for (var j = 0; j < i; j++) revealRun(runs[j]);
+      var r = runs[i], into = t - c.runStarts[i];
+      S.run = i;
+      if (into < r.dur) { S.phase = "run"; S.t0 = c.start + c.runStarts[i]; }
+      else { revealRun(r); S.phase = "settle"; S.t0 = c.start + c.runStarts[i] + r.dur; var e = endOf(r); placeLight(e.x, e.y); }
+      return;
+    }
+    runs.forEach(revealRun);
+    if (runs.length) { var last = endOf(runs[runs.length - 1]); placeLight(last.x, last.y); }
+    S.run = runs.length;
+    if (t < c.endTail) { S.phase = c.found ? "found" : "exhausted"; S.t0 = c.start + c.endRuns; return; }
+    if (c.found) renderFound(S, c.start + c.endRuns, c.start + c.endTail);
+    else L.I = L.target = 0.12;
+    if (t < c.endTail + CFG.dissolve) { S.phase = "dissolve"; S.t0 = c.start + c.endTail; return; }
+    layers.root.setAttribute("opacity", 0);
+    S.phase = "gap"; S.t0 = c.start + c.endTail + CFG.dissolve; S.gap = CFG.gap;
   }
 
   function pointAt(r, s) {
@@ -347,12 +425,49 @@
     return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
   }
 
+  // Success, drawn as a function of time since the found phase began (t0) and the current time.
+  function renderFound(S, t0, now) {
+    var c = CFG.success, dt = now - t0;
+    if (dt > c.pause) {
+      L.green = smootherstep((dt - c.pause) / c.toGreen);
+      L.target = 1.05;
+    }
+    if (dt < c.pause + c.toGreen * 0.6) return false;
+    if (!S.path) {
+      S.path = []; var n = S.found; while (n) { S.path.unshift(n); n = n.parent; }
+      layers.proof.setAttribute("points", S.path.map(function (q) { return q.x.toFixed(1) + "," + q.y.toFixed(1); }).join(" "));
+      var len = 0; for (var i = 1; i < S.path.length; i++) len += Math.hypot(S.path[i].x - S.path[i - 1].x, S.path[i].y - S.path[i - 1].y);
+      S.pathLen = len;
+      layers.proof.setAttribute("stroke-dasharray", len + " " + (len + 1));
+      layers.proof.setAttribute("stroke-dashoffset", len);
+      layers.proof.setAttribute("opacity", 0.9);
+      S.sweep0 = t0 + c.pause + c.toGreen * 0.6;
+    }
+    var since = now - S.sweep0;
+    var q = smootherstep(since / c.sweep);
+    layers.proof.setAttribute("stroke-dashoffset", (S.pathLen * (1 - q)).toFixed(2));
+    // Once the proof path is complete, it brightens once: a brighter green, a slightly
+    // heavier stroke, and a soft glow. It holds at that brightness, then dissolves.
+    var b = smootherstep((since - c.sweep - c.settle) / c.brighten);
+    if (b > 0) {
+      if (!S.glowSet) { layers.glow.setAttribute("points", layers.proof.getAttribute("points")); S.glowSet = true; }
+      layers.proof.setAttribute("stroke", mix(CFG.green, CFG.greenBright, b));
+      layers.proof.setAttribute("stroke-width", (1.6 + 0.6 * b).toFixed(2));
+      layers.proof.setAttribute("opacity", (0.9 + 0.1 * b).toFixed(3));
+      layers.glow.setAttribute("opacity", (0.45 * b).toFixed(3));
+      L.bright = b;
+    }
+    return since >= c.sweep + c.settle + c.brighten + c.hold;
+  }
+
+  // Phase changes advance t0 by the phase's exact length, not to the current frame, so the
+  // animation keeps to the schedule that seek() computes.
   function step(now) {
     var dt = now - state.t0, S = state;
     switch (S.phase) {
       case "appear":
-        layers.light.setAttribute("opacity", smootherstep(dt / 500).toFixed(3));
-        if (dt >= 500) { S.phase = runs.length ? "run" : "exhausted"; S.t0 = now; }
+        layers.light.setAttribute("opacity", smootherstep(dt / APPEAR).toFixed(3));
+        if (dt >= APPEAR) { S.phase = runs.length ? "run" : "exhausted"; S.t0 += APPEAR; }
         return;
       case "run": {
         var r = runs[S.run];
@@ -361,73 +476,50 @@
         var p = pointAt(r, e * r.len);
         placeLight(p.x, p.y);
         L.target = r.fwd ? 1 : 0.72;                       // retreating light is dimmer
-        if (t >= 1) { S.phase = "settle"; S.t0 = now; }
+        if (t >= 1) { S.phase = "settle"; S.t0 += r.dur; }
         return;
       }
       case "settle": {
         var rr = runs[S.run];
         L.target = rr.deadEnd ? 0.5 : 0.9;                 // a dead end dims the light briefly
         if (dt < rr.after) return;
-        S.run++; S.t0 = now;
+        S.run++; S.t0 += rr.after;
         if (rr.goal) S.phase = "found";
         else if (S.run >= runs.length) S.phase = "exhausted";
         else S.phase = "run";
         return;
       }
-      case "found": {
-        var c = CFG.success;
-        if (dt > c.pause) {
-          L.green = smootherstep((dt - c.pause) / c.toGreen);
-          L.target = 1.05;
-        }
-        if (dt >= c.pause + c.toGreen * 0.6) {
-          if (!S.path) {
-            S.path = []; var n = S.found; while (n) { S.path.unshift(n); n = n.parent; }
-            layers.proof.setAttribute("points", S.path.map(function (q) { return q.x.toFixed(1) + "," + q.y.toFixed(1); }).join(" "));
-            var len = 0; for (var i = 1; i < S.path.length; i++) len += Math.hypot(S.path[i].x - S.path[i - 1].x, S.path[i].y - S.path[i - 1].y);
-            S.pathLen = len;
-            layers.proof.setAttribute("stroke-dasharray", len + " " + (len + 1));
-            layers.proof.setAttribute("stroke-dashoffset", len);
-            layers.proof.setAttribute("opacity", 0.9);
-            S.sweep0 = now;
-          }
-          var since = now - S.sweep0;
-          var q = smootherstep(since / c.sweep);
-          layers.proof.setAttribute("stroke-dashoffset", (S.pathLen * (1 - q)).toFixed(2));
-          // Once the proof path is complete, it brightens once: a brighter green, a slightly
-          // heavier stroke, and a soft glow. It holds at that brightness, then dissolves.
-          var b = smootherstep((since - c.sweep - c.settle) / c.brighten);
-          if (b > 0) {
-            if (!S.glowSet) { layers.glow.setAttribute("points", layers.proof.getAttribute("points")); S.glowSet = true; }
-            layers.proof.setAttribute("stroke", mix(CFG.green, CFG.greenBright, b));
-            layers.proof.setAttribute("stroke-width", (1.6 + 0.6 * b).toFixed(2));
-            layers.proof.setAttribute("opacity", (0.9 + 0.1 * b).toFixed(3));
-            layers.glow.setAttribute("opacity", (0.45 * b).toFixed(3));
-            L.bright = b;
-          }
-          if (since >= c.sweep + c.settle + c.brighten + c.hold) { S.phase = "dissolve"; S.t0 = now; }
+      case "found":
+        if (renderFound(S, S.t0, now)) {
+          var c = CFG.success;
+          S.phase = "dissolve"; S.t0 = S.sweep0 + c.sweep + c.settle + c.brighten + c.hold;
         }
         return;
-      }
       case "exhausted": {
         var f = CFG.failure;
         if (dt > f.rest) {
           L.target = 0.12;                                 // the light subsides
         }
-        if (dt >= f.rest + f.subside + f.hold) { S.phase = "dissolve"; S.t0 = now; }
+        if (dt >= f.rest + f.subside + f.hold) { S.phase = "dissolve"; S.t0 += f.rest + f.subside + f.hold; }
         return;
       }
       case "dissolve":
         layers.root.setAttribute("opacity", (1 - smootherstep(dt / CFG.dissolve)).toFixed(3));
-        if (dt >= CFG.dissolve) { S.phase = "gap"; S.t0 = now; S.gap = CFG.gap; }
+        if (dt >= CFG.dissolve) { S.phase = "gap"; S.t0 += CFG.dissolve; S.gap = CFG.gap; }
         return;
       case "gap":
-        if (dt >= S.gap) newCycle(now);
+        if (dt >= S.gap) newCycle(S.t0 + S.gap, nextSeed(cyc.seed));
         return;
     }
   }
 
-  function loop(now) { step(now); if (layers.light) renderLight(now); raf = requestAnimationFrame(loop); }
+  // If frames stopped (a hidden tab), jump to where the schedule says the search is now.
+  var lastFrame = 0;
+  function loop(now) {
+    if (lastFrame && now - lastFrame > 400) seek(now);
+    lastFrame = now;
+    step(now); if (layers.light) renderLight(now); raf = requestAnimationFrame(loop);
+  }
 
   function measure() {
     W = window.innerWidth; H = window.innerHeight;
@@ -446,11 +538,21 @@
     layers.root.setAttribute("opacity", 0.8);
   }
 
-  function start() {
-    cancelAnimationFrame(raf);
+  // Resume the search kept from the previous page if the window is the same width;
+  // otherwise start a new one. A small change in height (a mobile address bar) keeps the
+  // stored height, so the tree is laid out exactly as before.
+  function start(fresh) {
+    cancelAnimationFrame(raf); lastFrame = 0;
     measure();
     if (reduceQuery.matches) { still(); return; }
-    newCycle(performance.now());
+    var now = performance.now(), saved = fresh ? null : load();
+    if (saved && Math.abs(saved.W - W) < 2 && Math.abs(saved.H - H) < 0.25 * H) {
+      H = saved.H;
+      cyc = prepare(saved.seed >>> 0, now - (Date.now() - saved.epoch));
+      seek(now);
+    } else {
+      newCycle(now);
+    }
     raf = requestAnimationFrame(loop);
   }
 
@@ -459,17 +561,21 @@
     // Ignore height-only changes (mobile address bars) to avoid restarting while scrolling.
     if (Math.abs(window.innerWidth - lastW) < 2) { measure(); return; }
     lastW = window.innerWidth;
-    clearTimeout(resizeTimer); resizeTimer = setTimeout(start, 250);
+    clearTimeout(resizeTimer); resizeTimer = setTimeout(function () { start(true); }, 250);
   });
-  if (reduceQuery.addEventListener) reduceQuery.addEventListener("change", start);
+  if (reduceQuery.addEventListener) reduceQuery.addEventListener("change", function () { start(); });
+  // A page restored from the back-forward cache resumes from the stored schedule.
+  window.addEventListener("pageshow", function (e) { if (e.persisted) start(); });
   start();
 
   // Testing hook: window.__exproof.sample(n) checks the 1/3 rate and the tree invariants.
   window.__exproof = {
     phase: function () { return state && state.phase; },
+    cycle: function () { return cyc && { seed: cyc.seed, run: state.run, of: runs.length, solvable: cyc.tree.solvable, endRuns: cyc.endRuns, endTail: cyc.endTail, total: cyc.total }; },
     light: function () { return { x: L.x, y: L.y, I: L.I }; },
     glow: function () { return layers.glow && +layers.glow.getAttribute('opacity'); },
     sample: function (n) {
+      rng = Math.random;
       var solv = 0, ok = true, ms = 0, nodes = 0, leafDepth = {}, leaves = 0, crossings = 0;
       for (var i = 0; i < n; i++) {
         var t = build(), p = plan(t);
