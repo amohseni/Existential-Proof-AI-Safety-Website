@@ -87,7 +87,15 @@
     <article class="block" id="radical-interpretability">
       <h2>Radical AI Interpretability</h2>
       <p class="meta-line">Daniel A. Herrmann and <a href="https://philpeople.org/profiles/ben-levinstein">Benjamin A. Levinstein</a></p>
-      <p class="summary">A framework for interpreting AI systems as agents, combining philosophical radical interpretation with the tools of mechanistic interpretability. The book is available on <a href="https://arxiv.org/abs/2606.26523">arXiv</a>.</p>
+      <p class="summary">How can we tell what an AI system believes and wants from facts about its computation? The book joins philosophical radical interpretation with mechanistic interpretability.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p>The book joins radical interpretation<label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote"><i>Radical interpretation:</i> the project, from Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with mechanistic interpretability. It gives criteria of success for attributing beliefs, desires, and meanings, and ties each to tests that current methods can run. Its central lesson is that attribution is holistic. Belief, desire, and propositional structure constrain one another, so a method that measures one while holding the others fixed inherits their distortions.</p>
+      <p>It builds on two papers. One showed that leading probes for belief in language models fail to generalize. The other proposed four conditions for a representation to count as belief-like: accuracy, coherence, uniformity, and use. The next step is to give the same treatment to deception and situational awareness.</p>
+      <p class="related"><span class="label">Outputs</span><a href="https://arxiv.org/abs/2606.26523">Radical AI Interpretability (book, arXiv:2606.26523)</a><a href="publications.html#standards">Standards for Belief Representations in LLMs</a><a href="publications.html#lie-detector">Still No Lie Detector for Language Models</a></p>
+        </div>
+      </details>
     </article>
     <article class="block" id="value-learning">
       <h2>Learning the Value of Value Learning</h2>
@@ -96,11 +104,29 @@
     </article>
     <article class="block" id="principal-agent">
       <h2>AI Alignment as a Principal–Agent Problem</h2>
-      <p class="summary">Formal models of delegation, incentives, and misalignment.</p>
+      <p class="meta-line">Daniel A. Herrmann and <a href="https://philpeople.org/profiles/ben-levinstein">Benjamin A. Levinstein</a></p>
+      <p class="summary">When is imperfect alignment good enough to delegate a decision to an AI system? There is a margin of misalignment within which delegating pays.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p>A capable system may know more than we do and have options we lack. The same capabilities make it costly if its aims diverge from ours. We ask when a principal who is uncertain about a system’s values and abilities should hand it decisions. Letting it decide any problem whatever is a knife-edge standard: one misclassified gamble defeats it. Handing over the problems we expect it to face is robust, and the gain splits into three terms:</p>
+      <p class="scheme">Gain from delegating = reach + information − cost of misalignment.</p>
+      <p>A system that errs only on close calls, within <var>δ</var> of our indifference, costs at most <var>Kδ</var>², where <var>K</var> measures how often we face close calls. What it knows does not shrink with <var>δ</var>, so there is a margin of misalignment within which delegating pays.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#managing-misalignment">A Decision-Theoretic Approach for Managing Misalignment</a><a href="publications.html#margins">Margins of Misalignment</a></p>
+        </div>
+      </details>
     </article>
     <article class="block" id="causation">
       <h2>A Bayesian Reduction of Causation</h2>
       <p class="meta-line">Daniel A. Herrmann, <a href="https://philpeople.org/profiles/ben-levinstein">Benjamin A. Levinstein</a>, <a href="https://aydinmohseni.com/">Aydin Mohseni</a>, and Bruce Rushing</p>
+      <p class="summary">Does causal reasoning need anything beyond subjective probability? Treat interventions as events in the world, and claims about them reduce to conditioning.</p>
+      <details class="expand">
+        <summary>More</summary>
+        <div class="expand-body">
+      <p>Results on the causal hierarchy say that claims about interventions cannot be recovered from probabilities. We argue that these results rest on an impoverished set of variables. Treat interventions as events in the world, and claims about them reduce to conditioning. A representation theorem in the style of de Finetti shows how an agent can learn causal structure and probabilities together. For AI, this suggests that a system can reason well about interventions with no explicit causal machinery inside it, which bears on what interpretability should look for in a world model.</p>
+      <p class="related"><span class="label">Outputs</span><a href="publications.html#causation">A Bayesian Reduction of Causation</a></p>
+        </div>
+      </details>
     </article>
   </div>
 </section>
