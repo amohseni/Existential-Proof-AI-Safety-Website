@@ -55,6 +55,7 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Simon DeDeo | https://www.cmu.edu/dietrich/sds/people/faculty/simon-dedeo.html |
   | Travis LaCroix | https://durham.ac.uk/staff/travis-lacroix |
   | Dorian Clay | https://www.cmu.edu/dietrich/philosophy/people/masters/dorian-clay.html |
+  | Daniel Kopp | https://www.cmu.edu/dietrich/philosophy/people/masters/daniel-kopp.html |
   | Sree Sharvesh | https://www.sreesharvesh.com/ |
   | Katalin Berlow | https://katalinberlow.github.io/ |
   | Abinav Chari | https://www.linkedin.com/in/abinav-chari1 (as on Daniel's site) |
