@@ -370,6 +370,9 @@
 
   function install(c) {
     cyc = c; tree = c.tree; runs = c.runs;
+    // setupScene() empties the SVG, so forget the edge elements drawn for these nodes
+    // before; otherwise seek() would skip edges that were explored before a frame gap.
+    tree.nodes.forEach(function (n) { n.edge = null; n.lit = null; n.revealed = 0; });
     setupScene();
     placeLight(tree.root.x, tree.root.y);
     L.px = null; L.vx = 0; L.vy = 0; L.I = 0.2; L.target = 1; L.green = 0; L.bright = 0; L.color = null; L.last = 0;
