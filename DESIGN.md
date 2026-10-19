@@ -22,7 +22,7 @@ The full plan is in `docs/PLAN.md`. This file records how the build follows the 
 5. **Added the evolutionary-adaptations project**, which the plan's project list omits. It is the project with Daniel and Sven Neth. Its six-part scheme is set as text, and it carries the site's one table.
 6. **Layout rules are enforced.** `STYLE.md` defines the zones and section types; `tools/check_layout.py` fails on any protrusion into the margin column, sideways scrolling, overlapping notes, or clipped text.
 
-7. **Names link to personal websites.** The `PEOPLE` table in the generator maps each name to a URL; names without a confirmed URL stay unlinked. Aydin's only listed affiliation besides CMU is CoRe Safe AI.
+7. **Names link to personal websites.** Links are written directly in the HTML, and the GitHub repository is the only source of the site. The list of known URLs is in `README.md` under "Link a name"; names without a confirmed URL stay unlinked. Aydin's only listed affiliation besides CMU is CoRe Safe AI.
 8. **People are grouped.** The current entries are "Core members"; graduate students and team members will get their own groups.
 
 ## Hero

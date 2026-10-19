@@ -26,6 +26,6 @@ The removed text is preserved in the repository history (commit `d361d15` and ea
 
 - Daniel's FORMAL proposal (Foundations of Robust Machine Alignment), once its status can be stated publicly.
 - The research-protocols line (optimal research protocols for debate and scalable oversight), if it is a group project.
-- Personal website URLs for Daniel Herrmann, Bruce Rushing, and the SPAR team members. Names without a confirmed URL are unlinked. Benjamin A. Levinstein's name links to his PhilPeople profile until a personal site is confirmed.
+- Personal website URLs for the SPAR team members and the IASEAI coauthors (Abinav Chari, Isabelle Qian, Sree Sharvesh). Names without a confirmed URL are unlinked. Benjamin A. Levinstein's name links to his PhilPeople profile until a personal site is confirmed.
 - The paper on AI mutualism not being stable under capability differences: exact title, authors, status, and link.
 - Notes: add the page with the first two notes.
