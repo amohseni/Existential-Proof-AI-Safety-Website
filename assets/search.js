@@ -200,12 +200,24 @@
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
     svg.setAttribute("width", W); svg.setAttribute("height", H);
     var defs = el("defs", {}, svg);
-    var g1 = el("radialGradient", { id: "xp-halo-near" }, defs);
-    el("stop", { offset: "0", "stop-color": "#ffffff", "stop-opacity": "0.22" }, g1);
-    el("stop", { offset: "1", "stop-color": "#ffffff", "stop-opacity": "0" }, g1);
-    var g2 = el("radialGradient", { id: "xp-halo-far" }, defs);
-    el("stop", { offset: "0", "stop-color": "#ffffff", "stop-opacity": "0.06" }, g2);
-    el("stop", { offset: "1", "stop-color": "#ffffff", "stop-opacity": "0" }, g2);
+    // The light: a faint pool, a soft glow, and a small core. Gradients fall off smoothly
+    // (several stops) so the light reads as an area, not a disc with a rim.
+    function radial(id, peak, falloff) {
+      var g = el("radialGradient", { id: id }, defs), stops = [];
+      [0, 0.25, 0.5, 0.75, 1].forEach(function (o) {
+        var a = peak * Math.pow(1 - o, falloff);
+        stops.push(el("stop", { offset: String(o), "stop-color": "#ffffff", "stop-opacity": a.toFixed(4) }, g));
+      });
+      return stops;
+    }
+    layers.stops = [].concat(radial("xp-pool", 0.075, 2.2), radial("xp-glow-grad", 0.34, 1.8), radial("xp-core-grad", 1, 0.9));
+    // Mask for the illuminated copy of the explored edges: bright at the light, fading outward.
+    var lf = el("radialGradient", { id: "xp-lightfall" }, defs);
+    [[0, 255], [0.35, 150], [0.7, 40], [1, 0]].forEach(function (st) {
+      el("stop", { offset: String(st[0]), "stop-color": "rgb(" + st[1] + "," + st[1] + "," + st[1] + ")" }, lf);
+    });
+    var lm = el("mask", { id: "xp-lightmask", maskUnits: "userSpaceOnUse", x: 0, y: 0, width: W, height: H }, defs);
+    layers.lightMask = el("circle", { cx: -999, cy: -999, r: 120, fill: "url(#xp-lightfall)" }, lm);
     // Mask that dims the proof path under the text column, matching the per-edge dimming.
     var lg = el("linearGradient", { id: "xp-scrim-grad", gradientUnits: "userSpaceOnUse", x1: 0, y1: 0, x2: W, y2: 0 }, defs);
     var ramp = 80, inside = CFG.scrimInside;
@@ -218,6 +230,7 @@
     el("rect", { x: 0, y: 0, width: W, height: H, fill: "url(#xp-scrim-grad)" }, mk);
     layers.root = el("g", {}, svg);
     layers.edges = el("g", { fill: "none", stroke: CFG.edgeColor, "stroke-width": CFG.edgeWidth, "stroke-linecap": "round" }, layers.root);
+    layers.lit = el("g", { fill: "none", stroke: "#f5f5f2", "stroke-width": CFG.edgeWidth, "stroke-linecap": "round", mask: "url(#xp-lightmask)" }, layers.root);
     var blur = el("filter", { id: "xp-glow", x: "-5%", y: "-50%", width: "110%", height: "200%" }, defs);
     el("feGaussianBlur", { stdDeviation: "3.2" }, blur);
     layers.proofGroup = el("g", { mask: "url(#xp-scrim)" }, null);
@@ -225,9 +238,10 @@
     layers.proof = el("polyline", { fill: "none", stroke: CFG.green, "stroke-width": 1.6, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 }, layers.proofGroup);
     layers.root.appendChild(layers.proofGroup);
     layers.light = el("g", { opacity: 0 }, layers.root);
-    layers.far = el("circle", { r: 26, fill: "url(#xp-halo-far)" }, layers.light);
-    layers.near = el("circle", { r: 9, fill: "url(#xp-halo-near)" }, layers.light);
-    layers.core = el("circle", { r: 1.7, fill: "#ffffff" }, layers.light);
+    layers.pool = el("ellipse", { rx: 48, ry: 48, fill: "url(#xp-pool)" }, layers.light);
+    layers.glowE = el("ellipse", { rx: 11, ry: 11, fill: "url(#xp-glow-grad)" }, layers.light);
+    layers.core = el("ellipse", { rx: 2.6, ry: 2.6, fill: "url(#xp-core-grad)" }, layers.light);
+    L.color = null;
   }
 
   function edgeEl(child) {
@@ -239,6 +253,11 @@
       "stroke-dasharray": len + " " + (len + 1), "stroke-dashoffset": len,
       opacity: (CFG.edgeOpacity * maskAt((p.x + child.x) / 2)).toFixed(3)
     }, layers.edges);
+    child.lit = el("line", {
+      x1: p.x, y1: p.y, x2: child.x, y2: child.y,
+      "stroke-dasharray": len + " " + (len + 1), "stroke-dashoffset": len,
+      opacity: (0.75 * maskAt((p.x + child.x) / 2)).toFixed(3)
+    }, layers.lit);
     child.edge = e; child.edgeLen = len; child.revealed = 0;
     return e;
   }
@@ -246,13 +265,58 @@
     var e = edgeEl(child);
     if (frac <= child.revealed) return;
     child.revealed = frac;
-    e.setAttribute("stroke-dashoffset", (child.edgeLen * (1 - frac)).toFixed(2));
+    var off = (child.edgeLen * (1 - frac)).toFixed(2);
+    e.setAttribute("stroke-dashoffset", off);
+    child.lit.setAttribute("stroke-dashoffset", off);
   }
-  function placeLight(x, y) {
-    var k = Math.max(0.7, maskAt(x));
-    layers.light.setAttribute("transform", "translate(" + x.toFixed(2) + "," + y.toFixed(2) + ")");
-    layers.near.setAttribute("opacity", k);
-    layers.far.setAttribute("opacity", k);
+  // Light state. Position comes from the search; everything else is derived per frame:
+  // velocity (smoothed), the direction of travel, how stretched the light is, its intensity
+  // (eased toward a target set by what the search is doing), and its color.
+  var L = { x: 0, y: 0, px: null, py: null, vx: 0, vy: 0, angle: 0, I: 0, target: 1, green: 0, bright: 0, last: 0, color: null };
+  function placeLight(x, y) { L.x = x; L.y = y; }
+  function renderLight(now) {
+    var dt = L.last ? Math.min(64, now - L.last) : 16; L.last = now;
+    if (L.px === null) { L.px = L.x; L.py = L.y; }
+    var rvx = (L.x - L.px) / dt, rvy = (L.y - L.py) / dt;
+    L.px = L.x; L.py = L.y;
+    var a = 1 - Math.exp(-dt / 90);                       // velocity smoothing
+    L.vx += (rvx - L.vx) * a; L.vy += (rvy - L.vy) * a;
+    var speed = Math.hypot(L.vx, L.vy);
+    if (speed > 0.02) {
+      var target = Math.atan2(L.vy, L.vx), d = target - L.angle;
+      d = Math.atan2(Math.sin(d), Math.cos(d));            // shortest turn
+      L.angle += d * (1 - Math.exp(-dt / 70));
+    }
+    L.I += (L.target - L.I) * (1 - Math.exp(-dt / 220));   // intensity eases
+    var s = Math.min(1, speed / 1.1);                      // 0 at rest, 1 at full travel speed
+    var breathe = 1 + 0.05 * (1 - s) * Math.sin(now / 640);
+    var I = Math.max(0, L.I), k = Math.max(0.7, maskAt(L.x));
+    var deg = (L.angle * 180 / Math.PI).toFixed(2);
+    layers.light.setAttribute("transform", "translate(" + L.x.toFixed(2) + "," + L.y.toFixed(2) + ") rotate(" + deg + ")");
+    // Moving light stretches along its path and its glow trails slightly behind the core.
+    layers.core.setAttribute("rx", (2.6 * (1 + 2.0 * s) * breathe).toFixed(2));
+    layers.core.setAttribute("ry", (2.6 * (1 - 0.22 * s) * breathe).toFixed(2));
+    layers.glowE.setAttribute("rx", (11 * (1 + 1.0 * s) * breathe).toFixed(2));
+    layers.glowE.setAttribute("ry", (11 * (1 - 0.25 * s) * breathe).toFixed(2));
+    layers.glowE.setAttribute("cx", (-7 * s).toFixed(2));
+    layers.pool.setAttribute("rx", (48 * (1 + 0.35 * s) * (0.85 + 0.15 * I)).toFixed(2));
+    layers.pool.setAttribute("ry", (48 * (0.85 + 0.15 * I)).toFixed(2));
+    layers.pool.setAttribute("cx", (-12 * s).toFixed(2));
+    layers.core.setAttribute("opacity", (Math.min(1, 0.35 + 0.65 * I)).toFixed(3));
+    layers.glowE.setAttribute("opacity", (k * I).toFixed(3));
+    layers.pool.setAttribute("opacity", (k * I).toFixed(3));
+    // The light shows what has been explored near it.
+    layers.lightMask.setAttribute("cx", L.x.toFixed(1));
+    layers.lightMask.setAttribute("cy", L.y.toFixed(1));
+    layers.lightMask.setAttribute("r", (70 + 70 * I).toFixed(1));
+    layers.lit.setAttribute("opacity", Math.min(1, I).toFixed(3));
+    // Color: white, then green on success, then brighter green.
+    var c = L.bright > 0 ? mix(CFG.green, CFG.greenBright, L.bright) : (L.green > 0 ? mix("#ffffff", CFG.green, L.green) : "#ffffff");
+    if (c !== L.color) {
+      layers.stops.forEach(function (st) { st.setAttribute("stop-color", c); });
+      layers.lit.setAttribute("stroke", L.green > 0 ? mix("#f5f5f2", CFG.green, L.green * 0.5) : "#f5f5f2");
+      L.color = c;
+    }
   }
   function mix(a, b, t) {
     var pa = [1, 3, 5].map(function (i) { return parseInt(a.substr(i, 2), 16); });
@@ -267,6 +331,7 @@
     runs = p.runs;
     setupScene();
     placeLight(tree.root.x, tree.root.y);
+    L.px = null; L.vx = 0; L.vy = 0; L.I = 0.2; L.target = 1; L.green = 0; L.bright = 0; L.color = null;
     state = { phase: "appear", t0: now, run: 0, found: p.found };
   }
 
@@ -295,11 +360,13 @@
         var e = r.deadEnd ? deadEndEase(t) : smootherstep(t);
         var p = pointAt(r, e * r.len);
         placeLight(p.x, p.y);
+        L.target = r.fwd ? 1 : 0.72;                       // retreating light is dimmer
         if (t >= 1) { S.phase = "settle"; S.t0 = now; }
         return;
       }
       case "settle": {
         var rr = runs[S.run];
+        L.target = rr.deadEnd ? 0.5 : 0.9;                 // a dead end dims the light briefly
         if (dt < rr.after) return;
         S.run++; S.t0 = now;
         if (rr.goal) S.phase = "found";
@@ -310,17 +377,17 @@
       case "found": {
         var c = CFG.success;
         if (dt > c.pause) {
-          var g = smootherstep((dt - c.pause) / c.toGreen);
-          layers.core.setAttribute("fill", mix("#ffffff", CFG.green, g));
+          L.green = smootherstep((dt - c.pause) / c.toGreen);
+          L.target = 1.05;
         }
         if (dt >= c.pause + c.toGreen * 0.6) {
           if (!S.path) {
             S.path = []; var n = S.found; while (n) { S.path.unshift(n); n = n.parent; }
             layers.proof.setAttribute("points", S.path.map(function (q) { return q.x.toFixed(1) + "," + q.y.toFixed(1); }).join(" "));
-            var L = 0; for (var i = 1; i < S.path.length; i++) L += Math.hypot(S.path[i].x - S.path[i - 1].x, S.path[i].y - S.path[i - 1].y);
-            S.pathLen = L;
-            layers.proof.setAttribute("stroke-dasharray", L + " " + (L + 1));
-            layers.proof.setAttribute("stroke-dashoffset", L);
+            var len = 0; for (var i = 1; i < S.path.length; i++) len += Math.hypot(S.path[i].x - S.path[i - 1].x, S.path[i].y - S.path[i - 1].y);
+            S.pathLen = len;
+            layers.proof.setAttribute("stroke-dasharray", len + " " + (len + 1));
+            layers.proof.setAttribute("stroke-dashoffset", len);
             layers.proof.setAttribute("opacity", 0.9);
             S.sweep0 = now;
           }
@@ -336,7 +403,7 @@
             layers.proof.setAttribute("stroke-width", (1.6 + 0.6 * b).toFixed(2));
             layers.proof.setAttribute("opacity", (0.9 + 0.1 * b).toFixed(3));
             layers.glow.setAttribute("opacity", (0.45 * b).toFixed(3));
-            layers.core.setAttribute("fill", mix(CFG.green, CFG.greenBright, b));
+            L.bright = b;
           }
           if (since >= c.sweep + c.settle + c.brighten + c.hold) { S.phase = "dissolve"; S.t0 = now; }
         }
@@ -345,10 +412,7 @@
       case "exhausted": {
         var f = CFG.failure;
         if (dt > f.rest) {
-          var k = 1 - smootherstep((dt - f.rest) / f.subside);
-          layers.near.setAttribute("opacity", (k).toFixed(3));
-          layers.far.setAttribute("opacity", (k).toFixed(3));
-          layers.core.setAttribute("opacity", (0.35 + 0.65 * k).toFixed(3));
+          L.target = 0.12;                                 // the light subsides
         }
         if (dt >= f.rest + f.subside + f.hold) { S.phase = "dissolve"; S.t0 = now; }
         return;
@@ -363,7 +427,7 @@
     }
   }
 
-  function loop(now) { step(now); raf = requestAnimationFrame(loop); }
+  function loop(now) { step(now); if (layers.light) renderLight(now); raf = requestAnimationFrame(loop); }
 
   function measure() {
     W = window.innerWidth; H = window.innerHeight;
@@ -403,6 +467,7 @@
   // Testing hook: window.__exproof.sample(n) checks the 1/3 rate and the tree invariants.
   window.__exproof = {
     phase: function () { return state && state.phase; },
+    light: function () { return { x: L.x, y: L.y, I: L.I }; },
     glow: function () { return layers.glow && +layers.glow.getAttribute('opacity'); },
     sample: function (n) {
       var solv = 0, ok = true, ms = 0, nodes = 0, leafDepth = {}, leaves = 0, crossings = 0;

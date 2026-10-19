@@ -15,9 +15,8 @@ The site states only what Aydin said, what the site plan (`docs/PLAN.md`) says, 
 | Projects | Sentence on what the six-part schema shows (theorems, conjectures, ill-defined claims) | Approve. |
 | Projects | "Why it matters" text for Radical AI Interpretability, the principal–agent project, and value learning | Approve or rewrite. |
 | Projects | Collaborators on the principal–agent project | Names. |
-| Projects, Publications | A Bayesian Reduction of Causation | Whether to include; year, status, author order, one-line summary. |
 | Publications | An Epistemic Reading of the Power-Seeking Theorems | Authors (Mohseni and Herrmann? Sven Neth?). |
-| Publications | Radical AI Interpretability | Authors, year, venue, type. |
+| Projects, Publications | A Bayesian Reduction of Causation | Author order (set alphabetically), year, status, one-line summary. |
 | Publications | Year for Learning the Value of Value Learning | Year to show. |
 | People | Website, Google Scholar, and CV links for both | URLs. |
 | People | Collaborator list (Sven Neth, Alex J. London, Benjamin A. Levinstein, Bruce Rushing) | Who to list, with affiliations. |
@@ -28,5 +27,5 @@ The removed text is preserved in the repository history (commit `d361d15` and ea
 
 - Daniel's FORMAL proposal (Foundations of Robust Machine Alignment), once its status can be stated publicly.
 - The research-protocols line (optimal research protocols for debate and scalable oversight), if it is a group project.
-- The Measuring Agency project (SPAR), if it is a group project.
+- The paper on AI mutualism not being stable under capability differences: exact title, authors, status, and link.
 - Notes: add the page with the first two notes.
