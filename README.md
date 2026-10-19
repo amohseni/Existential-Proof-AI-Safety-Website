@@ -13,13 +13,9 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 - `docs/PLAN.md`: the site plan. `docs/WORDMARK-AND-SEARCH.md`: the wordmark and background spec. `DESIGN.md`: how the build follows and departs from it.
 - `CONTENT_REVIEW.md`: claims that still need confirming.
 
-## Going live on GitHub Pages
+## Hosting
 
-The repository starts private so draft content is not public. When the content is confirmed:
-
-1. Settings, General: change visibility to public (or keep it private if the account has GitHub Pro).
-2. Settings, Pages: source "Deploy from a branch", branch `main`, folder `/ (root)`.
-3. The site appears at `https://amohseni.github.io/Existential-Proof-AI-Safety-Website/`. For a custom domain, add a `CNAME` file with the domain.
+The repository is public and served by GitHub Pages from `main`, folder `/ (root)`, at `https://amohseni.github.io/Existential-Proof-AI-Safety-Website/`. Every push to `main` republishes the site within a minute or two. Aydin Mohseni and Daniel Herrmann both have write access.
 
 ## Editing
 
