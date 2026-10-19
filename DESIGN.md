@@ -19,7 +19,8 @@ The full plan is in `docs/PLAN.md`. This file records how the build follows the 
 2. **No Notes page yet.** An empty or thin Notes page signals an inactive lab. Add it to the navigation with the first two notes.
 3. **Projects on one page.** Each project has a stable anchor (`projects.html#adaptations` and so on). A project gets its own page once it has enough content to fill one.
 4. **Link text stays white with a red underline.** Blood red text on black has a contrast ratio near 2.9:1, below the 4.5:1 needed for small text. Red is used for underlines, marks, the current page, and large accent text, where it reads clearly.
-5. **Added the evolutionary-adaptations project**, which the plan's project list omits. It is the project with Daniel and Sven Neth, and it carries the site's two figures.
+5. **Added the evolutionary-adaptations project**, which the plan's project list omits. It is the project with Daniel and Sven Neth. Its six-part scheme is set as text, and it carries the site's one table.
+6. **Layout rules are enforced.** `STYLE.md` defines the zones and section types; `tools/check_layout.py` fails on any protrusion into the margin column, sideways scrolling, overlapping notes, or clipped text.
 
 ## Hero
 

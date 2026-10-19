@@ -41,22 +41,10 @@
       <h2>Evolutionary Theory of Advanced AI Adaptations</h2>
       <p class="meta-line"><span class="status active">Active</span> · <b>Aydin Mohseni</b>, <b>Daniel Herrmann</b>, <b>Sven Neth</b></p>
       <p class="question">Which pressures shape the behavioral dispositions of AI systems as they are trained and deployed, and how do those pressures bear on alignment?</p>
-      <p>Claims that capable AI systems will seek power, resist shutdown, or deceive their overseers are usually stated loosely. We treat each such claim of instrumental convergence<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Instrumental convergence:</i> the thesis that agents with very different final goals will pursue similar intermediate goals, such as acquiring resources, because those goals help with almost any final goal.</span> as a claim with six parts.</p>
+      <p>Claims that capable AI systems will seek power, resist shutdown, or deceive their overseers are usually stated loosely. We treat each such claim of instrumental convergence<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Instrumental convergence:</i> the thesis that agents with very different final goals will pursue similar intermediate goals, such as acquiring resources, because those goals help with almost any final goal.</span> as a claim with six parts:</p>
 
-      <figure class="wide" aria-labelledby="fig1-cap">
-        <div class="schema" role="list">
-          <div class="slot" role="listitem"><span class="sym">A</span><span class="role">Systems</span><span class="gloss">Systems of kind <i>A</i>,</span></div>
-          <div class="slot" role="listitem"><span class="sym">T</span><span class="role">Training</span><span class="gloss">trained by processes <i>T</i>,</span></div>
-          <div class="slot" role="listitem"><span class="sym">D</span><span class="role">Environment</span><span class="gloss">on tasks and data distributed as <i>D</i>,</span></div>
-          <div class="slot" role="listitem"><span class="sym">C</span><span class="role">Convergence</span><span class="gloss">converge, in sense <i>C</i>,</span></div>
-          <div class="slot focus" role="listitem"><span class="sym">B</span><span class="role">Behavior</span><span class="gloss">to behavior pattern <i>B</i></span></div>
-          <div class="slot" role="listitem"><span class="sym">S</span><span class="role">Situations</span><span class="gloss">in situations <i>S</i>.</span></div>
-        </div>
-        <ul class="patterns" aria-label="Behavior patterns">
-          <li>Coherence</li><li>Coordination</li><li>Collusion</li><li>Deception</li><li>Learning</li><li>Situational awareness</li><li>Proxy gaming</li><li class="studied">Power-seeking</li><li>Resource acquisition</li><li>Self-preservation</li>
-        </ul>
-        <figcaption id="fig1-cap"><span class="label">Figure 1</span>The form of a convergence claim. A claim is fully stated only when all six parts are fixed. The row beneath lists the behavior patterns <i>B</i> the project considers; the red mark shows the pattern under study now.</figcaption>
-      </figure>
+      <p class="scheme">Systems of kind <var>A</var>, trained by processes <var>T</var>, on tasks and data distributed as <var>D</var>, converge in sense <var>C</var> to behavior pattern <var>B</var> in situations <var>S</var>.</p>
+      <p>The behavior patterns <var>B</var> in view include coherence, coordination, collusion, deception, learning, situational awareness, proxy gaming, power-seeking, resource acquisition, and self-preservation. Current work concerns power-seeking.</p>
       <h3>Current work: the power-seeking theorems</h3>
       <p>Turner and colleagues proved that, for most reward functions, optimal policies tend to seek power.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">A. M. Turner, L. Smith, R. Shah, A. Critch, and P. Tadepalli, “Optimal Policies Tend to Seek Power,” <i>NeurIPS</i> 2021; A. M. Turner and P. Tadepalli, “Parametrically Retargetable Decision-Makers Tend to Seek Power,” <i>NeurIPS</i> 2022.</span> The proofs count reward functions by a symmetry argument that many readers find hard to interpret. We construct the prior that the counting assumes, which turns each result into a statement about probability. The probabilities then admit two interpretations.</p>
 
@@ -71,7 +59,7 @@
             </tbody>
           </table>
         </div>
-        <figcaption id="fig2-cap"><span class="label">Figure 2</span>Two interpretations of the probabilities in the power-seeking theorems.</figcaption>
+        <figcaption id="fig2-cap"><span class="label">Table 1</span>Two interpretations of the probabilities in the power-seeking theorems.</figcaption>
       </figure>
     </article>
 

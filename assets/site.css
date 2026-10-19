@@ -133,7 +133,23 @@ a:focus-visible, button:focus-visible, summary:focus-visible, label:focus-visibl
   border-bottom: 1px solid var(--rule);
 }
 .section > .label { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 4.6rem); align-self: start; padding-top: 0.45rem; }
+/* Zone rule. A text section has two zones to the right of the rail: the text column and the
+   margin column. Only .sidenote and .marginnote may enter the margin column. Everything else in a
+   text section, including figures, tables, and grids, stays inside the text column (max-width: 100%).
+   A wide section (.section--wide) has no margin column: its content spans the text and margin
+   columns together, and it may not contain margin notes. No element uses negative margins. */
 .body { padding-right: calc(var(--margin) + 2.5rem); min-width: 0; counter-reset: sidenote; }
+.body > *, .body figure, .body table, .body img, .body pre { max-width: 100%; }
+.body * { min-width: 0; }
+.section--wide .body { padding-right: 0; }
+.section--wide .sidenote, .section--wide .marginnote, .section--wide .margin-toggle { display: none; }
+.label, .eyebrow, .meta-line, .work-meta, .role, .addr, .related { overflow-wrap: anywhere; }
+
+/* A formal statement set in the text: italic, indented, variables upright. */
+.scheme { font-style: italic; font-size: 1.24rem; line-height: 1.45; margin: 1.4rem 0 1.5rem; padding-left: 1.4rem; }
+.scheme var, .body var { font-family: var(--serif); }
+.body p var { font-style: italic; }
+.body .scheme var { font-style: normal; }
 .body > *:first-child { margin-top: 0; }
 
 h2 { font-weight: 400; font-size: 1.75rem; line-height: 1.2; margin: 0 0 0.9rem; text-wrap: balance; }
@@ -152,7 +168,7 @@ p, ul, ol { max-width: var(--measure); margin: 0 0 1.1rem; }
 .related .label { flex-basis: 100%; margin-bottom: 0.2rem; }
 
 /* ---------- Home: research areas ---------- */
-.areas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 1.6rem; margin-right: calc(-1 * (var(--margin) + 2.5rem)); border-top: 1px solid var(--rule-strong); }
+.areas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 1.6rem; border-top: 1px solid var(--rule-strong); }
 .area { padding-top: 1rem; min-width: 0; }
 .area h3 { font-style: normal; font-size: 1.25rem; margin: 0 0 0.45rem; }
 .area h3 a { text-decoration: none; }
@@ -187,21 +203,9 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
 
 /* ---------- Figures ---------- */
 figure { margin: 2rem 0 2.2rem; max-width: 100%; }
-.wide { margin-right: calc(-1 * (var(--margin) + 2.5rem)); max-width: none; }
 figcaption { font-size: 0.86rem; line-height: 1.38; color: var(--fg-2); max-width: var(--measure); margin-top: 0.9rem; }
 figcaption .label { margin-right: 0.5rem; color: var(--fg); }
 
-.schema { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid var(--fg); border-bottom: 1px solid var(--rule); }
-.slot { padding: 0.9rem 0.9rem 1rem 0; border-right: 1px solid var(--rule); min-width: 0; }
-.slot:last-child { border-right: 0; }
-.slot + .slot { padding-left: 0.9rem; }
-.slot .sym { font-style: italic; font-size: 2.4rem; line-height: 1; display: block; margin-bottom: 0.55rem; }
-.slot .role { font-family: var(--sans); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-2); display: block; margin-bottom: 0.35rem; overflow-wrap: anywhere; }
-.slot .gloss { font-size: 0.95rem; line-height: 1.3; display: block; }
-.slot.focus .sym { color: var(--red-bright); }
-.patterns { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; padding: 0.8rem 0 0; margin: 0; list-style: none; max-width: none; font-family: var(--sans); font-size: 0.76rem; color: var(--fg); }
-.patterns li::before { content: ""; display: inline-block; width: 0.32rem; height: 0.32rem; background: var(--rule-strong); margin-right: 0.45rem; vertical-align: 0.12em; }
-.patterns li.studied::before { background: var(--red-bright); }
 
 .compare { width: 100%; border-collapse: collapse; font-size: 0.98rem; line-height: 1.35; }
 .compare th, .compare td { text-align: left; vertical-align: top; padding: 0.6rem 1rem 0.6rem 0; border-bottom: 1px solid var(--rule); }
@@ -233,6 +237,7 @@ figcaption .label { margin-right: 0.5rem; color: var(--fg); }
 .work-summary { font-size: 0.98rem; margin: 0 0 0.4rem; }
 .work-links { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.04em; align-items: baseline; }
 .pending { color: var(--fg-2); }
+.work-links details.cite[open] { flex-basis: 100%; }
 details.cite summary { cursor: pointer; color: var(--fg); list-style: none; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 0.2em; }
 details.cite summary::-webkit-details-marker { display: none; }
 details.cite[open] summary { color: var(--red-bright); }
@@ -244,7 +249,7 @@ details.cite[open] summary { color: var(--red-bright); }
 .empty-note { font-family: var(--sans); font-size: 0.8rem; color: var(--fg-2); padding-top: 1rem; }
 
 /* ---------- People ---------- */
-.people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.5rem; margin-right: calc(-1 * (var(--margin) + 2.5rem)); }
+.people { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.5rem; }
 .person { border-top: 1px solid var(--fg); padding-top: 0.9rem; min-width: 0; }
 .person h2, .person h3 { font-style: normal; margin: 0 0 0.15rem; font-size: 1.35rem; }
 .person .role { font-family: var(--sans); font-size: 0.74rem; color: var(--fg-2); margin: 0 0 0.8rem; line-height: 1.5; }
@@ -289,16 +294,11 @@ html.review .review-bar {
   .section { padding-block: 2.4rem 0.8rem; }
   .section > .label { position: static; padding: 0 0 1rem; }
   .body { padding-right: 0; }
-  .wide, .people, .areas { margin-right: 0; }
   .sidenote, .marginnote { display: none; }
   label.sidenote-number { cursor: pointer; }
   .margin-toggle:checked + .sidenote, .margin-toggle:checked + .marginnote {
     display: block; float: none; width: auto; margin: 0.6rem 0 0.8rem; padding-left: 0.9rem; border-left: 1px solid var(--red); color: var(--fg);
   }
-  .schema { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .slot:nth-child(3n) { border-right: 0; }
-  .slot:nth-child(4) { padding-left: 0; }
-  .slot:nth-child(n+4) { border-top: 1px solid var(--rule); }
   .people { grid-template-columns: minmax(0, 1fr); }
   .nav { gap: 0.3rem 1.1rem; }
 }
@@ -309,11 +309,6 @@ html.review .review-bar {
   .featured li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; }
   .work { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
   .work-meta { flex-direction: row; flex-wrap: wrap; gap: 0.2rem 1rem; align-items: center; }
-  .schema { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .slot:nth-child(n) { border-right: 1px solid var(--rule); padding-left: 0.9rem; border-top: 0; }
-  .slot:nth-child(2n) { border-right: 0; }
-  .slot:nth-child(2n+1) { padding-left: 0; }
-  .slot:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .addresses li { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .problems li { grid-template-columns: 2.2rem minmax(0, 1fr); }
 }

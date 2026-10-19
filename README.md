@@ -11,6 +11,7 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 - `assets/favicon.svg`: the ∃xP monogram.
 - `assets/fonts/`: ET Book (MIT license, from tufte-css); wordmark subsets of STIX Two Math and EB Garamond (SIL Open Font License).
 - `docs/PLAN.md`: the site plan. `docs/WORDMARK-AND-SEARCH.md`: the wordmark and background spec. `DESIGN.md`: how the build follows and departs from it.
+- `STYLE.md`: the style guide (layout zones, section types, type, color, writing rules). `tools/check_layout.py`: the automated layout check.
 - `CONTENT_REVIEW.md`: claims that still need confirming.
 
 ## Hosting
@@ -18,6 +19,9 @@ Static site for the AI safety research group of Aydin Mohseni and Daniel Herrman
 The repository is public and served by GitHub Pages from `main`, folder `/ (root)`, at `https://amohseni.github.io/Existential-Proof-AI-Safety-Website/`. Every push to `main` republishes the site within a minute or two. Aydin Mohseni and Daniel Herrmann both have write access.
 
 ## Editing
+
+Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (with a local server running, as described there) before pushing.
+
 
 - **Header and footer** are repeated in every page. A change to the navigation must be made in all seven files.
 - **Add a publication:** copy one `<li class="work">` block in `publications.html`. Set `data-type` to `paper`, `working`, or `report`. Talks do not go on this page. Status classes: `active` (in progress), none (under review or revision), `out` (published). Once the list mixes types, the type filter in `assets/site.js` works with buttons of the form `<button type="button" data-filter="paper" aria-pressed="false">Papers</button>` inside a `<div class="filters">`.
