@@ -85,7 +85,7 @@ Headings are plain and descriptive. Section labels are one or two words in small
 - Plain, direct sentences. No em dashes. No clever turns or slogans.
 - One term per concept, used consistently across pages.
 - Link each person's name to their main personal website wherever it appears. Leave it unlinked if no URL is confirmed.
-- Programs carry no status labels and no collaborator lists, only a "Led by" line. Each has a one- or two-sentence summary; longer text goes inside its "More" toggle.
+- Programs carry no status labels, no collaborator lists, and no "Led by" line. Each has a one- or two-sentence summary; longer text goes inside its "More" toggle.
 - Publications lists books, papers, working papers, and reports. Talks and workshops go in their own sections below the list, not in it.
 
 ## 6. Layout check
