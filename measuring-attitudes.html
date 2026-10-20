@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Measuring Beliefs and Desires in AI Systems · ∃xProof AI</title>
-<meta name="description" content="How can we tell what an AI system believes and wants? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on trained models, from small transformers to language models.">
+<meta name="description" content="How can we tell what an AI system believes and wants? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on small transformers and on language models.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 <section class="hero page-head" aria-labelledby="p-title">
   <p class="eyebrow"><a href="research.html#interpretability">Research · Interpretability</a></p>
   <h1 id="p-title">Measuring Beliefs and Desires in AI Systems</h1>
-  <p class="lede">How can we tell what an AI system believes and wants? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on trained models, from small transformers to language models.</p>
+  <p class="lede">How can we tell what an AI system believes and wants? We develop criteria for attributing beliefs, desires, and meanings to AI systems, and test them on small transformers and on language models.</p>
   <p class="who">Led by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a></p>
 </section>
 
@@ -64,7 +64,7 @@
         <figcaption id="fig-rai-cap"><span class="label">Table 1</span>Four conditions for a representation in a language model to count as belief-like.</figcaption>
       </figure>
       <p><i>Model organisms.</i> In a synthetic decision task, the true posterior over hidden states and the value of each option can be computed exactly, so attributions can be checked against ground truth. A small transformer trained on choices alone develops separable linear representations of both, and steering the posterior changes choice through the subspace that encodes the options’ values, as a Jeffrey–Bolker reading predicts. A pretrained language model shows the same organization. Jeremy Saal leads this work, in collaboration with Simplex. A paper is under review.</p>
-      <p><i>Language models.</i> When a language model’s choices are read as expected-utility maximization, how coherent are the credences and utilities this attributes, and how robust is the attribution? We test whether it predicts choices in and out of sample, whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts, whether it agrees with probes, and whether it is stable under meaning-preserving rephrasings.</p>
+      <p><i>Language models.</i> When a language model’s choices are read as expected-utility maximization, how coherent are the credences and utilities this attributes, and how robust is the attribution? We test whether the attribution predicts choices in and out of sample, and whether steering the putative credence and utility representations shifts choices as expected-utility theory predicts. We also check it against probes and under rephrasings that preserve meaning.</p>
   </div>
 </section>
 

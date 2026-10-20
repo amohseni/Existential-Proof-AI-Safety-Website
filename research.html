@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Research · ∃xProof AI</title>
-<meta name="description" content="Research areas, programs, and key questions of ∃xProof AI.">
+<meta name="description" content="Research areas, programs, and example questions of ∃xProof AI.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 <section class="hero page-head" aria-labelledby="r-title">
   <p class="eyebrow">Research</p>
   <h1 id="r-title">Research areas and programs</h1>
-  <p class="lede">We study AI systems as agents. Our work falls into four areas: when a system can usefully be described as an agent, what it believes and wants, how it should choose when values are uncertain, and when imperfect alignment is good enough to delegate a decision to it.</p>
+  <p class="lede">We study AI systems as agents. Our work falls into four areas: when a system can usefully be described as an agent, what interpretability methods and evaluations tell us about it, how it should choose when values are uncertain, and when imperfect alignment is good enough to delegate a decision to it.</p>
 </section>
 
 <section class="section section--wide" aria-label="Research areas">
@@ -43,7 +43,7 @@
         <details class="area-more">
           <summary>When AI systems can be modeled as agents with beliefs, preferences, and ways of choosing, and what such models predict.</summary>
           <p class="area-why">Whether and when we can profitably describe AI systems using the vocabulary and theoretical machinery of agency informs many approaches to AI safety.</p>
-          <p class="label">Key questions</p>
+          <p class="label">Example questions</p>
           <ol class="problems">
             <li>Under what assumptions about a system’s goals and its environment does power-seeking follow from pursuing almost any goal, and which of those assumptions, dropped, make it fail?</li>
             <li>If we cut the channels two copies of a model use to communicate, can they still coordinate? Causal and evidential decision theories predict different answers.</li>
@@ -59,9 +59,9 @@
       <div class="area" id="interpretability">
         <h2>Interpretability</h2>
         <details class="area-more">
-          <summary>How to tell what an AI system believes and wants, and when a probe or evaluation measures it.</summary>
+          <summary>What interpretability methods and evaluations measure, and what their results license us to conclude about a system.</summary>
           <p class="area-why">Understanding the internal structure of AI systems, and how that structure produces their outputs, can help us both make deployment decisions and guide monitoring and intervention efforts. We aim to provide practice-informed and conceptually rigorous foundations of interpretability.</p>
-          <p class="label">Key questions</p>
+          <p class="label">Example questions</p>
           <ol class="problems">
             <li>A model fails an eval for a dangerous capability. What licenses the conclusion that it lacks the capability, especially if it can tell it is being tested?</li>
             <li>What would make a probe for deception a measurement of deception, and not of something that merely goes with deception in the probe’s training data?</li>
@@ -70,15 +70,15 @@
         </details>
         <p class="label area-label">Program</p>
         <ul class="area-programs">
-          <li id="measuring-attitudes"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a><span>Criteria for attributing beliefs and desires to AI systems, tested on trained models from small transformers to language models.</span></li>
+          <li id="measuring-attitudes"><a href="measuring-attitudes.html">Measuring Beliefs and Desires in AI Systems</a><span>Criteria for attributing beliefs and desires to AI systems, tested on small transformers and on language models.</span></li>
         </ul>
       </div>
       <div class="area" id="value">
         <h2>Value</h2>
         <details class="area-more">
-          <summary>How to choose when values are uncertain: one’s own, or those of the people one acts for.</summary>
+          <summary>How to choose when one is uncertain about one’s own values, or about the values of the people one acts for.</summary>
           <p class="area-why">Decisions about how to train and deploy AI systems both explicitly and implicitly encode certain values into the systems. We want to make this process more explicit and provide guidance on how to make difficult value choices under conditions of uncertainty.</p>
-          <p class="label">Key questions</p>
+          <p class="label">Example questions</p>
           <ol class="problems">
             <li>RLHF and model constitutions already settle whose feedback counts and how conflicts are resolved. Which aggregation rules do they assume, and how should those rules be compared?</li>
             <li>How should AIs make decisions on our behalf, if they are uncertain of our preferences?</li>
@@ -95,7 +95,7 @@
         <details class="area-more">
           <summary>When an AI system whose values differ from ours is good enough to delegate a decision to.</summary>
           <p class="area-why">Perfect alignment is unlikely, so the practical question is when imperfect alignment is good enough. We aim to develop a calculus of misalignment and capability trade-offs that can guide deployment decisions.</p>
-          <p class="label">Key questions</p>
+          <p class="label">Example questions</p>
           <ol class="problems">
             <li>A proxy is a measurement, valid under the conditions in which it was calibrated. How far outside those conditions can a system optimize it before the principal is worse off?</li>
             <li>Can a system share our values while reasoning by a different decision theory?</li>
@@ -108,7 +108,7 @@
         </ul>
       </div>
     </div>
-    <p class="more">Open an area to see its key questions. If you would like to work on one, see <a href="work-with-us.html">Work with us</a>.</p>
+    <p class="more">Open an area to see example questions. If you would like to work with us, see <a href="work-with-us.html">Work with us</a>.</p>
   </div>
 </section>
 </main>
