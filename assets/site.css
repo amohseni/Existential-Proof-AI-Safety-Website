@@ -379,6 +379,11 @@ html.review .review-bar {
 .pair .problems li { font-size: 1rem; line-height: 1.38; padding-block: 0.5rem; grid-template-columns: 2.2rem minmax(0, 1fr); }
 .pair .addr { font-family: var(--sans); font-size: 0.95rem; color: var(--fg-2); user-select: all; margin: 0; }
 .pair-intro { color: var(--fg-2); }
+/* People: students and collaborators side by side, set slightly smaller than other lists. */
+.pair--people .featured li { padding-block: 0.7rem; }
+.pair--people .featured li:first-child { padding-top: 0; }
+.pair--people .featured .t { font-size: 1.12rem; }
+.pair--people .featured .d { font-size: 0.95rem; }
 @media (max-width: 760px) { .pair { grid-template-columns: minmax(0, 1fr); gap: 1.8rem; } }
 
 @media (max-width: 1100px) { :root { --margin: 12rem; } .areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 1.6rem; } }
