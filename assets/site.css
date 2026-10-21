@@ -306,8 +306,8 @@ details.cite[open] summary { color: var(--red-bright); }
 .person-head { display: flex; gap: 1rem; align-items: center; margin: 0.15rem 0 0.9rem; }
 .person-head .portrait { flex: none; width: 4.6rem; height: 4.6rem; border-radius: 50%; object-fit: cover; opacity: 0.94; }
 .portrait-link { flex: none; display: block; border-radius: 50%; }
-.person-head .portrait { display: block; transition: transform 180ms ease, opacity 180ms ease; }
-.portrait-link:hover .portrait, .portrait-link:focus-visible .portrait { transform: scale(1.09); opacity: 1; }
+.person-head .portrait { display: block; box-shadow: 0 0 0 0 rgba(245, 245, 242, 0); transition: transform 135ms ease-out, opacity 135ms ease-out, box-shadow 135ms ease-out; }
+.portrait-link:hover .portrait, .portrait-link:focus-visible .portrait { transform: scale(1.09); opacity: 1; box-shadow: 0 0 14px 1px rgba(245, 245, 242, 0.16); }   /* a faint white glow, like the search light */
 @media (prefers-reduced-motion: reduce) { .person-head .portrait { transition: none; } }
 .person-id { min-width: 0; }
 .person-head .role { margin-bottom: 0; }
