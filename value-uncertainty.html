@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Decision under Value Uncertainty · ∃xProof AI</title>
-<meta name="description" content="How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both questions arise for AI systems meant to learn and serve what people value.">
+<meta name="description" content="How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both cases arise for AI systems meant to learn and serve what people value.">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 <section class="hero page-head" aria-labelledby="p-title">
   <p class="eyebrow"><a href="research.html#value">Research · Value</a></p>
   <h1 id="p-title">Decision under Value Uncertainty</h1>
-  <p class="lede">How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both questions arise for AI systems meant to learn and serve what people value.</p>
+  <p class="lede">How should an agent choose when values are uncertain, whether her own values or those of someone she acts for? Both cases arise for AI systems meant to learn and serve what people value.</p>
 </section>
 
 <section class="section" id="overview">
@@ -45,7 +45,7 @@
 <section class="section" id="why">
   <p class="label">Why it matters</p>
   <div class="body">
-    <p>Every training pipeline already commits to answers about whose feedback counts, how it is weighted, and what happens when it conflicts, and the answers are not stated as choices. We want to make those trade-offs explicit, and to say how the rules should be compared. The single-person case matters more the more autonomy we give systems acting on our behalf. A system serving one person who is unsure of her own preferences cannot simply maximize the expected value of her preferences, since that quantity is undefined until the candidate preferences are put on a common scale. And a system meant to learn what people value needs an account of when learning more is worth it.</p>
+    <p>Every training pipeline already commits to answers about whose feedback counts, how it is weighted, and what happens when it conflicts, and the answers are not stated as choices. We want to make those choices explicit, and to say how the rules behind them should be compared. The single-person case matters more the more autonomy we give systems acting on our behalf. A system acting for one person, and uncertain about her preferences, cannot simply maximize the expected value of her preferences, since that quantity is undefined until the candidate preferences are put on a common scale. And a system meant to learn what people value needs an account of when learning more is worth it.</p>
   </div>
 </section>
 
@@ -57,7 +57,7 @@
       <h3>Acting for someone whose preferences are uncertain</h3>
       <p>A benefactor chooses on behalf of one person and is uncertain about that person’s preferences. The natural rule is to maximize expected utility across the candidate preferences. But each candidate utility function is fixed only up to a choice of scale, and rescaling one of them can change which option comes out best.<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">Multiplying one candidate utility function by ten changes nothing about the preferences it represents, but gives that candidate ten times the weight in the expectation.</span> This is the problem of interpersonal comparisons, arising within a single person. What the benefactor needs is a rule</p>
       <p class="scheme"><var>f</var>: probability functions over the person’s possible utility functions → rankings of the options.</p>
-      <p>We ask how far the standard solutions to interpersonal comparisons carry over to the intrapersonal case, among them normalizing every utility function to the same range and egalitarian equivalence. We also ask what changes when the benefactor acts for a group whose preferences are uncertain. There the order of aggregation matters: aggregating across people first and aggregating across possible preferences first can give different rankings.</p>
+      <p>Standard solutions to interpersonal comparisons include normalizing every utility function to the same range, and egalitarian equivalence. We ask how far they carry over to the intrapersonal case. We also ask what changes when the benefactor acts for a group whose preferences are uncertain. There the order of aggregation matters: aggregating across people first and aggregating across possible preferences first can give different rankings.</p>
   </div>
 </section>
 

@@ -69,3 +69,5 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
 - **Animation settings** are at the top of `assets/search.js`: `CFG` (the 1/3 probability, depth range, node budget, colors, speeds, and timings). Running `window.__exproof.sample(1000)` in the browser console checks the 1/3 share and the tree invariants. To watch a solvable cycle, run `window.__exproofForce = true` in the console before the next cycle starts.
 
 - **Example questions** appear twice: inside each area on `research.html` (under its More toggle) and on `work-with-us.html`. Change both together.
+
+- **Each fall, update the PhD admissions line** on `work-with-us.html` (the admission year and the UNC and Carnegie Mellon deadlines).

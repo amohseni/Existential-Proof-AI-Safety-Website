@@ -77,12 +77,12 @@
         <h2>Value</h2>
         <details class="area-more">
           <summary>How to choose when one is uncertain about one’s own values, or about the values of the people one acts for.</summary>
-          <p class="area-why">Decisions about how to train and deploy AI systems both explicitly and implicitly encode certain values into the systems. We want to make this process more explicit and provide guidance on how to make difficult value choices under conditions of uncertainty.</p>
+          <p class="area-why">Decisions about how to train and deploy AI systems build values into them, sometimes explicitly and often implicitly. We want to make this process more explicit, and to give guidance on making hard value choices under uncertainty.</p>
           <p class="label">Example questions</p>
           <ol class="problems">
-            <li>RLHF and model constitutions already settle whose feedback counts and how conflicts are resolved. Which aggregation rules do they assume, and how should those rules be compared?</li>
-            <li>How should AIs make decisions on our behalf, if they are uncertain of our preferences?</li>
-            <li>How should an AI system aggregate multiple dimensions of value, when such values are difficult to compare?</li>
+            <li>Reinforcement learning from human feedback (RLHF) and model constitutions already settle whose feedback counts and how conflicts are resolved. Which aggregation rules do they assume, and how should those rules be compared?</li>
+            <li>How should AI systems make decisions on our behalf when they are uncertain of our preferences?</li>
+            <li>How should an AI system aggregate several dimensions of value when they are difficult to compare?</li>
           </ol>
         </details>
         <p class="label area-label">Program</p>
@@ -94,10 +94,10 @@
         <h2>Alignment</h2>
         <details class="area-more">
           <summary>When an AI system whose values differ from ours is good enough to delegate a decision to.</summary>
-          <p class="area-why">Perfect alignment is unlikely, so the practical question is when imperfect alignment is good enough. We aim to develop a calculus of misalignment and capability trade-offs that can guide deployment decisions.</p>
+          <p class="area-why">Perfect alignment is unlikely, so the practical question is when imperfect alignment is good enough. We aim to develop a calculus of delegation under possible misalignment that can guide deployment decisions.</p>
           <p class="label">Example questions</p>
           <ol class="problems">
-            <li>A proxy is a measurement, valid under the conditions in which it was calibrated. How far outside those conditions can a system optimize it before the principal is worse off?</li>
+            <li>It is difficult to specify exactly what we care about, so we often use proxies. These tend to work only under certain conditions. How far outside those conditions can a system optimize a proxy before the person it acts for is worse off?</li>
             <li>Can a system share our values while reasoning by a different decision theory?</li>
             <li>How reliable must the measurement of a trait be for a given deployment decision?</li>
           </ol>
