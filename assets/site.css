@@ -307,7 +307,7 @@ details.cite[open] summary { color: var(--red-bright); }
 .person-head .portrait { flex: none; width: 4.6rem; height: 4.6rem; border-radius: 50%; object-fit: cover; opacity: 0.94; }
 .portrait-link { flex: none; display: block; border-radius: 50%; }
 .person-head .portrait { display: block; transition: transform 180ms ease, opacity 180ms ease; }
-.portrait-link:hover .portrait, .portrait-link:focus-visible .portrait { transform: scale(1.06); opacity: 1; }
+.portrait-link:hover .portrait, .portrait-link:focus-visible .portrait { transform: scale(1.09); opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .person-head .portrait { transition: none; } }
 .person-id { min-width: 0; }
 .person-head .role { margin-bottom: 0; }
