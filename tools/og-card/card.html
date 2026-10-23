@@ -83,6 +83,12 @@ while (queue.length) {
   if (kids.length === 2 && rng() < 0.5) kids.reverse();
   kids.forEach(function (k) { var ch = make(n, n.depth + 1, k.win); n.children.push(ch); queue.push(ch); });
 }
+// Trim: dead branches stop CUT levels before the end, so only the witness path crosses the last stretch.
+var CUT = +(Q.get('cut') || 1);
+if (CUT > 1) {
+  nodes.forEach(function (n) { n.children = n.children.filter(function (c) { return c.win || c.depth <= D - CUT; }); });
+  var keep = []; (function walk(n) { keep.push(n); n.children.forEach(walk); })(root); nodes = keep;
+}
 // Tidy layout, as on the site.
 (function place(n) {
   if (!n.children.length) { n.top = [0]; n.bot = [0]; return; }

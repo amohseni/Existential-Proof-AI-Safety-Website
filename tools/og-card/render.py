@@ -6,12 +6,15 @@ Run from the repository root, with a local server running there:
 
 The tree uses the generator and tidy layout from assets/search.js, at depth 14, with a
 fixed seed. Change SEED for a different tree; the other parameters set the layout.
+The cut parameter trims the dead branches so they stop that many levels before the end, leaving the
+green witness path to cross the last stretch alone.
 """
 from playwright.sync_api import sync_playwright
 
 SEED = 208
 PARAMS = ("v=x&D=14&N=150&br=1.6&st=0.7&side=1.5&ms=290&umax=40&ls=34"
-          "&my=-62&ml=84&tx0=600&tx1=1240&gy=315&b0=40&b1=590")
+          "&my=-62&ml=84&tx0=600&tx1=1240&gy=315&b0=40&b1=590"
+          "&cut=4")
 URL = f"http://localhost:8000/tools/og-card/card.html?seed={SEED}&{PARAMS}"
 
 with sync_playwright() as p:
