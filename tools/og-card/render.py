@@ -1,4 +1,5 @@
-"""Render assets/og-card.png, the 1200 x 630 link-preview image.
+"""Render assets/og-card.png, the link-preview image: a 1200 x 630 layout rendered at
+2x, so the file is 2400 x 1260 and stays sharp on high-density screens.
 
 Run from the repository root, with a local server running there:
     python3 -m http.server 8000
@@ -20,7 +21,7 @@ URL = f"http://localhost:8000/tools/og-card/card.html?seed={SEED}&{PARAMS}"
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
-    page = browser.new_page(viewport={"width": 1200, "height": 630})
+    page = browser.new_page(viewport={"width": 1200, "height": 630}, device_scale_factor=2)
     page.goto(URL)
     page.evaluate("document.fonts.ready")
     page.wait_for_timeout(400)
