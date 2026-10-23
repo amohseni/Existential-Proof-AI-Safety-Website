@@ -121,6 +121,22 @@ var up = leaf.u - lo, dn = hi - leaf.u;
 var unit = Math.min(up > 0 ? (gy - band[0]) / up : 1e9, dn > 0 ? (band[1] - gy) / dn : 1e9, +(Q.get('umax') || 34));
 nodes.forEach(function (n) { n.x = x0 + n.depth * dx; n.y = gy + (n.u - leaf.u) * unit; });
 
+// Ragged ends: after layout, clip the tips of some dead branches, so they stop at different
+// depths. Positions are kept, so the tree's shape and density do not change.
+var RAG = +(Q.get('rag') || 0), RAGP = +(Q.get('ragp') || 0.5), RAGK = +(Q.get('ragk') || 3);
+if (RAG) {
+  var rr = mulberry32(RAG);
+  for (var pass = 0; pass < RAGK; pass++) {
+    var p = RAGP * Math.pow(0.75, pass), live = [];
+    (function walk3(n) { live.push(n); n.children.forEach(walk3); })(root);
+    live.forEach(function (t) {
+      if (t.win || t.children.length || t.frozen || !t.parent) return;
+      if (rr() < p) t.parent.children = t.parent.children.filter(function (c) { return c !== t; });
+      else t.frozen = true;       // a tip that survives keeps its length
+    });
+  }
+  var keep2 = []; (function walk2(n) { keep2.push(n); n.children.forEach(walk2); })(root); nodes = keep2;
+}
 var svg = document.getElementById('tree'), NS = 'http://www.w3.org/2000/svg';
 function el(name, a, p) { var e = document.createElementNS(NS, name); for (var k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; }
 var defs = el('defs', {});
