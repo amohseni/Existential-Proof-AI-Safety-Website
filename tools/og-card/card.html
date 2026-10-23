@@ -1,0 +1,136 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<!-- Source of assets/og-card.png, the link-preview image. Render it with tools/og-card/render.py. -->
+<style>
+@font-face { font-family: "ET Book"; src: url("../../assets/fonts/et-book-roman.woff"); font-style: normal; }
+@font-face { font-family: "ET Book"; src: url("../../assets/fonts/et-book-italic.woff"); font-style: italic; }
+@font-face { font-family: "Wordmark Exists"; src: url("../../assets/fonts/wordmark-exists.woff2"); unicode-range: U+2203; }
+@font-face { font-family: "Wordmark Garamond"; src: url("../../assets/fonts/wordmark-garamond.woff2"); font-style: normal; }
+@font-face { font-family: "Wordmark Garamond"; src: url("../../assets/fonts/wordmark-garamond-italic.woff2"); font-style: italic; }
+@font-face { font-family: "Plex"; src: url("ibm-plex-sans-latin-500-normal.woff2"); font-weight: 500; }
+:root { --bg: #050505; --fg: #f5f5f2; --fg-2: #b8b8b3; --red: #b0122b; --red-bright: #d11c3d; }
+html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--bg); color: var(--fg); }
+.card { position: relative; width: 1200px; height: 630px; }
+svg { position: absolute; inset: 0; }
+.abs { position: absolute; }
+.brand { white-space: nowrap; display: inline-flex; align-items: baseline; line-height: 0.92; font-weight: 400; }
+.exists { font-family: "Wordmark Exists"; color: var(--red); }
+.x { font-family: "Wordmark Garamond"; font-style: italic; }
+.proof { font-family: "Wordmark Garamond"; font-size: 0.94em; letter-spacing: -0.022em; }
+.ai { font-family: "Wordmark Garamond"; font-size: 0.965em; letter-spacing: -0.014em; margin-left: 0.18em; }
+.line { font-family: "ET Book"; margin: 0; }
+.line em { color: var(--red-bright); }
+.url { font-family: "Plex"; font-weight: 500; font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-2); }
+.mono { top: 0; bottom: 0; display: flex; align-items: center; }
+.mono .brand { font-size: var(--mono-size, 330px); }
+.sig { display: flex; align-items: baseline; gap: 22px; }
+.sig .brand { font-size: 40px; }
+</style></head>
+<body>
+<div class="card" id="card">
+  <svg id="tree" width="1200" height="630" viewBox="0 0 1200 630"></svg>
+  <div class="abs mono" id="mono"><span class="brand"><span class="exists">∃</span><span class="x">x</span><span class="proof">P</span></span></div>
+  <div class="abs" id="head"></div>
+  <div class="abs" id="foot"></div>
+</div>
+<script>
+var Q = new URLSearchParams(location.search);
+var v = Q.get('v') || 'y';
+var seed = +(Q.get('seed') || 1);
+var goal = Q.get('goal') ? Q.get('goal').split(',').map(Number) : null;   // [x, y] tip of the middle arm
+var monoRight = +(Q.get('mr') || 84);
+var M = document.getElementById('mono'); if (Q.get('ml')) M.style.left = Q.get('ml') + 'px'; else M.style.right = monoRight + 'px';
+if (Q.get('ms')) document.documentElement.style.setProperty('--mono-size', Q.get('ms') + 'px');
+
+var WORD = '<span class="brand"><span class="exists">∃</span><span class="x">x</span><span class="proof">Proof</span><span class="ai">AI</span></span>';
+var LINE = 'We are searching for a path<br>to safe AI, if one <em>exists</em>.';
+var head = document.getElementById('head'), foot = document.getElementById('foot');
+// Layout x: name and line top left, tree below them, path into the monogram.
+// Layout y: no line; tree fills the left, signature bottom left.
+// Layout z: line top left, no name except the monogram; url bottom left.
+var band, my = +(Q.get('my') || 0);   // vertical shift of the monogram
+M.style.transform = 'translateY(' + my + 'px)';
+if (v === 'x') {
+  foot.innerHTML = '<p class="line" style="font-size:' + (Q.get('ls') || 31) + 'px;line-height:1.2">' + LINE + '</p><div class="url" style="margin-top:22px">exproof.ai</div>';
+} else {
+  foot.innerHTML = '<div class="sig">' + WORD + '<span class="url">exproof.ai</span></div>';
+}
+band = [+(Q.get('b0') || 40), +(Q.get('b1') || 590)];
+function placeFoot() {
+  var r = M.querySelector('.brand').getBoundingClientRect();
+  var gxx = goal ? goal[0] : r.left + (+(Q.get('fx0') || 0));
+  foot.style.cssText = 'left:' + (gxx + (+(Q.get('fx') || 0))) + 'px;top:' + (r.bottom + (+(Q.get('fy') || 18))) + 'px;';
+}
+placeFoot();
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+var rng = mulberry32(seed);
+var D = +(Q.get('D') || 13), MAXN = +(Q.get('N') || 110);
+// Same generator as assets/search.js, at a smaller depth so each edge is long enough to read.
+var BR = +(Q.get('br') || 1), ST = +(Q.get('st') || 1);
+function stopP(d, p) { var u = d / D; return ST * Math.min(0.98, 0.035 + 0.60 * Math.pow(u, 1.70) + 0.35 * Math.pow(Math.max(0, (p - 0.72) / 0.28), 2)); }
+function twoP(d, p) { var u = d / D; return BR * Math.max(0.10, 0.40 - 0.24 * u) * (1 - Math.pow(Math.min(1, p), 1.6)); }
+function sideP(d) { return d === 0 ? 0.92 : 0.06 + 0.34 * (1 - d / D); }
+var nodes = [];
+function make(par, d, win) { var n = { depth: d, parent: par, children: [], win: win }; nodes.push(n); return n; }
+var root = make(null, 0, true), queue = [root];
+var side = +(Q.get('side') || 1);   // multiplier on side-branching, to make the tree fuller
+while (queue.length) {
+  var n = queue.shift(), pr = nodes.length / MAXN, kids = [];
+  if (n.win) { if (n.depth < D) { kids.push({ win: true }); if (rng() < Math.min(0.97, sideP(n.depth) * side) && n.depth + 1 < D) kids.push({ win: false }); } }
+  else if (n.depth >= D - 1) kids = [];
+  else if (n.depth >= 2 && rng() < stopP(n.depth, pr)) kids = [];
+  else { var c = (n.depth === 0 || rng() < twoP(n.depth, pr)) ? 2 : 1; if (pr >= 1) c = 0; for (var i = 0; i < c; i++) kids.push({ win: false }); }
+  if (kids.length === 2 && rng() < 0.5) kids.reverse();
+  kids.forEach(function (k) { var ch = make(n, n.depth + 1, k.win); n.children.push(ch); queue.push(ch); });
+}
+// Tidy layout, as on the site.
+(function place(n) {
+  if (!n.children.length) { n.top = [0]; n.bot = [0]; return; }
+  n.children.forEach(place);
+  var offs = [], bot = [];
+  n.children.forEach(function (c, i) {
+    var off = 0;
+    if (i > 0) { off = -Infinity; for (var k = 0; k < c.top.length && k < bot.length; k++) off = Math.max(off, bot[k] - c.top[k] + 1); }
+    offs.push(off);
+    for (var k2 = 0; k2 < c.bot.length; k2++) bot[k2] = Math.max(bot[k2] === undefined ? -Infinity : bot[k2], off + c.bot[k2]);
+  });
+  var mid = offs.reduce(function (a, b) { return a + b; }, 0) / offs.length;
+  n.top = [0]; n.bot = [0];
+  n.children.forEach(function (c, i) {
+    c.rel = offs[i] - mid;
+    for (var k = 0; k < c.top.length; k++) {
+      var tk = c.rel + c.top[k], bk = c.rel + c.bot[k];
+      n.top[k + 1] = n.top[k + 1] === undefined ? tk : Math.min(n.top[k + 1], tk);
+      n.bot[k + 1] = n.bot[k + 1] === undefined ? bk : Math.max(n.bot[k + 1], bk);
+    }
+  });
+})(root);
+(function rel(n, y) { n.u = y; n.children.forEach(function (c) { rel(c, y + c.rel); }); })(root, 0);
+var leaf = nodes.filter(function (n) { return n.win && n.depth === D; })[0];
+var lo = Math.min.apply(null, nodes.map(function (n) { return n.u; })), hi = Math.max.apply(null, nodes.map(function (n) { return n.u; }));
+// Place the witness leaf just short of the goal; scale so the tree stays inside the band.
+var gx = +(Q.get('tx1') || (goal ? goal[0] - 16 : 1100)), gy = +(Q.get('gy') || (goal ? goal[1] : 315));
+var x0 = +(Q.get('tx0') || -40), dx = (gx - x0) / D;
+var up = leaf.u - lo, dn = hi - leaf.u;
+var unit = Math.min(up > 0 ? (gy - band[0]) / up : 1e9, dn > 0 ? (band[1] - gy) / dn : 1e9, +(Q.get('umax') || 34));
+nodes.forEach(function (n) { n.x = x0 + n.depth * dx; n.y = gy + (n.u - leaf.u) * unit; });
+
+var svg = document.getElementById('tree'), NS = 'http://www.w3.org/2000/svg';
+function el(name, a, p) { var e = document.createElementNS(NS, name); for (var k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; }
+var defs = el('defs', {});
+var f = el('filter', { id: 'glow', x: '-10%', y: '-50%', width: '120%', height: '200%' }, defs); el('feGaussianBlur', { stdDeviation: Q.get('blur') || '5' }, f);
+var gw = +(Q.get('gw') || 2.4), go = +(Q.get('go') || 0.68);
+var g = el('g', { stroke: '#91918b', 'stroke-width': gw, 'stroke-linecap': 'round', opacity: go, fill: 'none' });
+nodes.forEach(function (n) { if (n.parent && !(n.win && n.parent.win)) el('line', { x1: n.parent.x, y1: n.parent.y, x2: n.x, y2: n.y }, g); });
+var pts = []; for (var m = leaf; m; m = m.parent) pts.unshift(m.x.toFixed(1) + ',' + m.y.toFixed(1));
+el('polyline', { points: pts.join(' '), fill: 'none', stroke: '#4fdc95', 'stroke-width': 9, opacity: 0.55, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', filter: 'url(#glow)' });
+el('polyline', { points: pts.join(' '), fill: 'none', stroke: '#1fa463', 'stroke-width': +(Q.get('pw') || 4), 'stroke-linejoin': 'round', 'stroke-linecap': 'round' });
+el('circle', { cx: leaf.x, cy: leaf.y, r: 6, fill: '#4fdc95' });
+if (Q.get('scrim')) { var sc = Q.get('scrim').split(',').map(Number);
+  var rg = el('radialGradient', { id: 'sc' }, defs); [[0, 1], [0.72, 0.97], [1, 0]].forEach(function (t) { el('stop', { offset: t[0], 'stop-color': '#050505', 'stop-opacity': t[1] }, rg); });
+  svg.insertBefore(el('ellipse', { cx: sc[0], cy: sc[1], rx: sc[2], ry: sc[3], fill: 'url(#sc)' }), svg.querySelector('polyline')); }
+if (Q.get('nodot')) svg.querySelector('circle').remove();
+if (Q.get('notree')) svg.innerHTML = '';
+window.__info = { up: up, dn: dn, nodes: nodes.length, unit: unit, rootY: root.y, leafY: leaf.y };
+</script>
+</body></html>
