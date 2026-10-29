@@ -41,45 +41,30 @@
 <section class="hero page-head" aria-labelledby="p-title">
   <p class="eyebrow"><a href="research.html#alignment">Research · Alignment</a></p>
   <h1 id="p-title">AI Alignment and Delegation</h1>
-  <p class="lede">When should we let an AI system make a decision for us, if it may not share our values? And how should delegation, incentives, and oversight be designed when we do?</p>
+  <p class="lede">When should we (not) delegate decisions to an AI system, if it may not share our values?</p>
 </section>
 
 <section class="section" id="overview">
   <p class="label">Overview</p>
   <div class="body">
-      <p class="question">When is imperfect alignment good enough to delegate a decision to an AI system?</p>
-      <p>Perfect alignment is unlikely, so we need to know when a system that does not fully share our values is good enough to hand a task. We call this the question of alignment sufficiency. We model the choice as a decision for a principal who is uncertain about the system’s values and abilities, and describe the system only by how it would choose.<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote">In practice we observe what a system does, not what it believes or wants. None of the results assume that the system maximizes expected utility.</span> Delegating the problems she expects it to face pays when</p>
-      <p class="scheme">reach + information &gt; cost of misalignment.</p>
-      <p><i>Reach</i> is the value of the problems the system faces that she would not face herself. <i>Information</i> is what its choice dispositions reveal about the world. The <i>cost of misalignment</i> is what its departures from her own choices cost her.</p>
+      <p class="question">We aim to develop a calculus for making delegation decisions under uncertainty.</p>
+      <p>Perfect value alignment of an AI system is unlikely, so we need to know when a system that does not fully share our values is good enough to deploy. We call this the question of <i>alignment sufficiency</i>. We consider contexts in which we are uncertain about various traits of the AI, including its beliefs, goals, and behavior.<label class="margin-toggle sidenote-number" for="sn-1"></label><input class="margin-toggle" id="sn-1" type="checkbox"><span class="sidenote">Ultimately our analysis bottoms out in the behavior of the agent. Sometimes certain patterns in this behavior are conveniently summarized with the language of belief and goals. </span> We develop precise ways to think about making deployment decisions in these contexts.</p>
   </div>
 </section>
 
 <section class="section" id="why">
   <p class="label">Why it matters</p>
   <div class="body">
-    <p>A lab has to decide when a system that does not fully share its aims is good enough for a given job. A safety case is the argument a lab makes that a system is safe enough to deploy, and the part of it that concerns alignment has so far had little formal treatment. We give a decision-theoretic account of it: what the lab needs to know about the system’s behavior, the decisions it will face, and the cost of its errors, and when delegating pays even with values some way off.</p>
+    <p>We want to provide a rigorous way to think about building <i>safety cases</i>. A safety case is the argument a lab makes that a system is safe enough to deploy. We want to formalize the optimal way one should make a deployment decision so that we can have clear standards of success and failure for safety cases. Our decision-theoretic approach articulates what the lab would need to demonstrate about its model in order to justify deployment.</p>
   </div>
 </section>
 
 <section class="section" id="current">
   <p class="label">Current work</p>
   <div class="body">
-<h3>Knife-edges and margins</h3>
-      <p>Dorst and colleagues propose that to defer to an expert is to prefer her opinions for any decision whatever.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">K. Dorst, B. A. Levinstein, B. Salow, B. E. Husic, and B. Fitelson, “Deference Done Better,” <i>Philosophical Perspectives</i>.</span> Carried over to delegation, where the agent’s values come along with its opinions, this standard becomes a knife-edge. The ex ante standard, which asks only about the problems the principal expects the system to face, is robust. A system that errs only on close calls, within <var>δ</var> of her indifference, costs at most <var>Kδ</var>², where <var>K</var> measures how often she faces close calls, while its information does not shrink with <var>δ</var>.</p>
-      <figure aria-labelledby="fig-pa-cap">
-        <div class="table-wrap">
-          <table class="compare">
-            <thead><tr><th scope="col"></th><th scope="col">Universal delegation</th><th scope="col">Ex ante delegation</th></tr></thead>
-            <tbody>
-              <tr><th scope="row">The principal asks</th><td>would I let it decide any problem?</td><td>should I hand over the problems I expect?</td></tr>
-              <tr><th scope="row">What it requires</th><td>choices that match mine, given its values and abilities</td><td>errors only on close calls</td></tr>
-              <tr><th scope="row">Misalignment tolerated</th><td>none</td><td>a margin that grows with reach and information</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <figcaption id="fig-pa-cap"><span class="label">Table 1</span>Two standards for delegating to a system whose values may differ from ours.</figcaption>
-      </figure>
-      <p>A second strand, by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and L. G. Demo, treats alignment as a principal-agent problem, with formal models of delegation, incentives, and misalignment between a principal and a more capable agent.</p>
+<h3>Margins of Misalignment and Principal-Agent Problems</h3>
+      <p>A first strand of active research, led by <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Ben Levinstein</a>, develops a general decision-theoretic framework for making deployment decisions. The framework models our uncertainty about the behavior of a system: it doesn't assume that the system is representable as an agent. Even in these very general settings we can show that rational deployment depends on whether or not the gains from behavioral analogues of how much a system knows and how capable it is outweigh the cost of its possible misalignment.</p>
+      <p>A second strand, led by <a href="https://aydinmohseni.com/">Aydin Mohseni</a> and L. G. Demo, treats alignment as a principal-agent problem, with formal models of delegation, incentives, and misalignment between a principal and a more capable agent.</p>
   </div>
 </section>
 

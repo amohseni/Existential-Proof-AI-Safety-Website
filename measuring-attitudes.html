@@ -47,17 +47,17 @@
 <section class="section" id="overview">
   <p class="label">Overview</p>
   <div class="body">
-      <p class="question">How can we tell what an AI system believes and wants from facts about its computation?</p>
-      <p>Interpretability methods read beliefs and goals off a model’s internal states. We give criteria for when such methods succeed. We take up the problem of radical interpretation,<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Radical interpretation:</i> the problem, posed by Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with the facts about the agent given by its computation:</p>
+      <p class="question">How can we tell what an AI system believes and wants from looking inside?</p>
+      <p>Interpretability methods read beliefs and goals off a model’s internal states. We give criteria for when such methods succeed. We take up the project of <i>radical interpretation</i>,<label class="margin-toggle sidenote-number" for="sn-1"></label><input class="margin-toggle" id="sn-1" type="checkbox"><span class="sidenote"><i>Radical interpretation:</i> the problem, posed by Davidson and Lewis, of working out what an agent believes, wants, and means from facts that do not presuppose any of these.</span> with the facts about the agent given by its computation:</p>
       <p class="scheme">Find the beliefs <var>B</var>, desires <var>D</var>, and meanings <var>M</var> that together best explain the computation <var>C</var> of system <var>S</var>.</p>
-      <p>The three are solved for together. Belief, desire, and the structure of the propositions they concern constrain one another, so a method that holds one fixed while measuring another inherits its distortions.</p>
+      <p>Belief, desire, and the structure of the propositions they concern constrain one another, so a method that holds one fixed while measuring another inherits its distortions. We develop ways to use this holism to our advantage.</p>
   </div>
 </section>
 
 <section class="section" id="why">
   <p class="label">Why it matters</p>
   <div class="body">
-    <p>Many safety concerns are claims about what a system believes and wants. A deceptive system believes one thing and says another, and a misaligned one wants something other than what we want. Checking such claims requires knowing when a reading of a model’s internal states is a reading of its beliefs and desires. Working out whether a system breaks down into belief and desire, and what its desires are, is most of the work of telling whether it is aligned, and whether its alignment is good enough for a given use.</p>
+    <p>Many safety concerns are driven by claims about what a system believes and wants. A deceptive system believes one thing and says another, and a misaligned one wants something other than what we want. Being able to read belief and desire off the internals of a system would help us decide whether or not to deploy an AI system, and would help us supervise the system during deployment.</p>
   </div>
 </section>
 
@@ -65,7 +65,7 @@
   <p class="label">Current work</p>
   <div class="body">
 <h3>Criteria</h3>
-<p>Probes for belief in language models fail to generalize in basic ways.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">B. A. Levinstein and D. A. Herrmann, “Still No Lie Detector for Language Models: Probing Empirical and Conceptual Roadblocks,” <i>Philosophical Studies</i>.</span> We argue that a representation must meet four conditions to count as belief-like.<label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"><span class="sidenote">D. A. Herrmann and B. A. Levinstein, “Standards for Belief Representations in LLMs,” <i>Minds and Machines</i>.</span> The book <i>Radical AI Interpretability</i> ties criteria of success, on representationalist and interpretationist views alike, to tests that current methods can run. The next step is to give deception and situational awareness the same treatment.</p>
+<p>Probes for belief in language models fail to generalize in basic ways.<label class="margin-toggle sidenote-number" for="sn-2"></label><input class="margin-toggle" id="sn-2" type="checkbox"><span class="sidenote">B. A. Levinstein and D. A. Herrmann, “Still No Lie Detector for Language Models: Probing Empirical and Conceptual Roadblocks,” <i>Philosophical Studies</i>.</span> We argue that a representation must meet four conditions to count as belief-like.<label class="margin-toggle sidenote-number" for="sn-3"></label><input class="margin-toggle" id="sn-3" type="checkbox"><span class="sidenote">D. A. Herrmann and B. A. Levinstein, “Standards for Belief Representations in LLMs,” <i>Minds and Machines</i>.</span> <a href="https://www.danielherrmann.ca/">Daniel Herrmann</a> and <a href="https://www.levinstein.org/">Ben Levinstein</a>'s book <a href="publications.html#radical"><i>Radical AI Interpretability</i></a> articulates criteria for belief and desire, and shows how such criteria can guide the development of mechanistic interpretability methods.</p>
       <figure aria-labelledby="fig-rai-cap">
         <div class="table-wrap">
           <table class="compare">
