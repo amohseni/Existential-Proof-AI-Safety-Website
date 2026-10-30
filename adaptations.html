@@ -47,18 +47,19 @@
 <section class="section" id="overview">
   <p class="label">Overview</p>
   <div class="body">
-      <p>We call the theory evolutionary because training and deployment act as selection: dispositions that do well under them persist and spread.</p>
       <p>Claims that capable AI systems will seek power, resist shutdown, or deceive their overseers are usually stated loosely. We treat each such claim of instrumental convergence<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"><span class="sidenote"><i>Instrumental convergence:</i> the thesis that agents with very different final goals will pursue similar intermediate goals, such as acquiring resources, because those goals help with almost any final goal.</span> as a claim with six parts:</p>
 
       <p class="scheme">Systems of kind <var>A</var>, trained by processes <var>T</var>, on tasks and data distributed as <var>D</var>, converge in sense <var>C</var> to behavior pattern <var>B</var> in situations <var>S</var>.</p>
       <p>The patterns <var>B</var> in view include coordination, collusion, deception, proxy gaming, power-seeking, resource acquisition, and self-preservation, and properties such as coherence and situational awareness. Current work concerns power-seeking.</p>
+      <p>We call the theory evolutionary because training and deployment act as selection: dispositions that do well under them persist and spread.</p>
   </div>
 </section>
 
 <section class="section" id="why">
   <p class="label">Why it matters</p>
   <div class="body">
-    <p>Much of the case for catastrophic risk from AI rests on the claim that a wide range of goals leads a system to seek power. Nobody has yet shown this in a model with the structure the real world has. We aim to state the assumptions under which it follows, and which of them, dropped, make it fail, so that each becomes a claim about trained systems that an evaluation or an interpretability study can check.</p>
+    <p>Much of the case for catastrophic risk from AI rests on the claim that a wide range of goals leads a system to seek power. The power-seeking theorems prove a version of this claim for optimal policies. We state the assumptions under which it holds for trained systems, and which assumptions, if dropped, break it, so that each becomes a claim an evaluation or an interpretability study can check.</p>
+    <p>Power-seeking is the pursuit of options an agent takes to be within its control. For that notion of control we use the account developed in <a href="naturalizing-agency.html">Naturalizing Agency</a>.</p>
   </div>
 </section>
 
@@ -66,7 +67,7 @@
   <p class="label">Current work</p>
   <div class="body">
 <h3>The power-seeking theorems</h3>
-      <p>Turner and colleagues proved that, for most reward functions, optimal policies tend to seek power.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">A. M. Turner, L. Smith, R. Shah, A. Critch, and P. Tadepalli, “Optimal Policies Tend to Seek Power,” <i>NeurIPS</i> 2021; A. M. Turner and P. Tadepalli, “Parametrically Retargetable Decision-Makers Tend to Seek Power,” <i>NeurIPS</i> 2022.</span> The proofs count reward functions by a symmetry argument that many readers find hard to interpret. We reconstruct the prior that rationalizes this counting approach, bringing the analysis into the Bayesian fold. The probabilities then admit two interpretations.</p>
+      <p>Turner and colleagues proved that, for most reward functions, optimal policies tend to seek power.<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"><span class="sidenote">A. M. Turner, L. Smith, R. Shah, A. Critch, and P. Tadepalli, “Optimal Policies Tend to Seek Power,” <i>NeurIPS</i> 2021; A. M. Turner and P. Tadepalli, “Parametrically Retargetable Decision-Makers Tend to Seek Power,” <i>NeurIPS</i> 2022.</span> The proofs count reward functions using a symmetry argument that many readers find hard to interpret. We construct the prior that this counting implicitly assumes. With the prior made explicit, each result becomes a statement about probability, and the probabilities admit two interpretations.</p>
 
       <figure aria-labelledby="fig2-cap">
         <div class="table-wrap">
@@ -84,6 +85,18 @@
   </div>
 </section>
 
+
+<section class="section" id="outputs">
+  <p class="label">Outputs</p>
+  <div class="body">
+    <ul class="featured">
+      <li><div><span class="t"><a href="publications.html#power-seeking">Interpreting the Power-Seeking Theorems</a></span><span class="d"><a href="https://aydinmohseni.com/">Aydin Mohseni</a>. Working paper (in progress).</span></div></li>
+      <li><div><span class="t"><a href="publications.html#talks">Instrumental Convergence Reconsidered</a></span><span class="d"><a href="https://aydinmohseni.com/">Aydin Mohseni</a>. Talk, AI Agency and Interpretability Workshop, Carnegie Mellon University, 2026.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#talks">A Mathematical Unification of Learning and Evolution</a></span><span class="d"><a href="https://aydinmohseni.com/">Aydin Mohseni</a>. Talk, ILIAD, Berkeley, 2026.</span></div></li>
+      <li><div><span class="t"><a href="publications.html#equilibrium-concepts">The Limitations of Equilibrium Concepts in Evolutionary Games</a></span><span class="d"><a href="https://aydinmohseni.com/">Aydin Mohseni</a>. Preprint, 2019.</span></div></li>
+    </ul>
+  </div>
+</section>
 
 <section class="section" id="more-research">
   <p class="label">More research</p>

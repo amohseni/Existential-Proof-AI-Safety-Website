@@ -56,6 +56,10 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Pietro Cibinel | https://pietrocibinel.com/ |
   | Simon DeDeo | https://www.cmu.edu/dietrich/sds/people/faculty/simon-dedeo.html |
   | Travis LaCroix | https://durham.ac.uk/staff/travis-lacroix |
+  | Jens Jäger | https://jjaegerphilo.github.io/ |
+  | Yosra Kazemi | https://cifar.ca/bios/yosra-kazemi/ |
+  | Hoda Heidari | https://www.cs.cmu.edu/~hheidari/ |
+  | Kevin J. S. Zollman | https://www.cmu.edu/dietrich/philosophy/people/faculty/kevin-zollman.html |
   | Dorian Clay | https://dorianclay.com/ |
   | Daniel Kopp | https://www.cmu.edu/dietrich/philosophy/people/masters/daniel-kopp.html |
   | Sree Sharvesh | https://www.sreesharvesh.com/ |
@@ -64,7 +68,7 @@ Read `STYLE.md` before adding content, and run `python3 tools/check_layout.py` (
   | Abinav Chari | https://www.linkedin.com/in/abinav-chari1 (as on Daniel's site) |
   | Isabelle Qian | https://www.linkedin.com/in/isabelle-athena-qian (as on Daniel's site) |
 
-  Names with no confirmed URL stay unlinked: Jeremy Saal, L. G. Demo, Jens Jäger, Haotian Zong, Yosra Kazemi, Yang Hu.
+  Names with no confirmed URL stay unlinked: Jeremy Saal, L. G. Demo, Haotian Zong, Yang Hu.
 - **Add a margin note:** inside a paragraph, add
   `<label for="sn-x" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-x" class="margin-toggle"><span class="sidenote">Note text.</span>`
   with an `id` unique on that page.
